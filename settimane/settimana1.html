@@ -32,7 +32,51 @@
           <button class="interactive-btn" onclick="nascondiMostra()">Nascondi / Mostra</button>
           <button class="interactive-btn reset-btn" onclick="resetDiv()">Reset</button>
         </div>
-      </div>
+
+        <details style="margin-top: 30px; cursor: pointer;">
+          <summary style="font-weight: bold; color: #0369a1; font-size: 18px; padding: 10px; background: #e0f2fe; border-radius: 8px; border: 1px solid #bae6fd;">
+            👀 Clicca qui per ispezionare il codice JavaScript
+          </summary>
+          
+          <pre style="background: #0f2942; color: #e0f2fe; padding: 15px; border-radius: 10px; overflow-x: auto; margin-top: 10px; font-family: monospace; font-size: 14px;"><code>// Funzione 1: Modifica il contenuto HTML
+function cambiaTesto() {
+  const mioDiv = document.getElementById("target-div");
+  mioDiv.innerHTML = "&lt;strong&gt;Magia! ✨&lt;/strong&gt; Il contenuto è modificato.";
+}
+
+// Funzione 2: Modifica lo stile CSS
+function cambiaStile() {
+  const mioDiv = document.getElementById("target-div");
+  mioDiv.style.backgroundColor = "#0284c7"; 
+  mioDiv.style.color = "#ffffff"; 
+  mioDiv.style.border = "3px dashed #38bdf8"; 
+  mioDiv.style.borderRadius = "20px"; 
+  mioDiv.style.transform = "scale(1.02)"; 
+}
+
+// Funzione 3: Nasconde o mostra
+function nascondiMostra() {
+  const mioDiv = document.getElementById("target-div");
+  if (mioDiv.style.display === "none") {
+    mioDiv.style.display = "block"; 
+  } else {
+    mioDiv.style.display = "none"; 
+  }
+}
+
+// Funzione 4: Reset
+function resetDiv() {
+  const mioDiv = document.getElementById("target-div");
+  mioDiv.innerHTML = "Questo è il testo originale...";
+  mioDiv.style.backgroundColor = "";
+  mioDiv.style.color = "";
+  mioDiv.style.border = "";
+  mioDiv.style.borderRadius = "";
+  mioDiv.style.transform = "";
+  mioDiv.style.display = "block";
+}</code></pre>
+        </details>
+        </div>
     </div>
 
   </div>
