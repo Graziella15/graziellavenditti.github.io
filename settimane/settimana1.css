@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  /* Mantiene lo sfondo coerente con la pagina principale */
+  background:
+    radial-gradient(circle at top left, rgba(191, 219, 254, 0.85), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(125, 211, 252, 0.5), transparent 25%),
+    linear-gradient(135deg, #eff6ff, #dbeafe, #bfdbfe);
+  color: #0f2942;
+  padding: 40px 20px;
+}
+
+.week-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  text-decoration: none;
+  color: #0c4a6e;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px 18px;
+  border-radius: 12px;
+  transition: 0.3s ease;
+}
+
+.back-link:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateX(-5px);
+}
+
+.content-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  border-radius: 28px;
+  padding: 34px;
+  box-shadow: 0 18px 40px rgba(12, 74, 110, 0.1);
+  margin-bottom: 30px;
+  animation: fadeUp 0.8s ease;
+}
+
+.intro-section h1 {
+  font-size: 34px;
+  color: #0f3b5f;
+  margin-bottom: 12px;
+}
+
+.exercise-section h2 {
+  font-size: 26px;
+  color: #0369a1;
+  border-bottom: 2px solid #bae6fd;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+
+.homework-box {
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f8fafc, #eff6ff);
+  border: 1px solid #bfdbfe;
+}
+
+.interactive-btn {
+  border: none;
+  background: linear-gradient(135deg, #0c4a6e, #38bdf8);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.interactive-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(12, 74, 110, 0.25);
+}
+
+.solution-content {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px dashed #bae6fd;
+  display: none; /* Nasconde il contenuto inizialmente */
+}
+
+/* Classe che viene aggiunta dal JS per mostrare il contenuto */
+.solution-content.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+pre {
+  background: #0f2942;
+  color: #e0f2fe;
+  padding: 15px;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
