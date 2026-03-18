@@ -118,3 +118,26 @@ pre {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+/* Stile per il div target dell'esercizio */
+.box-manipolazione {
+  padding: 24px;
+  background-color: #e0f2fe;
+  color: #0c4a6e;
+  border: 2px solid #bae6fd;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  transition: all 0.3s ease; /* Rende fluide le animazioni JavaScript */
+}
+
+/* Raggruppa i bottoni */
+.btn-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Stile speciale per il bottone di reset */
+.reset-btn {
+  background: linear-gradient(135deg, #64748b, #94a3b8) !important;
+}
