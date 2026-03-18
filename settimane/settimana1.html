@@ -1,57 +1,19 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Settimana 1 | Weekly Homework Hub</title>
-  <link rel="stylesheet" href="settimana1.css" />
-</head>
-<body>
-
-  <div class="week-wrapper">
-    <a href="../index.html" class="back-link">← Torna all'Oceano (Home)</a>
-
-    <div class="content-card intro-section">
-      <h1>Homework: Settimana 1</h1>
-      <p>In questa pagina troverai lo svolgimento degli esercizi assegnati per questa settimana. Premi i pulsanti per visualizzare il codice e i risultati.</p>
-    </div>
-
-    <div class="content-card exercise-section" id="esercizio-1">
-      <h2>Esercizio 1</h2>
-      <p>Breve descrizione della traccia del primo esercizio.</p>
+<div class="content-card exercise-section" id="esercizio-1">
+      <h2>Esercizio 1: Manipolazione del DOM</h2>
+      <p>In questo esercizio testiamo varie manipolazioni di un elemento DIV utilizzando un file JavaScript esterno, come richiesto dalla consegna.</p>
       
       <div class="homework-box">
-        <button class="interactive-btn" onclick="toggleSolution('soluzione-1')">Mostra/Nascondi Lavoro</button>
         
-        <div id="soluzione-1" class="solution-content">
-          <p><strong>Svolgimento:</strong></p>
-          <pre><code>
-// Inserisci qui il tuo codice o il testo dell'esercizio
-console.log("Ciao, questo è l'esercizio 1!");
-          </code></pre>
+        <div id="target-div" class="box-manipolazione">
+          Questo è il testo originale del DIV. Usa i bottoni qui sotto per modificarmi!
         </div>
+
+        <div class="btn-group">
+          <button class="interactive-btn" onclick="cambiaTesto()">Cambia Testo</button>
+          <button class="interactive-btn" onclick="cambiaStile()">Cambia Stile</button>
+          <button class="interactive-btn" onclick="nascondiMostra()">Nascondi / Mostra</button>
+          <button class="interactive-btn reset-btn" onclick="resetDiv()">Reset</button>
+        </div>
+
       </div>
     </div>
-
-    <div class="content-card exercise-section" id="esercizio-2">
-      <h2>Esercizio 2</h2>
-      <p>Breve descrizione della traccia del secondo esercizio.</p>
-      
-      <div class="homework-box">
-        <button class="interactive-btn" onclick="toggleSolution('soluzione-2')">Mostra/Nascondi Lavoro</button>
-        
-        <div id="soluzione-2" class="solution-content">
-          <p><strong>Svolgimento:</strong></p>
-          <pre><code>
-// Inserisci qui il tuo codice o il testo dell'esercizio
-console.log("E questo è l'esercizio 2!");
-          </code></pre>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <script src="settimana1.js"></script>
-</body>
-</html>
