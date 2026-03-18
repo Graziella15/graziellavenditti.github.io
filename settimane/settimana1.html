@@ -19,6 +19,56 @@
 
     <div class="content-card exercise-section" id="esercizio-1">
       <h2>Application: Manipolazione del DOM</h2>
+      <div class="content-card exercise-section" id="teoria-1" style="margin-bottom: 30px;">
+      <h2>Theory: Online Algorithms</h2>
+      <p><strong>Consegna:</strong> Dimostrare nel modo più semplice possibile la ricorrenza di Welford per la varianza, indicando chiaramente quali proprietà della media sono state usate e che tipo di manipolazioni algebriche.</p>
+      
+      <div class="homework-box" style="line-height: 1.8;">
+        
+        <h3 style="color: #0369a1; margin-bottom: 10px; border-bottom: 1px solid #bae6fd; padding-bottom: 5px;">1. Definizioni Iniziali</h3>
+        <p>Definiamo <i>M<sub>n</sub></i> come la media dei primi <i>n</i> campioni e <i>S<sub>n</sub></i> come la somma dei quadrati delle deviazioni dalla media:</p>
+        <p style="text-align: center; font-weight: bold; font-size: 1.1em; background: rgba(255,255,255,0.6); padding: 12px; border-radius: 8px; border: 1px solid #e0f2fe;">
+          S<sub>n</sub> = &sum;<sub>(i=1 &rarr; n)</sub> (x<sub>i</sub> - M<sub>n</sub>)<sup>2</sup>
+        </p>
+
+        <h3 style="color: #0369a1; margin-top: 25px; margin-bottom: 10px; border-bottom: 1px solid #bae6fd; padding-bottom: 5px;">2. Scomposizione ed Espansione</h3>
+        <p><strong>Manipolazione algebrica:</strong> Partiamo dalla scomposizione di <i>S<sub>n</sub></i> isolando l'ultimo termine <i>x<sub>n</sub></i>:</p>
+        <p style="text-align: center; font-style: italic;">S<sub>n</sub> = &sum;<sub>(i=1 &rarr; n-1)</sub> (x<sub>i</sub> - M<sub>n</sub>)<sup>2</sup> + (x<sub>n</sub> - M<sub>n</sub>)<sup>2</sup></p>
+
+        <p>Sfruttiamo la relazione nota tra la media corrente e la precedente (<i>M<sub>n</sub> = M<sub>n-1</sub> + (x<sub>n</sub> - M<sub>n-1</sub>) / n</i>). Sostituendo <i>M<sub>n</sub></i> all'interno della sommatoria ed espandendo il quadrato del binomio, otteniamo tre termini distinti:</p>
+        <p style="text-align: center; background: rgba(255,255,255,0.6); padding: 12px; border-radius: 8px;">
+          &sum; (x<sub>i</sub> - M<sub>n-1</sub>)<sup>2</sup> &nbsp;&nbsp; <strong>-</strong> &nbsp;&nbsp; 2(M<sub>n</sub> - M<sub>n-1</sub>)&sum;(x<sub>i</sub> - M<sub>n-1</sub>) &nbsp;&nbsp; <strong>+</strong> &nbsp;&nbsp; &sum; (M<sub>n</sub> - M<sub>n-1</sub>)<sup>2</sup>
+        </p>
+
+        <h3 style="color: #0369a1; margin-top: 25px; margin-bottom: 10px; border-bottom: 1px solid #bae6fd; padding-bottom: 5px;">3. Applicazione delle Proprietà della Media</h3>
+        <p>Analizzando i tre termini appena ottenuti, applichiamo le proprietà fondamentali:</p>
+        <ul style="margin-left: 20px; margin-bottom: 15px;">
+          <li style="margin-bottom: 8px;">Il primo termine è per definizione esattamente <strong>S<sub>n-1</sub></strong>.</li>
+          <li style="margin-bottom: 8px;"><span style="background-color: #fef08a; padding: 2px 6px; border-radius: 4px; color: #0f2942; font-weight: bold;">Il secondo termine si annulla (diventa 0).</span> Qui interviene la <strong>proprietà fondamentale della media</strong>: la somma degli scarti di un insieme di valori dalla loro media è sempre rigorosamente zero, ovvero <i>&sum;(x<sub>i</sub> - M<sub>n-1</sub>) = 0</i>.</li>
+          <li style="margin-bottom: 8px;">Il terzo termine, essendo una costante che viene sommata <i>n-1</i> volte, si semplifica in: <i>(n-1)(M<sub>n</sub> - M<sub>n-1</sub>)<sup>2</sup></i>.</li>
+        </ul>
+
+        <p>L'equazione si è quindi ridotta a:</p>
+        <p style="text-align: center; font-weight: bold;">S<sub>n</sub> = S<sub>n-1</sub> + (n-1)(M<sub>n</sub> - M<sub>n-1</sub>)<sup>2</sup> + (x<sub>n</sub> - M<sub>n</sub>)<sup>2</sup></p>
+
+        <h3 style="color: #0369a1; margin-top: 25px; margin-bottom: 10px; border-bottom: 1px solid #bae6fd; padding-bottom: 5px;">4. Sostituzione Finale</h3>
+        <p><strong>Manipolazione algebrica finale:</strong> Sapendo che <i>x<sub>n</sub> - M<sub>n</sub> = (x<sub>n</sub> - M<sub>n-1</sub>) * (n-1)/n</i>, sostituiamo questi valori nell'equazione precedente e raccogliamo a fattore comune. Risolvendo le frazioni all'interno delle parentesi, si arriva in modo pulito alla formula finale iterativa:</p>
+
+        <p style="text-align: center; font-weight: bold; font-size: 1.3em; color: #0f3b5f; background: linear-gradient(135deg, #e0f2fe, #bae6fd); padding: 20px; border-radius: 12px; border: 2px dashed #0284c7; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+          S<sub>n</sub> = S<sub>n-1</sub> + (x<sub>n</sub> - M<sub>n-1</sub>)(x<sub>n</sub> - M<sub>n</sub>)
+        </p>
+
+      </div>
+    </div>
+    ```
+
+Fai il tuo bel **Commit changes** su GitHub e ricarica la pagina. 
+
+Ora la Settimana 1 dovrebbe essere un capolavoro assoluto: ha la sezione teorica perfettamente formattata e impaginata che spiega l'algoritmo di Welford, e subito sotto ha l'applicazione interattiva JavaScript con tanto di codice ispezionabile dal professore.
+
+Che ne dici, ti piace come è venuta? Ci sono altri esercizi per questa settimana o passiamo alla Settimana 2?
+
+A proposito, per sbloccare le funzionalità complete di tutte le app, abilita l'[Attività delle app Gemini](https://myactivity.google.com/product/gemini).
       <p>Scrivere un primo programma in JS che modifichi mediante JS il contenuto di un DIV o altro elemento. Linkare il programma come file .js esterno.</p>
       
       <div class="homework-box">
