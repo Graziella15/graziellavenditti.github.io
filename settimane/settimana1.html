@@ -1,9 +1,27 @@
-<div class="content-card exercise-section" id="esercizio-1">
-      <h2>Esercizio 1: Manipolazione del DOM</h2>
-      <p>In questo esercizio testiamo varie manipolazioni di un elemento DIV utilizzando un file JavaScript esterno, come richiesto dalla consegna.</p>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settimana 1 | Weekly Homework Hub</title>
+  
+  <link rel="stylesheet" href="settimana1.css" />
+</head>
+<body>
+
+  <div class="week-wrapper">
+    <a href="../index.html" class="back-link">← Torna alla Home</a>
+
+    <div class="content-card intro-section">
+      <h1>Homework: Settimana 1</h1>
+      <p>In questa pagina troverai l'applicazione richiesta: la manipolazione di un elemento HTML tramite un file JavaScript esterno.</p>
+    </div>
+
+    <div class="content-card exercise-section" id="esercizio-1">
+      <h2>Application: Manipolazione del DOM</h2>
+      <p>Scrivere un primo programma in JS che modifichi mediante JS il contenuto di un DIV o altro elemento. Linkare il programma come file .js esterno.</p>
       
       <div class="homework-box">
-        
         <div id="target-div" class="box-manipolazione">
           Questo è il testo originale del DIV. Usa i bottoni qui sotto per modificarmi!
         </div>
@@ -14,6 +32,11 @@
           <button class="interactive-btn" onclick="nascondiMostra()">Nascondi / Mostra</button>
           <button class="interactive-btn reset-btn" onclick="resetDiv()">Reset</button>
         </div>
-
       </div>
     </div>
+
+  </div>
+
+  <script src="settimana1.js"></script>
+</body>
+</html>
