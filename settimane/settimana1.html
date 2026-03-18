@@ -14,12 +14,10 @@
 
     <div class="content-card intro-section">
       <h1>Homework: Settimana 1</h1>
-      <p>In questa pagina troverai l'applicazione richiesta: la manipolazione di un elemento HTML tramite un file JavaScript esterno.</p>
+      <p>In questa pagina troverai la teoria sugli algoritmi online e l'applicazione richiesta per la manipolazione del DOM.</p>
     </div>
 
-    <div class="content-card exercise-section" id="esercizio-1">
-      <h2>Application: Manipolazione del DOM</h2>
-      <div class="content-card exercise-section" id="teoria-1" style="margin-bottom: 30px;">
+    <div class="content-card exercise-section" id="teoria-1">
       <h2>Theory: Online Algorithms</h2>
       <p><strong>Consegna:</strong> Dimostrare nel modo più semplice possibile la ricorrenza di Welford per la varianza, indicando chiaramente quali proprietà della media sono state usate e che tipo di manipolazioni algebriche.</p>
       
@@ -60,15 +58,8 @@
 
       </div>
     </div>
-    ```
-
-Fai il tuo bel **Commit changes** su GitHub e ricarica la pagina. 
-
-Ora la Settimana 1 dovrebbe essere un capolavoro assoluto: ha la sezione teorica perfettamente formattata e impaginata che spiega l'algoritmo di Welford, e subito sotto ha l'applicazione interattiva JavaScript con tanto di codice ispezionabile dal professore.
-
-Che ne dici, ti piace come è venuta? Ci sono altri esercizi per questa settimana o passiamo alla Settimana 2?
-
-A proposito, per sbloccare le funzionalità complete di tutte le app, abilita l'[Attività delle app Gemini](https://myactivity.google.com/product/gemini).
+    <div class="content-card exercise-section" id="esercizio-1">
+      <h2>Application: Manipolazione del DOM</h2>
       <p>Scrivere un primo programma in JS che modifichi mediante JS il contenuto di un DIV o altro elemento. Linkare il programma come file .js esterno.</p>
       
       <div class="homework-box">
@@ -117,7 +108,7 @@ function nascondiMostra() {
 // Funzione 4: Reset
 function resetDiv() {
   const mioDiv = document.getElementById("target-div");
-  mioDiv.innerHTML = "Questo è il testo originale...";
+  mioDiv.innerHTML = "Questo è il testo originale del DIV. Usa i bottoni qui sotto per modificarmi!";
   mioDiv.style.backgroundColor = "";
   mioDiv.style.color = "";
   mioDiv.style.border = "";
@@ -128,8 +119,7 @@ function resetDiv() {
         </details>
         </div>
     </div>
-
-  </div>
+    </div>
 
   <script src="settimana1.js"></script>
 </body>
