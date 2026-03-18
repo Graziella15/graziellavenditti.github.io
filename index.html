@@ -3,59 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome | Weekly Homework Hub</title>
+  <title>Weekly Homework Hub</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="landing-page">
+<body>
 
-  <div class="ocean-elements">
-    <div class="bubble bubble-1"></div>
-    <div class="bubble bubble-2"></div>
-    <div class="bubble bubble-3"></div>
-    <div class="bubble bubble-4"></div>
-    <div class="bubble bubble-5"></div>
-    <div class="bubble bubble-6"></div>
-    <div class="bubble bubble-7"></div>
-    <div class="bubble bubble-8"></div>
-    <div class="bubble bubble-9"></div>
-    <div class="bubble bubble-10"></div>
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <div class="sea-shape shell shell-1"></div>
-    <div class="sea-shape shell shell-2"></div>
-    <div class="sea-shape starfish starfish-1"></div>
-    <div class="sea-shape starfish starfish-2"></div>
-    <div class="sea-shape coral coral-1"></div>
-    <div class="sea-shape coral coral-2"></div>
-  </div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <h2>Homework Hub</h2>
+      <button class="close-btn" onclick="toggleSidebar()">✕</button>
+    </div>
 
-  <div class="wave wave-1"></div>
-  <div class="wave wave-2"></div>
+    <p class="sidebar-text">Seleziona una settimana</p>
 
-  <div class="landing-glow landing-glow-1"></div>
-  <div class="landing-glow landing-glow-2"></div>
+    <nav class="sidebar-nav">
+      <a href="settimane/settimana1.html" target="_blank">🌊 Settimana 1</a>
+      <a href="settimane/settimana2.html" target="_blank">🐚 Settimana 2</a>
+      <a href="settimane/settimana3.html" target="_blank">⭐ Settimana 3</a>
+    </nav>
+  </aside>
 
-  <div class="landing-container">
-    <div class="landing-badge">Academic Homework Archive</div>
-    <h1>Weekly Homework Hub</h1>
-    <p>
-      Uno spazio digitale elegante e ordinato, ispirato al mare,
-      pensato per raccogliere e consultare gli homework settimanali del corso.
-    </p>
+  <main class="main-content">
+    <header class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+      <div class="brand">Weekly Homework Hub</div>
+    </header>
 
-    <div class="loading-text">Entering your ocean of homework...</div>
+    <section class="hero">
+      <div class="hero-badge">Academic Portfolio</div>
+      <h1>Benvenuto nel mio spazio dedicato agli homework settimanali</h1>
+      <p>
+        Questo sito raccoglie in modo ordinato e accessibile gli homework del corso,
+        suddivisi per settimana. Ogni pagina contiene il materiale relativo al lavoro svolto,
+        così da offrire una consultazione chiara, elegante e immediata.
+      </p>
+      <a href="#settimane" class="hero-btn">Esplora le settimane</a>
+    </section>
 
-    <a href="home.html" class="enter-btn">Entra nel sito</a>
-  </div>
+    <section class="intro-section">
+      <div class="intro-card">
+        <h2>Introduzione</h2>
+        <p>
+          Ho creato questo sito come archivio personale degli homework caricati durante il corso.
+          La struttura permette di consultare facilmente ogni settimana e di mantenere una raccolta
+          ordinata dei lavori svolti.
+        </p>
+      </div>
 
-  <!--
-  Se vuoi entrare automaticamente dopo 3 secondi, togli i commenti:
+      <div class="intro-card">
+        <h2>Organizzazione</h2>
+        <p>
+          Ogni homework è inserito in una pagina separata. Dal menu laterale o dalle card qui sotto
+          puoi aprire direttamente la settimana desiderata in una nuova pagina.
+        </p>
+      </div>
+    </section>
 
-  <script>
-    setTimeout(() => {
-      window.location.href = "home.html";
-    }, 3000);
-  </script>
-  -->
+    <section class="weeks-section" id="settimane">
+      <h2 class="section-title">Settimane disponibili</h2>
 
+      <div class="weeks-grid">
+        <a class="week-card" href="settimane/settimana1.html" target="_blank">
+          <div class="week-icon">🌊</div>
+          <h3>Settimana 1</h3>
+          <p>Apri l’homework della prima settimana.</p>
+          <span>Apri pagina →</span>
+        </a>
+
+        <a class="week-card" href="settimane/settimana2.html" target="_blank">
+          <div class="week-icon">🐚</div>
+          <h3>Settimana 2</h3>
+          <p>Consulta il materiale della seconda settimana.</p>
+          <span>Apri pagina →</span>
+        </a>
+
+        <a class="week-card" href="settimane/settimana3.html" target="_blank">
+          <div class="week-icon">⭐</div>
+          <h3>Settimana 3</h3>
+          <p>Visualizza il contenuto della terza settimana.</p>
+          <span>Apri pagina →</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
