@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homework 2: Media e Varianza</title>
-    
     <link rel="stylesheet" href="settimana2.css"> 
 </head>
 <body>
 
     <div class="settimana-container" id="settimana-2">
         <h2>Settimana 2: Media e Varianza (Naive vs Online)</h2>
-        <p>Generiamo dati casuali usando <code>Math.random()</code> e confrontiamo gli algoritmi.</p>
+        <p>Generiamo dati casuali usando l'oggetto <code>Math.random()</code> e confrontiamo gli algoritmi.</p>
         
         <button onclick="eseguiHomework2()">Genera e Calcola</button>
         
+        <button id="btn-mostra-numeri" onclick="mostraNumeri()" style="display: none; background-color: #ff8c00; margin-left: 10px;">Mostra/Nascondi i 10.000 numeri</button>
+        
         <div id="risultati-hw2" class="risultati-box"></div>
+
+        <div id="box-numeri" class="numeri-scroll" style="display: none;"></div>
     </div>
 
     <script src="settimana2.js"></script>
