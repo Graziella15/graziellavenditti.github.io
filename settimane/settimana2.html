@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework 2: Media e Varianza</title>
+    <title>Homework 2: Media e Varianza e Teoria</title>
     <link rel="stylesheet" href="settimana2.css"> 
 </head>
 <body>
@@ -13,12 +13,49 @@
         <p>Generiamo dati casuali usando l'oggetto <code>Math.random()</code> e confrontiamo gli algoritmi.</p>
         
         <button onclick="eseguiHomework2()">Genera e Calcola</button>
-        
         <button id="btn-mostra-numeri" onclick="mostraNumeri()" style="display: none; background-color: #ff8c00; margin-left: 10px;">Mostra/Nascondi i 10.000 numeri</button>
         
         <div id="risultati-hw2" class="risultati-box"></div>
-
         <div id="box-numeri" class="numeri-scroll" style="display: none;"></div>
+    </div>
+
+    <div class="teoria-container">
+        <h2>📚 Teoria: Generare distribuzioni partendo dall'Uniforme</h2>
+        <p>I computer generano numeri pseudo-casuali con distribuzione <strong>Uniforme tra 0 e 1</strong>. Per ottenere altre distribuzioni, si applicano specifiche trasformazioni matematiche a questi valori di base.</p>
+        
+        <div class="teoria-grid">
+            <div class="teoria-card">
+                <h3>🟢 Distribuzioni Continue</h3>
+                <ul>
+                    <li><strong>Esponenziale</strong> (Metodo Trasformata Inversa)<br>
+                        <em>Formula:</em> X = -ln(U) / &lambda;</li>
+                    <li><strong>Normale / Gaussiana</strong> (Box-Muller)<br>
+                        <em>Formula:</em> Z = &radic;(-2 ln(U<sub>1</sub>)) &times; cos(2&pi; U<sub>2</sub>)</li>
+                    <li><strong>Cauchy</strong> (Trasformata Inversa)<br>
+                        <em>Formula:</em> X = x<sub>0</sub> + &gamma; tan(&pi;(U - 0.5))</li>
+                    <li><strong>Chi-Quadro (&chi;<sup>2</sup>)</strong> (Composizione)<br>
+                        <em>Formula:</em> Somma di k variabili Normali standard al quadrato.</li>
+                    <li><strong>F di Fisher</strong> (Rapporto)<br>
+                        <em>Formula:</em> Rapporto tra due Chi-Quadro divise per i gradi di libertà.</li>
+                    <li><strong>Triangolare</strong> (Trasformata Inversa a tratti)<br>
+                        <em>Formula:</em> Uso delle radici quadrate di U basate su minimo, massimo e moda.</li>
+                </ul>
+            </div>
+
+            <div class="teoria-card">
+                <h3>🔵 Distribuzioni Discrete</h3>
+                <ul>
+                    <li><strong>Bernoulli</strong> (Soglia diretta)<br>
+                        <em>Formula:</em> Se U &lt; p &rarr; 1 (Successo), altrimenti 0.</li>
+                    <li><strong>Binomiale</strong> (Somma di Bernoulli)<br>
+                        <em>Formula:</em> Somma dei successi in n test di Bernoulli indipendenti.</li>
+                    <li><strong>Geometrica</strong> (Trasformata Inversa discretizzata)<br>
+                        <em>Formula:</em> X = &lfloor; ln(U) / ln(1-p) &rfloor;</li>
+                    <li><strong>Poisson</strong> (Moltiplicazione sequenziale)<br>
+                        <em>Formula:</em> Si moltiplicano U<sub>1</sub> &times; U<sub>2</sub> finché il prodotto &lt; e<sup>-&lambda;</sup>.</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script src="settimana2.js"></script>
