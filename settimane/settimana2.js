@@ -1,9 +1,8 @@
-// Variabile globale per ricordare i numeri generati anche fuori dalla funzione
 let datiGenerati = []; 
 
 function eseguiHomework2() {
     const n_dati = 10000; 
-    datiGenerati = []; // Svuota l'array ogni volta che clicchi "Genera"
+    datiGenerati = []; 
 
     // 1. OGGETTO RANDOM
     for (let i = 0; i < n_dati; i++) {
@@ -59,25 +58,19 @@ function eseguiHomework2() {
         <p><em>I risultati coincidono perfettamente! ✨</em></p>
     `;
 
-    // Ora che abbiamo calcolato tutto, rendiamo visibile il bottone per mostrare i numeri!
+    // Mostra il bottone dei numeri extra
     document.getElementById('btn-mostra-numeri').style.display = "inline-block";
-    
-    // Nascondiamo la lista dei numeri se era rimasta aperta dal calcolo precedente
     document.getElementById('box-numeri').style.display = "none";
 }
 
-// NUOVA FUNZIONE: per il bottone che mostra/nasconde i numeri
 function mostraNumeri() {
     const boxNumeri = document.getElementById('box-numeri');
     
-    // Se la scatola è nascosta, la riempiamo e la mostriamo
     if (boxNumeri.style.display === "none") {
-        // Tagliamo i numeri a 2 decimali sennò esce un papiro illeggibile e li uniamo con una virgola
         const numeriFormattati = datiGenerati.map(n => n.toFixed(2)).join(", ");
         boxNumeri.innerHTML = `<p><strong>Ecco l'elenco dei dati:</strong></p><p>${numeriFormattati}</p>`;
-        boxNumeri.style.display = "block"; // Mostra il box
+        boxNumeri.style.display = "block"; 
     } else {
-        // Se la scatola è già visibile, la nascondiamo (funziona come un interruttore)
         boxNumeri.style.display = "none";
     }
 }
