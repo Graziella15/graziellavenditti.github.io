@@ -1,54 +1,44 @@
-document.getElementById('generateBtn').addEventListener('click', () => {
-    const n = parseInt(document.getElementById('count').value);
-    if (isNaN(n) || n <= 0) return alert("Inserisci un numero valido");
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('generateBtn');
+    
+    btn.addEventListener('click', () => {
+        const n = parseInt(document.getElementById('count').value);
+        if (n <= 0) return;
 
-    const data = Array.from({ length: n }, () => Math.random() * 100);
+        // Generazione dati con Math.random()
+        const data = [];
+        for (let i = 0; i < n; i++) {
+            data.push(Math.random() * 100);
+        }
 
-    // --- ALGORITMO NAIVE ---
-    // Formula: Var = (Σx² / n) - (Σx / n)²
-    const naiveResults = (nums) => {
-        const n = nums.length;
+        // 1. ALGORITMO NAIVE
         let sum = 0;
         let sumSq = 0;
-        
-        for (let x of nums) {
+        for (let x of data) {
             sum += x;
             sumSq += x * x;
         }
-        
-        const mean = sum / n;
-        const variance = (sumSq / n) - (mean * mean);
-        return { mean, variance };
-    };
+        const mNaive = sum / n;
+        const vNaive = (sumSq / n) - (mNaive * mNaive);
 
-    // --- ALGORITMO ONLINE (Welford) ---
-    // Aggiorna la media e la somma dei quadrati delle differenze passo dopo passo
-    const onlineResults = (nums) => {
-        let n = 0;
-        let mean = 0;
+        // 2. ALGORITMO ONLINE (Welford)
+        let mOnline = 0;
         let M2 = 0;
-
-        for (let x of nums) {
-            n++;
-            let delta = x - mean;
-            mean += delta / n;
-            let delta2 = x - mean;
+        for (let i = 0; i < data.length; i++) {
+            let x = data[i];
+            let delta = x - mOnline;
+            mOnline += delta / (i + 1);
+            let delta2 = x - mOnline;
             M2 += delta * delta2;
         }
+        const vOnline = M2 / n;
+
+        // Scrittura nei tag HTML
+        document.getElementById('naiveMean').textContent = mNaive.toFixed(4);
+        document.getElementById('naiveVar').textContent = vNaive.toFixed(4);
+        document.getElementById('onlineMean').textContent = mOnline.toFixed(4);
+        document.getElementById('onlineVar').textContent = vOnline.toFixed(4);
         
-        // Varianza della popolazione (per confronto diretto col naive)
-        const variance = M2 / n; 
-        return { mean, variance };
-    };
-
-    const resNaive = naiveResults(data);
-    const resOnline = onlineResults(data);
-
-    // Visualizzazione
-    document.getElementById('naiveMean').textContent = resNaive.mean.toFixed(6);
-    document.getElementById('naiveVar').textContent = resNaive.variance.toFixed(6);
-    document.getElementById('onlineMean').textContent = resOnline.mean.toFixed(6);
-    document.getElementById('onlineVar').textContent = resOnline.variance.toFixed(6);
-    
-    document.getElementById('status').textContent = `Confronto completato su ${n} campioni.`;
+        console.log("Calcolo completato per", n, "elementi");
+    });
 });
