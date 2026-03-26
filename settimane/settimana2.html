@@ -2,28 +2,31 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Test Algoritmi Statistica</title>
+    <title>Test Statistica</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Generatore Statistico</h1>
-        <input type="number" id="count" value="100">
-        <button id="generateBtn">Calcola</button>
+        <h1>Calcolo Media e Varianza</h1>
+        <div class="input-group">
+            <input type="number" id="count" value="1000" min="1">
+            <button id="btnCalcola">Genera e Calcola</button>
+        </div>
 
         <div class="results">
             <div class="card">
-                <h3>Naive</h3>
-                <p>Media: <span id="naiveMean">0</span></p>
-                <p>Varianza: <span id="naiveVar">0</span></p>
+                <h3>Metodo Naive</h3>
+                <p>Media: <strong id="n-media">-</strong></p>
+                <p>Varianza: <strong id="n-varianza">-</strong></p>
             </div>
             <div class="card">
-                <h3>Online (Welford)</h3>
-                <p>Media: <span id="onlineMean">0</span></p>
-                <p>Varianza: <span id="onlineVar">0</span></p>
+                <h3>Metodo Online</h3>
+                <p>Media: <strong id="o-media">-</strong></p>
+                <p>Varianza: <strong id="o-varianza">-</strong></p>
             </div>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
 </html>
+
