@@ -3,87 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework 2: Media e Varianza e Teoria</title>
-    <link rel="stylesheet" href="settimana2.css"> 
+    <title>Homework 2: Media e Varianza</title>
+    <link rel="stylesheet" href="settimana2.css">
 </head>
 <body>
 
-    <div class="settimana-container" id="settimana-2">
+    <div class="settimana-container">
         <h2>Settimana 2: Media e Varianza (Naive vs Online)</h2>
-        <p>Generiamo dati casuali usando l'oggetto <code>Math.random()</code> e confrontiamo gli algoritmi.</p>
+        <p>Confronto algoritmi su 10.000 campioni casuali.</p>
         
-        <button onclick="eseguiHomework2()">Genera e Calcola</button>
-        <button id="btn-mostra-numeri" onclick="mostraNumeri()" style="display: none; background-color: #ff8c00; margin-left: 10px;">Mostra/Nascondi i 10.000 numeri</button>
-        <button onclick="mostraCodici()" style="background-color: #24292e; color: white; margin-left: 10px;">Mostra/Nascondi Codici</button>
-        
-        <div id="risultati-hw2" class="risultati-box"></div>
-        <div id="box-numeri" class="numeri-scroll" style="display: none;"></div>
+        <div class="actions">
+            <button class="btn-calcola" onclick="eseguiHomework2()">Genera e Calcola</button>
+            <button id="btn-mostra-numeri" class="btn-numeri" onclick="toggleElement('box-numeri')" style="display: none;">Mostra Numeri</button>
+            <button class="btn-codici" onclick="toggleElement('box-codici')">Mostra/Nascondi Sorgenti</button>
+        </div>
 
-        <div id="box-codici" class="numeri-scroll" style="display: none; background-color: #f1f1f1; border: 1px solid #ccc; padding: 15px; margin-top: 15px; border-radius: 4px; text-align: left;">
-            <h3 style="color: #d32f2f;">Codice HTML</h3>
-            <pre style="background: #fff; padding: 10px; overflow-x: auto; border: 1px solid #ddd; font-size: 13px;"><code>&lt;!-- Il codice HTML della pagina --&gt;
-&lt;button onclick="eseguiHomework2()"&gt;Genera e Calcola&lt;/button&gt;
+        <div id="risultati-hw2" class="risultati-box">I risultati appariranno qui...</div>
+        <div id="box-numeri" class="scroll-box" style="display: none;"></div>
+
+        <div id="box-codici" class="source-container" style="display: none;">
+            <h3>Sorgenti Completi</h3>
+            <span class="label">HTML</span>
+            <pre><code>&lt;button onclick="eseguiHomework2()"&gt;Calcola&lt;/button&gt;
 &lt;div id="risultati-hw2"&gt;&lt;/div&gt;</code></pre>
-            <hr>
-            <h3 style="color: #1976d2;">Codice CSS</h3>
-            <pre style="background: #fff; padding: 10px; overflow-x: auto; border: 1px solid #ddd; font-size: 13px;"><code>/* Esempio stile CSS */
-.settimana-container {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-}</code></pre>
-            <hr>
-            <h3 style="color: #388e3c;">Codice JavaScript</h3>
-            <pre style="background: #fff; padding: 10px; overflow-x: auto; border: 1px solid #ddd; font-size: 13px;"><code>// Logica di calcolo Media e Varianza
-function eseguiHomework2() {
-    // Generazione numeri e algoritmi Naive/Online...
-}</code></pre>
+            
+            <span class="label">CSS</span>
+            <pre><code id="code-css-display"></code></pre>
+            
+            <span class="label">JavaScript</span>
+            <pre><code id="code-js-display"></code></pre>
         </div>
     </div>
 
     <div class="teoria-container">
-        <h2>📚 Teoria: Generare distribuzioni partendo dall'Uniforme</h2>
-        <p>I computer generano numeri pseudo-casuali con distribuzione <strong>Uniforme tra 0 e 1</strong>. Per ottenere altre distribuzioni, si applicano specifiche trasformazioni matematiche a questi valori di base (spesso indicati con la lettera <em>U</em>).</p>
-        
+        <h2>📚 Teoria: Distribuzioni Partendo dall'Uniforme</h2>
         <div class="teoria-grid">
             <div class="teoria-card">
-                <h3 style="color: #2ea043;">🟢 Distribuzioni Continue</h3>
+                <h3 style="color: #2ea043;">🟢 Continue</h3>
                 <ul>
-                    <li><strong>Esponenziale</strong> (Trasformata Inversa)<br>
-                        <em>Formula:</em> X = -ln(U) / &lambda;</li>
-                    <li><strong>Normale / Gaussiana</strong> (Box-Muller)<br>
-                        <em>Formula:</em> Z = &radic;(-2 ln(U<sub>1</sub>)) &times; cos(2&pi; U<sub>2</sub>)</li>
-                    <li><strong>Cauchy</strong> (Trasformata Inversa)<br>
-                        <em>Formula:</em> X = x<sub>0</sub> + &gamma; tan(&pi;(U - 0.5))</li>
-                    <li><strong>Chi-Quadro (&chi;<sup>2</sup>)</strong> (Composizione)<br>
-                        <em>Concetto:</em> Somma dei quadrati di k variabili Normali standard.</li>
-                    <li><strong>T di Student</strong> (Rapporto)<br>
-                        <em>Concetto:</em> Rapporto tra una Normale standard e la radice di una Chi-Quadro.</li>
-                    <li><strong>Weibull</strong> (Trasformata Inversa)<br>
-                        <em>Formula:</em> X = &lambda; (-ln(U))<sup>1/k</sup></li>
+                    <li><strong>Esponenziale:</strong> X = -ln(U) / λ</li>
+                    <li><strong>Normale (Box-Muller):</strong> Z = √(-2 ln(U1)) * cos(2π U2)</li>
+                    <li><strong>Cauchy:</strong> X = x0 + γ tan(π(U - 0.5))</li>
                 </ul>
             </div>
-
             <div class="teoria-card">
-                <h3 style="color: #3182ce;">🔵 Distribuzioni Discrete</h3>
+                <h3 style="color: #3182ce;">🔵 Discrete</h3>
                 <ul>
-                    <li><strong>Bernoulli</strong> (Soglia Diretta)<br>
-                        <em>Formula:</em> Se U &lt; p &rarr; 1 (Successo), altrimenti 0.</li>
-                    <li><strong>Binomiale</strong> (Somma di Bernoulli)<br>
-                        <em>Concetto:</em> Somma di successi in n prove indipendenti.</li>
-                    <li><strong>Geometrica</strong> (Trasformata Inversa Discretizzata)<br>
-                        <em>Formula:</em> X = &lfloor; ln(U) / ln(1-p) &rfloor;</li>
-                    <li><strong>Poisson</strong> (Moltiplicazione Sequenziale)<br>
-                        <em>Concetto:</em> Moltiplicare U<sub>1</sub> &times; U<sub>2</sub>... finché il prodotto &lt; e<sup>-&lambda;</sup>.</li>
-                    <li><strong>Uniforme Discreta</strong> (Scalatura e Arrotondamento)<br>
-                        <em>Formula:</em> X = a + &lfloor; U &times; (b - a + 1) &rfloor;</li>
+                    <li><strong>Bernoulli:</strong> U < p ? 1 : 0</li>
+                    <li><strong>Poisson:</strong> Prodotto Ui < e^-λ</li>
+                    <li><strong>Geometrica:</strong> X = ⌊ ln(U) / ln(1-p) ⌋</li>
                 </ul>
             </div>
         </div>
     </div>
 
     <script src="settimana2.js"></script>
-    
 </body>
 </html>
