@@ -1,54 +1,43 @@
-document.getElementById('runBtn').addEventListener('click', () => {
-    const n = parseInt(document.getElementById('sampleSize').value);
-    
-    // 1. Generazione dati con Math.random()
-    const dati = Array.from({ length: n }, () => Math.random());
+document.getElementById('runAnalysis').addEventListener('click', () => {
+    const n = 10000; // Numero di campioni
+    const data = Array.from({ length: n }, () => Math.random() * 100);
 
-    // 2. Calcolo Naive
-    const t0 = performance.now();
-    const resNaive = calcolaNaive(dati);
-    const t1 = performance.now();
+    // --- 1. Algoritmo Naive ---
+    const calculateNaive = (arr) => {
+        const n = arr.length;
+        const mean = arr.reduce((a, b) => a + b, 0) / n;
+        const squareSum = arr.reduce((a, b) => a + Math.pow(b - mean, 2), 0);
+        return { mean, variance: squareSum / n };
+    };
 
-    // 3. Calcolo Online (Welford)
-    const t2 = performance.now();
-    const resOnline = calcolaOnline(dati);
-    const t3 = performance.now();
+    // --- 2. Algoritmo Online (Welford) ---
+    const calculateOnline = (arr) => {
+        let n = 0;
+        let mean = 0;
+        let M2 = 0;
 
-    renderTable(resNaive, resOnline, (t1 - t0), (t3 - t2));
-});
+        for (let x of arr) {
+            n++;
+            let delta = x - mean;
+            mean += delta / n;
+            let delta2 = x - mean;
+            M2 += delta * delta2;
+        }
+        return { mean, variance: M2 / n };
+    };
 
-function calcolaNaive(data) {
-    const n = data.length;
-    const media = data.reduce((a, b) => a + b, 0) / n;
-    const varianza = data.reduce((acc, x) => acc + Math.pow(x - media, 2), 0) / n;
-    return { media, varianza };
-}
+    const naive = calculateNaive(data);
+    const online = calculateOnline(data);
 
-function calcolaOnline(data) {
-    let n = 0, media = 0, M2 = 0;
-    for (let x of data) {
-        n++;
-        let delta = x - media;
-        media += delta / n;
-        M2 += delta * (x - media);
-    }
-    return { media, varianza: M2 / n };
-}
-
-function renderTable(naive, online, timeN, timeO) {
-    const body = document.getElementById('resultBody');
-    body.innerHTML = `
-        <tr>
-            <td><strong>Naive</strong></td>
-            <td>${naive.media.toFixed(6)}</td>
-            <td>${naive.varianza.toFixed(6)}</td>
-            <td>${timeN.toFixed(2)} ms</td>
-        </tr>
-        <tr>
-            <td><strong>Online</strong></td>
-            <td>${online.media.toFixed(6)}</td>
-            <td>${online.varianza.toFixed(6)}</td>
-            <td>${timeO.toFixed(2)} ms</td>
-        </tr>
+    // Visualizzazione Risultati
+    const display = document.getElementById('results');
+    display.innerHTML = `
+        <table>
+            <tr><th>Metodo</th><th>Media</th><th>Varianza</th></tr>
+            <tr><td>Naive</td><td>${naive.mean.toFixed(10)}</td><td>${naive.variance.toFixed(10)}</td></tr>
+            <tr><td>Online</td><td>${online.mean.toFixed(10)}</td><td>${online.variance.toFixed(10)}</td></tr>
+        </table>
+        <p class="match">I risultati sono identici (al netto di minime imprecisioni di floating point)? 
+        ${(Math.abs(naive.variance - online.variance) < 1e-10) ? "SÌ" : "NO"}</p>
     `;
-}
+});
