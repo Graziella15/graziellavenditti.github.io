@@ -1,43 +1,141 @@
-document.getElementById('runAnalysis').addEventListener('click', () => {
-    const n = 10000; // Numero di campioni
-    const data = Array.from({ length: n }, () => Math.random() * 100);
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-    // --- 1. Algoritmo Naive ---
-    const calculateNaive = (arr) => {
-        const n = arr.length;
-        const mean = arr.reduce((a, b) => a + b, 0) / n;
-        const squareSum = arr.reduce((a, b) => a + Math.pow(b - mean, 2), 0);
-        return { mean, variance: squareSum / n };
+// Algoritmo di Welford
+function welfordStats(values) {
+  let n = 0;
+  let mean = 0;
+  let M2 = 0;
+
+  for (const x of values) {
+    n++;
+    const delta = x - mean;
+    mean = mean + delta / n;
+    const delta2 = x - mean;
+    M2 = M2 + delta * delta2;
+  }
+
+  const variancePopulation = n > 0 ? M2 / n : 0;
+  const varianceSample = n > 1 ? M2 / (n - 1) : 0;
+
+  return {
+    n,
+    mean,
+    variancePopulation,
+    varianceSample
+  };
+}
+
+// Formula naive
+function naiveStats(values) {
+  const n = values.length;
+
+  if (n === 0) {
+    return {
+      n: 0,
+      mean: 0,
+      variancePopulation: 0
     };
+  }
 
-    // --- 2. Algoritmo Online (Welford) ---
-    const calculateOnline = (arr) => {
-        let n = 0;
-        let mean = 0;
-        let M2 = 0;
+  let sum = 0;
+  let sumSquares = 0;
 
-        for (let x of arr) {
-            n++;
-            let delta = x - mean;
-            mean += delta / n;
-            let delta2 = x - mean;
-            M2 += delta * delta2;
-        }
-        return { mean, variance: M2 / n };
-    };
+  for (const x of values) {
+    sum += x;
+    sumSquares += x * x;
+  }
 
-    const naive = calculateNaive(data);
-    const online = calculateOnline(data);
+  const mean = sum / n;
+  const variancePopulation = (sumSquares / n) - (mean * mean);
 
-    // Visualizzazione Risultati
-    const display = document.getElementById('results');
-    display.innerHTML = `
-        <table>
-            <tr><th>Metodo</th><th>Media</th><th>Varianza</th></tr>
-            <tr><td>Naive</td><td>${naive.mean.toFixed(10)}</td><td>${naive.variance.toFixed(10)}</td></tr>
-            <tr><td>Online</td><td>${online.mean.toFixed(10)}</td><td>${online.variance.toFixed(10)}</td></tr>
-        </table>
-        <p class="match">I risultati sono identici (al netto di minime imprecisioni di floating point)? 
-        ${(Math.abs(naive.variance - online.variance) < 1e-10) ? "SÌ" : "NO"}</p>
-    `;
+  return {
+    n,
+    mean,
+    variancePopulation
+  };
+}
+
+function formatNumber(x) {
+  return Number.isFinite(x) ? x.toFixed(6) : String(x);
+}
+
+function showResults(values, title = "Risultati") {
+  const numbersBox = document.getElementById("numbersBox");
+  const results = document.getElementById("results");
+
+  numbersBox.textContent = values.join(", ");
+
+  const w = welfordStats(values);
+  const naive = naiveStats(values);
+
+  results.innerHTML = `
+    <h2>${title}</h2>
+
+    <table>
+      <tr>
+        <th>Metodo</th>
+        <th>Media</th>
+        <th>Varianza popolazione</th>
+      </tr>
+      <tr>
+        <td>Welford</td>
+        <td>${formatNumber(w.mean)}</td>
+        <td>${formatNumber(w.variancePopulation)}</td>
+      </tr>
+      <tr>
+        <td>Naive</td>
+        <td>${formatNumber(naive.mean)}</td>
+        <td>${formatNumber(naive.variancePopulation)}</td>
+      </tr>
+    </table>
+
+    <p><strong>Numero di valori:</strong> ${w.n}</p>
+    <p><strong>Varianza campionaria con Welford:</strong> ${formatNumber(w.varianceSample)}</p>
+
+    <p>
+      La media viene aggiornata progressivamente senza dover salvare formule instabili.
+      La varianza è ottenuta tramite l'accumulatore M2.
+    </p>
+  `;
+}
+
+document.getElementById("generateBtn").addEventListener("click", () => {
+  const count = parseInt(document.getElementById("count").value);
+  const min = parseFloat(document.getElementById("min").value);
+  const max = parseFloat(document.getElementById("max").value);
+
+  if (isNaN(count) || isNaN(min) || isNaN(max) || count <= 0 || min > max) {
+    alert("Controlla i valori inseriti.");
+    return;
+  }
+
+  const values = [];
+  for (let i = 0; i < count; i++) {
+    values.push(randomInt(min, max));
+  }
+
+  showResults(values, "Risultati sui numeri pseudocasuali");
+});
+
+document.getElementById("pathologicalBtn").addEventListener("click", () => {
+  const values = [
+    1000000001,
+    1000000002,
+    1000000003,
+    1000000004,
+    1000000005
+  ];
+
+  showResults(values, "Test con sequenza patologica");
+
+  const results = document.getElementById("results");
+  results.innerHTML += `
+    <p class="highlight">
+      Questa sequenza contiene numeri molto grandi e molto vicini tra loro.
+      In questi casi la formula naive può soffrire di cancellazione numerica,
+      mentre la ricorrenza di Welford mantiene una migliore stabilità.
+    </p>
+  `;
 });
