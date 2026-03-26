@@ -2,7 +2,6 @@ function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Algoritmo di Welford
 function welfordStats(values) {
   let n = 0;
   let mean = 0;
@@ -27,7 +26,6 @@ function welfordStats(values) {
   };
 }
 
-// Formula naive
 function naiveStats(values) {
   const n = values.length;
 
@@ -71,8 +69,7 @@ function showResults(values, title = "Risultati") {
   const naive = naiveStats(values);
 
   results.innerHTML = `
-    <h2>${title}</h2>
-
+    <h3>${title}</h3>
     <table>
       <tr>
         <th>Metodo</th>
@@ -93,10 +90,8 @@ function showResults(values, title = "Risultati") {
 
     <p><strong>Numero di valori:</strong> ${w.n}</p>
     <p><strong>Varianza campionaria con Welford:</strong> ${formatNumber(w.varianceSample)}</p>
-
     <p>
-      La media viene aggiornata progressivamente senza dover salvare formule instabili.
-      La varianza è ottenuta tramite l'accumulatore M2.
+      Welford è più stabile numericamente della formula naive.
     </p>
   `;
 }
@@ -133,9 +128,10 @@ document.getElementById("pathologicalBtn").addEventListener("click", () => {
   const results = document.getElementById("results");
   results.innerHTML += `
     <p class="highlight">
-      Questa sequenza contiene numeri molto grandi e molto vicini tra loro.
-      In questi casi la formula naive può soffrire di cancellazione numerica,
-      mentre la ricorrenza di Welford mantiene una migliore stabilità.
+      In questa sequenza la formula naive può avere problemi di precisione numerica,
+      mentre Welford resta più affidabile.
     </p>
   `;
 });
+
+  
