@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confronto Algoritmi Media e Varianza</title>
+    <title>JS Statistiche: Naive vs Online</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Analisi Statistica con Math.random()</h1>
-        <p>Genera 10.000 numeri casuali e confronta gli algoritmi Naive e Online.</p>
+        <h1>Analisi Statistica in JavaScript</h1>
+        <p>Confronto tra Algoritmo Naive e Algoritmo Online (Welford).</p>
         
-        <button id="runBtn">Esegui Calcoli</button>
+        <div class="controls">
+            <label for="sampleSize">Quantità dati:</label>
+            <input type="number" id="sampleSize" value="100000" step="10000">
+            <button id="runBtn">Genera e Calcola</button>
+        </div>
 
         <div class="results">
             <table>
@@ -20,9 +24,10 @@
                         <th>Metodo</th>
                         <th>Media ($\mu$)</th>
                         <th>Varianza ($\sigma^2$)</th>
+                        <th>Tempo (ms)</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
+                <tbody id="resultBody">
                     </tbody>
             </table>
         </div>
