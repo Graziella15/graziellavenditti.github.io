@@ -4,156 +4,62 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Media e Varianza con Welford</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
-      background: #f4f6f8;
-      color: #222;
-    }
-
-    .container {
-      max-width: 950px;
-      margin: auto;
-      background: white;
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    }
-
-    h1, h2 {
-      color: #1d4ed8;
-    }
-
-    label {
-      font-weight: bold;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
-    input {
-      padding: 8px;
-      margin: 8px 0 14px 0;
-      width: 160px;
-    }
-
-    button {
-      padding: 10px 16px;
-      border: none;
-      background: #1d4ed8;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-right: 10px;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background: #1e40af;
-    }
-
-    .box {
-      margin-top: 20px;
-      padding: 16px;
-      background: #f8fafc;
-      border-left: 5px solid #1d4ed8;
-      border-radius: 8px;
-    }
-
-    .numbers-box {
-      max-height: 220px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      font-family: Consolas, monospace;
-    }
-
-    .highlight {
-      color: #b91c1c;
-      font-weight: bold;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 16px;
-    }
-
-    th, td {
-      border: 1px solid #cbd5e1;
-      padding: 10px;
-      text-align: left;
-    }
-
-    th {
-      background: #dbeafe;
-    }
-
-    .formula {
-      background: #eef2ff;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 10px;
-      font-family: Georgia, serif;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Generazione di numeri pseudocasuali e calcolo di media e varianza</h1>
+    <h1>Media e Varianza con ricorrenza di Welford</h1>
+
     <p>
       Programma in JavaScript con file esterno che genera numeri pseudocasuali
-      e calcola media e varianza usando la ricorrenza di Welford.
+      e calcola media e varianza usando l'algoritmo di Welford.
     </p>
 
-    <label for="count">Numero di valori da generare</label><br>
-    <input type="number" id="count" min="1" value="20"><br>
+    <label for="count">Numero di valori da generare</label>
+    <input type="number" id="count" min="1" value="20" />
 
-    <label for="min">Valore minimo</label><br>
-    <input type="number" id="min" value="1"><br>
+    <label for="min">Valore minimo</label>
+    <input type="number" id="min" value="1" />
 
-    <label for="max">Valore massimo</label><br>
-    <input type="number" id="max" value="100"><br>
+    <label for="max">Valore massimo</label>
+    <input type="number" id="max" value="100" />
 
-    <div>
+    <div class="buttons">
       <button id="generateBtn">Genera numeri casuali</button>
       <button id="pathologicalBtn">Test sequenza patologica</button>
     </div>
 
-    <div class="box numbers-box" id="numbersBox">
-      Qui appariranno i numeri generati...
-    </div>
-
-    <div class="box" id="results">
-      Qui appariranno i risultati...
+    <div class="box">
+      <h2>Numeri generati</h2>
+      <div id="numbersBox" class="numbers-box">
+        Qui appariranno i numeri generati...
+      </div>
     </div>
 
     <div class="box">
-      <h2>Teoria essenziale</h2>
-      <p><strong>Formula naive della varianza:</strong></p>
-      <div class="formula">
-        Var(X) = E[X²] - (E[X])²
+      <h2>Risultati</h2>
+      <div id="results">
+        Qui appariranno media e varianza...
       </div>
+    </div>
+
+    <div class="box">
+      <h2>Teoria</h2>
+      <p><strong>Formula naive:</strong></p>
+      <p class="formula">Var(X) = E[X²] - (E[X])²</p>
 
       <p><strong>Ricorrenza di Welford:</strong></p>
-      <div class="formula">
+      <p class="formula">
         n = n + 1<br>
         δ = x - media<br>
         media = media + δ / n<br>
         δ2 = x - media<br>
         M2 = M2 + δ · δ2
-      </div>
-
-      <p>
-        Alla fine:
       </p>
-      <div class="formula">
+
+      <p class="formula">
         varianza popolazione = M2 / n<br>
         varianza campionaria = M2 / (n - 1)
-      </div>
-
-      <p>
-        L'algoritmo di Welford è più stabile numericamente della formula naive,
-        soprattutto quando i numeri sono molto grandi e molto vicini tra loro.
       </p>
     </div>
   </div>
