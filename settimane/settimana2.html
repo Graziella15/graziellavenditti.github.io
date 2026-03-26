@@ -3,60 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework 2: Media e Varianza</title>
-    <link rel="stylesheet" href="settimana2.css">
+    <title>Welford Statistics & Probability Theory</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
-    <div class="settimana-container">
-        <h2>Settimana 2: Media e Varianza (Naive vs Online)</h2>
-        <p>Confronto algoritmi su 10.000 campioni casuali.</p>
-        
-        <div class="actions">
-            <button class="btn-calcola" onclick="eseguiHomework2()">Genera e Calcola</button>
-            <button id="btn-mostra-numeri" class="btn-numeri" onclick="toggleElement('box-numeri')" style="display: none;">Mostra Numeri</button>
-            <button class="btn-codici" onclick="toggleElement('box-codici')">Mostra/Nascondi Sorgenti</button>
-        </div>
+    <div class="container">
+        <header>
+            <h1>Analisi Statistica: Algoritmo di Welford</h1>
+            <p>Generazione di numeri pseudo-casuali e calcolo di media e varianza <em>one-pass</em>.</p>
+        </header>
 
-        <div id="risultati-hw2" class="risultati-box">I risultati appariranno qui...</div>
-        <div id="box-numeri" class="scroll-box" style="display: none;"></div>
+        <section class="calculator-box">
+            <button id="generateBtn">Genera 1.000 Campioni</button>
+            <div class="results-grid">
+                <div class="result-item">
+                    <span>Media ($\bar{x}$):</span>
+                    <strong id="mean">-</strong>
+                </div>
+                <div class="result-item">
+                    <span>Varianza ($s^2$):</span>
+                    <strong id="variance">-</strong>
+                </div>
+                <div class="result-item">
+                    <span>Iterazioni ($n$):</span>
+                    <strong id="count">-</strong>
+                </div>
+            </div>
+        </section>
 
-        <div id="box-codici" class="source-container" style="display: none;">
-            <h3>Sorgenti Completi</h3>
-            <span class="label">HTML</span>
-            <pre><code>&lt;button onclick="eseguiHomework2()"&gt;Calcola&lt;/button&gt;
-&lt;div id="risultati-hw2"&gt;&lt;/div&gt;</code></pre>
+        <hr class="separator">
+
+        <section class="theory-section">
+            <h2>Documentazione Tecnica e Statistica</h2>
             
-            <span class="label">CSS</span>
-            <pre><code id="code-css-display"></code></pre>
-            
-            <span class="label">JavaScript</span>
-            <pre><code id="code-js-display"></code></pre>
-        </div>
+            <article>
+                <h3>1. L'Algoritmo di Welford</h3>
+                <p>A differenza della formula classica $\sum (x_i - \bar{x})^2 / (n-1)$, che richiede due passaggi e può soffrire di instabilità numerica, Welford aggiorna i parametri iterativamente:</p>
+                <div class="formula">
+                    $$M_n = M_{n-1} + \frac{x_n - M_{n-1}}{n}$$
+                    $$S_n = S_{n-1} + (x_n - M_{n-1})(x_n - M_n)$$
+                    $$\text{Varianza} = \frac{S_n}{n-1}$$
+                </div>
+            </article>
+
+            <article>
+                <h3>2. Generazione Variabili da $U \in [0,1)$</h3>
+                <p>Partendo da un generatore uniforme, possiamo derivare le principali distribuzioni:</p>
+                
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h4>Normale (Box-Muller)</h4>
+                        <p>$$Z = \sqrt{-2\ln(U_1)} \cos(2\pi U_2)$$</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Esponenziale</h4>
+                        <p>$$X = -\frac{1}{\lambda} \ln(1-U)$$</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Weibull</h4>
+                        <p>$$X = \lambda (-\ln(1-U))^{1/k}$$</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Cauchy</h4>
+                        <p>$$X = x_0 + \gamma \tan(\pi(U - 0.5))$$</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Pareto</h4>
+                        <p>$$X = \frac{x_m}{(1-U)^{1/\alpha}}$$</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Triangolare</h4>
+                        <p>$$X = (U_1 + U_2) \cdot \text{scale}$$</p>
+                    </div>
+                </div>
+
+                <div class="theory-note">
+                    <strong>Variabili Discrete:</strong>
+                    <ul>
+                        <li><strong>Bernoulli:</strong> $X=1$ se $U < p$, altrimenti $0$.</li>
+                        <li><strong>Poisson:</strong> Generata tramite il tempo di interarrivo di variabili Esponenziali.</li>
+                        <li><strong>Binomiale:</strong> Somma di $n$ esperimenti di Bernoulli indipendenti.</li>
+                    </ul>
+                </div>
+            </article>
+        </section>
     </div>
 
-    <div class="teoria-container">
-        <h2>📚 Teoria: Distribuzioni Partendo dall'Uniforme</h2>
-        <div class="teoria-grid">
-            <div class="teoria-card">
-                <h3 style="color: #2ea043;">🟢 Continue</h3>
-                <ul>
-                    <li><strong>Esponenziale:</strong> X = -ln(U) / λ</li>
-                    <li><strong>Normale (Box-Muller):</strong> Z = √(-2 ln(U1)) * cos(2π U2)</li>
-                    <li><strong>Cauchy:</strong> X = x0 + γ tan(π(U - 0.5))</li>
-                </ul>
-            </div>
-            <div class="teoria-card">
-                <h3 style="color: #3182ce;">🔵 Discrete</h3>
-                <ul>
-                    <li><strong>Bernoulli:</strong> U < p ? 1 : 0</li>
-                    <li><strong>Poisson:</strong> Prodotto Ui < e^-λ</li>
-                    <li><strong>Geometrica:</strong> X = ⌊ ln(U) / ln(1-p) ⌋</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script src="settimana2.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
