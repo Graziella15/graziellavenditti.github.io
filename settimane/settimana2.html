@@ -1,69 +1,18 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Media e Varianza con Welford</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <title>Confronto Algoritmi Media e Varianza</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Media e Varianza con ricorrenza di Welford</h1>
-
-    <p>
-      Programma in JavaScript con file esterno che genera numeri pseudocasuali
-      e calcola media e varianza usando l'algoritmo di Welford.
-    </p>
-
-    <label for="count">Numero di valori da generare</label>
-    <input type="number" id="count" min="1" value="20" />
-
-    <label for="min">Valore minimo</label>
-    <input type="number" id="min" value="1" />
-
-    <label for="max">Valore massimo</label>
-    <input type="number" id="max" value="100" />
-
-    <div class="buttons">
-      <button id="generateBtn">Genera numeri casuali</button>
-      <button id="pathologicalBtn">Test sequenza patologica</button>
+    <h1>Analisi Statistica: Naive vs Online</h1>
+    <div class="container">
+        <button id="runAnalysis">Genera Dati e Calcola</button>
+        <div id="results">
+            <p>Clicca sul pulsante per generare 10.000 numeri casuali.</p>
+        </div>
     </div>
-
-    <div class="box">
-      <h2>Numeri generati</h2>
-      <div id="numbersBox" class="numbers-box">
-        Qui appariranno i numeri generati...
-      </div>
-    </div>
-
-    <div class="box">
-      <h2>Risultati</h2>
-      <div id="results">
-        Qui appariranno media e varianza...
-      </div>
-    </div>
-
-    <div class="box">
-      <h2>Teoria</h2>
-      <p><strong>Formula naive:</strong></p>
-      <p class="formula">Var(X) = E[X²] - (E[X])²</p>
-
-      <p><strong>Ricorrenza di Welford:</strong></p>
-      <p class="formula">
-        n = n + 1<br>
-        δ = x - media<br>
-        media = media + δ / n<br>
-        δ2 = x - media<br>
-        M2 = M2 + δ · δ2
-      </p>
-
-      <p class="formula">
-        varianza popolazione = M2 / n<br>
-        varianza campionaria = M2 / (n - 1)
-      </p>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
