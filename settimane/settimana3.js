@@ -1,13 +1,13 @@
 let myChart;
 
 function generaRandomWalk() {
-    const passi = 100; // Quanti salti vogliamo fare
-    let x = 1000;      // Valore iniziale x(0)
+    const n = 200; // Numero di passi nella simulazione
+    let x = 1000;  // Valore iniziale x(0)
     let dati = [x];
     let etichette = [0];
 
-    for (let i = 1; i <= passi; i++) {
-        // Genera +1 o -1 in modo casuale
+    for (let i = 1; i <= n; i++) {
+        // Generazione del salto casuale +1 o -1
         const salto = Math.random() < 0.5 ? 1 : -1;
         x = x + salto;
         
@@ -15,30 +15,45 @@ function generaRandomWalk() {
         etichette.push(i);
     }
 
-    renderGrafico(etichette, dati);
-}
-
-function renderGrafico(labels, data) {
     const ctx = document.getElementById('walkChart').getContext('2d');
     
-    // Se il grafico esiste già, lo distruggiamo per crearne uno nuovo
-    if (myChart) myChart.destroy();
+    // Reset del grafico se già esistente
+    if (myChart) {
+        myChart.destroy();
+    }
 
     myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: labels,
+            labels: etichette,
             datasets: [{
-                label: 'Prezzo Simulato (Random Walk)',
-                data: data,
+                label: 'Prezzo Simulato x(i)',
+                data: dati,
                 borderColor: '#2ecc71',
+                backgroundColor: 'rgba(46, 204, 113, 0.1)',
                 borderWidth: 2,
-                fill: false,
-                tension: 0.1
+                fill: true,
+                pointRadius: 0,
+                tension: 0.2
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { 
+                    ticks: { color: '#2c3e50' },
+                    grid: { color: '#ecf0f1' }
+                },
+                x: { 
+                    grid: { display: false }
+                }
+            }
         }
     });
 }
 
-// Avvia la prima simulazione all'apertura
+// Avvio al caricamento della pagina
 window.onload = generaRandomWalk;
+    
+
