@@ -1,41 +1,54 @@
 document.getElementById('runBtn').addEventListener('click', () => {
-    // 1. Generazione dati (10.000 campioni tra 0 e 100)
-    const data = Array.from({ length: 10000 }, () => Math.random() * 100);
+    const n = parseInt(document.getElementById('sampleSize').value);
     
-    // 2. Algoritmo Naive (Two-pass)
-    const startNaive = performance.now();
+    // 1. Generazione dati con Math.random()
+    const dati = Array.from({ length: n }, () => Math.random());
+
+    // 2. Calcolo Naive
+    const t0 = performance.now();
+    const resNaive = calcolaNaive(dati);
+    const t1 = performance.now();
+
+    // 3. Calcolo Online (Welford)
+    const t2 = performance.now();
+    const resOnline = calcolaOnline(dati);
+    const t3 = performance.now();
+
+    renderTable(resNaive, resOnline, (t1 - t0), (t3 - t2));
+});
+
+function calcolaNaive(data) {
     const n = data.length;
-    const meanNaive = data.reduce((a, b) => a + b) / n;
-    const varianceNaive = data.reduce((a, b) => a + Math.pow(b - meanNaive, 2), 0) / n;
-    const endNaive = performance.now();
+    const media = data.reduce((a, b) => a + b, 0) / n;
+    const varianza = data.reduce((acc, x) => acc + Math.pow(x - media, 2), 0) / n;
+    return { media, varianza };
+}
 
-    // 3. Algoritmo Online (Welford)
-    const startOnline = performance.now();
-    let meanOnline = 0;
-    let M2 = 0;
-    for (let i = 0; i < data.length; i++) {
-        let x = data[i];
-        let count = i + 1;
-        let delta = x - meanOnline;
-        meanOnline += delta / count;
-        let delta2 = x - meanOnline;
-        M2 += delta * delta2;
+function calcolaOnline(data) {
+    let n = 0, media = 0, M2 = 0;
+    for (let x of data) {
+        n++;
+        let delta = x - media;
+        media += delta / n;
+        M2 += delta * (x - media);
     }
-    const varianceOnline = M2 / n;
-    const endOnline = performance.now();
+    return { media, varianza: M2 / n };
+}
 
-    // 4. Visualizzazione Risultati
-    const tableBody = document.getElementById('tableBody');
-    tableBody.innerHTML = `
+function renderTable(naive, online, timeN, timeO) {
+    const body = document.getElementById('resultBody');
+    body.innerHTML = `
         <tr>
             <td><strong>Naive</strong></td>
-            <td>${meanNaive.toFixed(6)}</td>
-            <td>${varianceNaive.toFixed(6)}</td>
+            <td>${naive.media.toFixed(6)}</td>
+            <td>${naive.varianza.toFixed(6)}</td>
+            <td>${timeN.toFixed(2)} ms</td>
         </tr>
         <tr>
-            <td><strong>Online (Welford)</strong></td>
-            <td>${meanOnline.toFixed(6)}</td>
-            <td>${varianceOnline.toFixed(6)}</td>
+            <td><strong>Online</strong></td>
+            <td>${online.media.toFixed(6)}</td>
+            <td>${online.varianza.toFixed(6)}</td>
+            <td>${timeO.toFixed(2)} ms</td>
         </tr>
     `;
-});
+}
