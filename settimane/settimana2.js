@@ -66,4 +66,22 @@ function eseguiHomework2() {
 function mostraNumeri() {
     const boxNumeri = document.getElementById('box-numeri');
     
-    if (boxNumeri.
+    if (boxNumeri.style.display === "none" || boxNumeri.style.display === "") {
+        const numeriFormattati = datiGenerati.map(n => n.toFixed(2)).join(", ");
+        boxNumeri.innerHTML = `<p><strong>Ecco l'elenco dei dati:</strong></p><p>${numeriFormattati}</p>`;
+        boxNumeri.style.display = "block"; 
+    } else {
+        boxNumeri.style.display = "none";
+    }
+}
+
+// --- NUOVA FUNZIONE PER MOSTRARE/NASCONDERE I CODICI ---
+function mostraCodici() {
+    const boxCodici = document.getElementById('box-codici');
+    
+    if (boxCodici.style.display === "none" || boxCodici.style.display === "") {
+        boxCodici.style.display = "block"; // Mostra il riquadro coi codici
+    } else {
+        boxCodici.style.display = "none";  // Nasconde il riquadro
+    }
+}
