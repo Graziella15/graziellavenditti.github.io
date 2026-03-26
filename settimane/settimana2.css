@@ -1,130 +1,77 @@
-/* IMPOSTAZIONI BASE */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px;
-    background-color: #fafafa;
+    background-color: #f4f7f6;
     color: #333;
-    line-height: 1.6;
+    padding: 20px;
+    margin: 0;
 }
 
-/* STILI DEL CALCOLATORE (ESERCIZIO) */
-.settimana-container {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+.settimana-container, .teoria-container {
+    background: #fff;
     padding: 25px;
-    max-width: 900px;
-    margin: 0 auto;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
 }
 
-h2 {
-    color: #2c3e50;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-top: 0;
-}
+h2 { border-bottom: 2px solid #3498db; padding-bottom: 10px; }
 
 button {
-    background-color: #3498db; 
-    color: white;
-    padding: 10px 18px;
+    padding: 12px 20px;
     border: none;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 15px;
     font-weight: bold;
-    margin-bottom: 15px;
-    transition: background-color 0.3s, transform 0.1s;
+    transition: 0.3s;
 }
 
-button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-}
+.btn-calcola { background: #28a745; color: white; }
+.btn-numeri { background: #ff8c00; color: white; }
+.btn-codici { background: #24292e; color: white; }
 
 .risultati-box {
     margin-top: 20px;
-    background-color: #f8f9fa;
-    padding: 20px;
+    background: #f8f9fa;
     border-left: 5px solid #3498db;
-    border-radius: 6px;
-    font-size: 15px;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    white-space: pre-line;
 }
 
-/* STILE PER IL BOX DEI NUMERI E DEI CODICI (con barra di scorrimento) */
-.numeri-scroll {
-    margin-top: 15px;
+.scroll-box {
+    max-height: 200px;
+    overflow-y: auto;
+    background: #272822;
+    color: #f8f8f2;
     padding: 15px;
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    max-height: 350px; /* Se il contenuto è troppo lungo, compare la barra di scorrimento */
-    overflow-y: auto;  
-    font-size: 14px;
-    word-wrap: break-word; 
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-}
-
-hr {
-    border: 0;
-    height: 1px;
-    background: #e0e0e0;
-    margin: 15px 0;
-}
-
-/* STILI DELLA TEORIA (Quella in basso) */
-.teoria-container {
-    background-color: #f0f8ff; /* Azzurrino chiaro molto elegante */
-    border: 1px solid #b0c4de;
-    border-radius: 8px;
-    padding: 25px;
-    max-width: 900px;
-    margin: 30px auto 0 auto; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-.teoria-container h2 {
-    color: #34495e;
+    font-size: 11px;
+    margin-top: 15px;
 }
 
 .teoria-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
-    margin-top: 20px;
-    flex-wrap: wrap; /* Utile se apri il sito dal cellulare, mette le colonne una sotto l'altra */
 }
 
 .teoria-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    flex: 1; 
-    min-width: 300px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.04);
     border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 8px;
 }
 
-.teoria-card h3 {
-    margin-top: 0;
-    font-size: 18px;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 8px;
+pre {
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 12px;
 }
 
-.teoria-card ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.teoria-card li {
-    margin-bottom: 15px;
-    line-height: 1.5;
-    font-size: 14px;
-}
-
-.teoria-card em {
-    color: #6a5acd; 
+.label {
+    display: block;
+    margin-top: 10px;
     font-weight: bold;
-    font-style: normal;
+    color: #d32f2f;
 }
