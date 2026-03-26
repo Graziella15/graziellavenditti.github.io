@@ -66,11 +66,4 @@ function eseguiHomework2() {
 function mostraNumeri() {
     const boxNumeri = document.getElementById('box-numeri');
     
-    if (boxNumeri.style.display === "none") {
-        const numeriFormattati = datiGenerati.map(n => n.toFixed(2)).join(", ");
-        boxNumeri.innerHTML = `<p><strong>Ecco l'elenco dei dati:</strong></p><p>${numeriFormattati}</p>`;
-        boxNumeri.style.display = "block"; 
-    } else {
-        boxNumeri.style.display = "none";
-    }
-}
+    if (boxNumeri.
