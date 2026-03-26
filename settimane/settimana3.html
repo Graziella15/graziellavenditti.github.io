@@ -2,16 +2,67 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Random Walk - Homework Statistica</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 3 - Random Walk & Mercati</title>
+    <link rel="stylesheet" href="settimana3.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
     <div class="container">
-        <h1>Simulazione Random Walk</h1>
-        <canvas id="walkChart"></canvas>
-        <button onclick="generaRandomWalk()">Genera Nuovo Pattern</button>
+        <h1>Simulazione Random Walk (Passeggiata Aleatoria)</h1>
+        
+        <div class="chart-container">
+            <canvas id="walkChart"></canvas>
+        </div>
+
+        <div class="btn-container">
+            <button onclick="generaRandomWalk()">Genera Nuovo Pattern (+/-1)</button>
+        </div>
+
+        <hr>
+
+        <section class="theory">
+            <h2>Teoria: Struttura dei Mercati Finanziari</h2>
+            
+            <div class="theory-block">
+                <h3>I Principali Mercati Finanziari (Exchange)</h3>
+                <p>Gli Exchange (come il NYSE o Borsa Italiana) sono mercati organizzati dove si scambiano asset finanziari. La loro funzione è garantire <strong>liquidità</strong> (poter vendere/comprare rapidamente) e la <strong>formazione efficiente del prezzo</strong> attraverso l'incontro di domanda e offerta.</p>
+            </div>
+
+            <div class="theory-block">
+                <h3>Il Ruolo del Broker</h3>
+                <p>Il broker funge da intermediario tra l'investitore e l'Exchange. Poiché i privati non possono accedere direttamente ai server della borsa, il broker esegue gli ordini per loro conto, offrendo spesso piattaforme di analisi e gestione del rischio.</p>
+            </div>
+
+            <div class="theory-block">
+                <h3>Strumenti Finanziari Comuni</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Strumento</th>
+                            <th>Caratteristica Principale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Azioni</strong></td>
+                            <td>Rappresentano una quota di proprietà di un'azienda.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Obbligazioni</strong></td>
+                            <td>Titoli di debito (prestiti) con rendimento fisso o variabile.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Derivati</strong></td>
+                            <td>Contratti (es. Futures) il cui valore dipende da un sottostante.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
-    <script src="script.js"></script>
+
+    <script src="settimana3.js"></script>
 </body>
 </html>
