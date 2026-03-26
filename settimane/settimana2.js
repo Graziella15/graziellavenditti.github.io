@@ -1,38 +1,41 @@
-document.getElementById('btn').onclick = function() {
-    const n = parseInt(document.getElementById('inputN').value);
+document.getElementById('runBtn').addEventListener('click', () => {
+    // 1. Generazione dati (10.000 campioni tra 0 e 100)
+    const data = Array.from({ length: 10000 }, () => Math.random() * 100);
     
-    // Generazione dati
-    const dati = [];
-    for (let i = 0; i < n; i++) {
-        dati.push(Math.random() * 100);
-    }
+    // 2. Algoritmo Naive (Two-pass)
+    const startNaive = performance.now();
+    const n = data.length;
+    const meanNaive = data.reduce((a, b) => a + b) / n;
+    const varianceNaive = data.reduce((a, b) => a + Math.pow(b - meanNaive, 2), 0) / n;
+    const endNaive = performance.now();
 
-    // Naive
-    let somma = 0;
-    let sommaQuadrati = 0;
-    for (let x of dati) {
-        somma += x;
-        sommaQuadrati += x * x;
-    }
-    const mediaN = somma / n;
-    const varianzaN = (sommaQuadrati / n) - (mediaN * mediaN);
-
-    // Online (Welford)
-    let mediaO = 0;
+    // 3. Algoritmo Online (Welford)
+    const startOnline = performance.now();
+    let meanOnline = 0;
     let M2 = 0;
-    for (let i = 0; i < dati.length; i++) {
-        let x = dati[i];
-        let k = i + 1;
-        let delta = x - mediaO;
-        mediaO += delta / k;
-        M2 += delta * (x - mediaO);
+    for (let i = 0; i < data.length; i++) {
+        let x = data[i];
+        let count = i + 1;
+        let delta = x - meanOnline;
+        meanOnline += delta / count;
+        let delta2 = x - meanOnline;
+        M2 += delta * delta2;
     }
-    const varianzaO = M2 / n;
+    const varianceOnline = M2 / n;
+    const endOnline = performance.now();
 
-    // Mostra risultati
-    document.getElementById('n-med').innerText = mediaN.toFixed(6);
-    document.getElementById('n-var').innerText = varianzaN.toFixed(6);
-    document.getElementById('o-med').innerText = mediaO.toFixed(6);
-    document.getElementById('o-var').innerText = varianzaO.toFixed(6);
-    document.getElementById('msg').innerText = "Fatto!";
-};
+    // 4. Visualizzazione Risultati
+    const tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = `
+        <tr>
+            <td><strong>Naive</strong></td>
+            <td>${meanNaive.toFixed(6)}</td>
+            <td>${varianceNaive.toFixed(6)}</td>
+        </tr>
+        <tr>
+            <td><strong>Online (Welford)</strong></td>
+            <td>${meanOnline.toFixed(6)}</td>
+            <td>${varianceOnline.toFixed(6)}</td>
+        </tr>
+    `;
+});
