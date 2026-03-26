@@ -63,6 +63,7 @@ function eseguiHomework2() {
     document.getElementById('box-numeri').style.display = "none";
 }
 
+// Funzione per mostrare i 10.000 numeri
 function mostraNumeri() {
     const boxNumeri = document.getElementById('box-numeri');
     
@@ -75,13 +76,13 @@ function mostraNumeri() {
     }
 }
 
-// --- NUOVA FUNZIONE PER MOSTRARE/NASCONDERE I CODICI ---
+// Funzione per mostrare il box con i CODICI
 function mostraCodici() {
     const boxCodici = document.getElementById('box-codici');
     
     if (boxCodici.style.display === "none" || boxCodici.style.display === "") {
-        boxCodici.style.display = "block"; // Mostra il riquadro coi codici
+        boxCodici.style.display = "block"; 
     } else {
-        boxCodici.style.display = "none";  // Nasconde il riquadro
+        boxCodici.style.display = "none";  
     }
 }
