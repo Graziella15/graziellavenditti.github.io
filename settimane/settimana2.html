@@ -3,95 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welford Statistics & Probability Theory</title>
+    <title>Confronto Algoritmi Varianza</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-
     <div class="container">
-        <header>
-            <h1>Analisi Statistica: Algoritmo di Welford</h1>
-            <p>Generazione di numeri pseudo-casuali e calcolo di media e varianza <em>one-pass</em>.</p>
-        </header>
+        <h1>Statistiche Online vs Naive</h1>
+        <p>Genera numeri casuali e confronta i risultati dei due algoritmi.</p>
+        
+        <div class="controls">
+            <input type="number" id="count" value="1000" placeholder="Quanti numeri?">
+            <button id="generateBtn">Genera e Calcola</button>
+        </div>
 
-        <section class="calculator-box">
-            <button id="generateBtn">Genera 1.000 Campioni</button>
-            <div class="results-grid">
-                <div class="result-item">
-                    <span>Media ($\bar{x}$):</span>
-                    <strong id="mean">-</strong>
-                </div>
-                <div class="result-item">
-                    <span>Varianza ($s^2$):</span>
-                    <strong id="variance">-</strong>
-                </div>
-                <div class="result-item">
-                    <span>Iterazioni ($n$):</span>
-                    <strong id="count">-</strong>
-                </div>
+        <div class="results">
+            <div class="card">
+                <h3>Algoritmo Naive</h3>
+                <p>Media: <span id="naiveMean">-</span></p>
+                <p>Varianza: <span id="naiveVar">-</span></p>
             </div>
-        </section>
-
-        <hr class="separator">
-
-        <section class="theory-section">
-            <h2>Documentazione Tecnica e Statistica</h2>
-            
-            <article>
-                <h3>1. L'Algoritmo di Welford</h3>
-                <p>A differenza della formula classica $\sum (x_i - \bar{x})^2 / (n-1)$, che richiede due passaggi e può soffrire di instabilità numerica, Welford aggiorna i parametri iterativamente:</p>
-                <div class="formula">
-                    $$M_n = M_{n-1} + \frac{x_n - M_{n-1}}{n}$$
-                    $$S_n = S_{n-1} + (x_n - M_{n-1})(x_n - M_n)$$
-                    $$\text{Varianza} = \frac{S_n}{n-1}$$
-                </div>
-            </article>
-
-            <article>
-                <h3>2. Generazione Variabili da $U \in [0,1)$</h3>
-                <p>Partendo da un generatore uniforme, possiamo derivare le principali distribuzioni:</p>
-                
-                <div class="theory-grid">
-                    <div class="theory-card">
-                        <h4>Normale (Box-Muller)</h4>
-                        <p>$$Z = \sqrt{-2\ln(U_1)} \cos(2\pi U_2)$$</p>
-                    </div>
-                    <div class="theory-card">
-                        <h4>Esponenziale</h4>
-                        <p>$$X = -\frac{1}{\lambda} \ln(1-U)$$</p>
-                    </div>
-                    <div class="theory-card">
-                        <h4>Weibull</h4>
-                        <p>$$X = \lambda (-\ln(1-U))^{1/k}$$</p>
-                    </div>
-                    <div class="theory-card">
-                        <h4>Cauchy</h4>
-                        <p>$$X = x_0 + \gamma \tan(\pi(U - 0.5))$$</p>
-                    </div>
-                    <div class="theory-card">
-                        <h4>Pareto</h4>
-                        <p>$$X = \frac{x_m}{(1-U)^{1/\alpha}}$$</p>
-                    </div>
-                    <div class="theory-card">
-                        <h4>Triangolare</h4>
-                        <p>$$X = (U_1 + U_2) \cdot \text{scale}$$</p>
-                    </div>
-                </div>
-
-                <div class="theory-note">
-                    <strong>Variabili Discrete:</strong>
-                    <ul>
-                        <li><strong>Bernoulli:</strong> $X=1$ se $U < p$, altrimenti $0$.</li>
-                        <li><strong>Poisson:</strong> Generata tramite il tempo di interarrivo di variabili Esponenziali.</li>
-                        <li><strong>Binomiale:</strong> Somma di $n$ esperimenti di Bernoulli indipendenti.</li>
-                    </ul>
-                </div>
-            </article>
-        </section>
+            <div class="card">
+                <h3>Algoritmo Online</h3>
+                <p>Media: <span id="onlineMean">-</span></p>
+                <p>Varianza: <span id="onlineVar">-</span></p>
+            </div>
+        </div>
+        
+        <div id="status"></div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
