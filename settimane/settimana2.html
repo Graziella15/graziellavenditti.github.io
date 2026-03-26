@@ -2,34 +2,27 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confronto Algoritmi Varianza</title>
+    <title>Test Algoritmi Statistica</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Statistiche Online vs Naive</h1>
-        <p>Genera numeri casuali e confronta i risultati dei due algoritmi.</p>
-        
-        <div class="controls">
-            <input type="number" id="count" value="1000" placeholder="Quanti numeri?">
-            <button id="generateBtn">Genera e Calcola</button>
-        </div>
+        <h1>Generatore Statistico</h1>
+        <input type="number" id="count" value="100">
+        <button id="generateBtn">Calcola</button>
 
         <div class="results">
             <div class="card">
-                <h3>Algoritmo Naive</h3>
-                <p>Media: <span id="naiveMean">-</span></p>
-                <p>Varianza: <span id="naiveVar">-</span></p>
+                <h3>Naive</h3>
+                <p>Media: <span id="naiveMean">0</span></p>
+                <p>Varianza: <span id="naiveVar">0</span></p>
             </div>
             <div class="card">
-                <h3>Algoritmo Online</h3>
-                <p>Media: <span id="onlineMean">-</span></p>
-                <p>Varianza: <span id="onlineVar">-</span></p>
+                <h3>Online (Welford)</h3>
+                <p>Media: <span id="onlineMean">0</span></p>
+                <p>Varianza: <span id="onlineVar">0</span></p>
             </div>
         </div>
-        
-        <div id="status"></div>
     </div>
     <script src="script.js"></script>
 </body>
