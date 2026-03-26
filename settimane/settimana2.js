@@ -1,44 +1,44 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('generateBtn');
-    
-    btn.addEventListener('click', () => {
+document.addEventListener('DOMContentLoaded', function() {
+    const tasto = document.getElementById('btnCalcola');
+
+    tasto.onclick = function() {
         const n = parseInt(document.getElementById('count').value);
-        if (n <= 0) return;
-
-        // Generazione dati con Math.random()
-        const data = [];
+        
+        // 1. Generazione Dati
+        const dati = [];
         for (let i = 0; i < n; i++) {
-            data.push(Math.random() * 100);
+            dati.push(Math.random() * 100);
         }
 
-        // 1. ALGORITMO NAIVE
-        let sum = 0;
-        let sumSq = 0;
-        for (let x of data) {
-            sum += x;
-            sumSq += x * x;
+        // 2. Algoritmo NAIVE
+        let somma = 0;
+        let sommaQuadrati = 0;
+        for (let x of dati) {
+            somma += x;
+            sommaQuadrati += x * x;
         }
-        const mNaive = sum / n;
-        const vNaive = (sumSq / n) - (mNaive * mNaive);
+        const mediaN = somma / n;
+        const varianzaN = (sommaQuadrati / n) - (mediaN * mediaN);
 
-        // 2. ALGORITMO ONLINE (Welford)
-        let mOnline = 0;
+        // 3. Algoritmo ONLINE (Welford)
+        let mediaO = 0;
         let M2 = 0;
-        for (let i = 0; i < data.length; i++) {
-            let x = data[i];
-            let delta = x - mOnline;
-            mOnline += delta / (i + 1);
-            let delta2 = x - mOnline;
+        for (let k = 0; k < dati.length; k++) {
+            let x = dati[k];
+            let count = k + 1;
+            let delta = x - mediaO;
+            mediaO += delta / count;
+            let delta2 = x - mediaO;
             M2 += delta * delta2;
         }
-        const vOnline = M2 / n;
+        const varianzaO = M2 / n;
 
-        // Scrittura nei tag HTML
-        document.getElementById('naiveMean').textContent = mNaive.toFixed(4);
-        document.getElementById('naiveVar').textContent = vNaive.toFixed(4);
-        document.getElementById('onlineMean').textContent = mOnline.toFixed(4);
-        document.getElementById('onlineVar').textContent = vOnline.toFixed(4);
+        // 4. Mostra i risultati
+        document.getElementById('n-media').textContent = mediaN.toFixed(4);
+        document.getElementById('n-varianza').textContent = varianzaN.toFixed(4);
+        document.getElementById('o-media').textContent = mediaO.toFixed(4);
+        document.getElementById('o-varianza').textContent = varianzaO.toFixed(4);
         
-        console.log("Calcolo completato per", n, "elementi");
-    });
+        console.log("Calcolato con successo!");
+    };
 });
