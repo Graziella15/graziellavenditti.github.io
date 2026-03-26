@@ -2,31 +2,31 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Test Statistica</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <title>Confronto Algoritmi</title>
+    <link rel="stylesheet" href="style.css"> </head>
 <body>
-    <div class="container">
-        <h1>Calcolo Media e Varianza</h1>
-        <div class="input-group">
-            <input type="number" id="count" value="1000" min="1">
-            <button id="btnCalcola">Genera e Calcola</button>
-        </div>
+    <div class="box">
+        <h1>Analisi Dati Casuali</h1>
+        <input type="number" id="inputN" value="1000">
+        <button id="btn">Esegui Calcolo</button>
 
-        <div class="results">
+        <div class="grid">
             <div class="card">
-                <h3>Metodo Naive</h3>
-                <p>Media: <strong id="n-media">-</strong></p>
-                <p>Varianza: <strong id="n-varianza">-</strong></p>
+                <h3>Algoritmo Naive</h3>
+                <span class="label">Media:</span>
+                <div id="n-med" class="valore">-</div>
+                <span class="label">Varianza:</span>
+                <div id="n-var" class="valore">-</div>
             </div>
             <div class="card">
-                <h3>Metodo Online</h3>
-                <p>Media: <strong id="o-media">-</strong></p>
-                <p>Varianza: <strong id="o-varianza">-</strong></p>
+                <h3>Algoritmo Online</h3>
+                <span class="label">Media:</span>
+                <div id="o-med" class="valore">-</div>
+                <span class="label">Varianza:</span>
+                <div id="o-var" class="valore">-</div>
             </div>
         </div>
+        <p id="msg"></p>
     </div>
-    <script src="script.js"></script>
-</body>
+    <script src="script.js"></script> </body>
 </html>
-
