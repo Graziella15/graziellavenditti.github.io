@@ -1,44 +1,38 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const tasto = document.getElementById('btnCalcola');
+document.getElementById('btn').onclick = function() {
+    const n = parseInt(document.getElementById('inputN').value);
+    
+    // Generazione dati
+    const dati = [];
+    for (let i = 0; i < n; i++) {
+        dati.push(Math.random() * 100);
+    }
 
-    tasto.onclick = function() {
-        const n = parseInt(document.getElementById('count').value);
-        
-        // 1. Generazione Dati
-        const dati = [];
-        for (let i = 0; i < n; i++) {
-            dati.push(Math.random() * 100);
-        }
+    // Naive
+    let somma = 0;
+    let sommaQuadrati = 0;
+    for (let x of dati) {
+        somma += x;
+        sommaQuadrati += x * x;
+    }
+    const mediaN = somma / n;
+    const varianzaN = (sommaQuadrati / n) - (mediaN * mediaN);
 
-        // 2. Algoritmo NAIVE
-        let somma = 0;
-        let sommaQuadrati = 0;
-        for (let x of dati) {
-            somma += x;
-            sommaQuadrati += x * x;
-        }
-        const mediaN = somma / n;
-        const varianzaN = (sommaQuadrati / n) - (mediaN * mediaN);
+    // Online (Welford)
+    let mediaO = 0;
+    let M2 = 0;
+    for (let i = 0; i < dati.length; i++) {
+        let x = dati[i];
+        let k = i + 1;
+        let delta = x - mediaO;
+        mediaO += delta / k;
+        M2 += delta * (x - mediaO);
+    }
+    const varianzaO = M2 / n;
 
-        // 3. Algoritmo ONLINE (Welford)
-        let mediaO = 0;
-        let M2 = 0;
-        for (let k = 0; k < dati.length; k++) {
-            let x = dati[k];
-            let count = k + 1;
-            let delta = x - mediaO;
-            mediaO += delta / count;
-            let delta2 = x - mediaO;
-            M2 += delta * delta2;
-        }
-        const varianzaO = M2 / n;
-
-        // 4. Mostra i risultati
-        document.getElementById('n-media').textContent = mediaN.toFixed(4);
-        document.getElementById('n-varianza').textContent = varianzaN.toFixed(4);
-        document.getElementById('o-media').textContent = mediaO.toFixed(4);
-        document.getElementById('o-varianza').textContent = varianzaO.toFixed(4);
-        
-        console.log("Calcolato con successo!");
-    };
-});
+    // Mostra risultati
+    document.getElementById('n-med').innerText = mediaN.toFixed(6);
+    document.getElementById('n-var').innerText = varianzaN.toFixed(6);
+    document.getElementById('o-med').innerText = mediaO.toFixed(6);
+    document.getElementById('o-var').innerText = varianzaO.toFixed(6);
+    document.getElementById('msg').innerText = "Fatto!";
+};
