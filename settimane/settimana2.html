@@ -15,47 +15,63 @@
         <button onclick="eseguiHomework2()">Genera e Calcola</button>
         <button id="btn-mostra-numeri" onclick="mostraNumeri()" style="display: none; background-color: #ff8c00; margin-left: 10px;">Mostra/Nascondi i 10.000 numeri</button>
         
-        <a href="INSERISCI_QUI_IL_LINK_AL_TUO_REPOSITORY_GITHUB" target="_blank" style="text-decoration: none;">
-            <button style="background-color: #24292e; margin-left: 10px;">Visualizza Codice su GitHub</button>
-        </a>
+        <button onclick="mostraCodici()" style="background-color: #24292e; color: white; margin-left: 10px;">Mostra/Nascondi Codici</button>
+        
         <div id="risultati-hw2" class="risultati-box"></div>
         <div id="box-numeri" class="numeri-scroll" style="display: none;"></div>
+
+        <div id="box-codici" class="numeri-scroll" style="display: none; text-align: left; background-color: #2b2b2b; color: #f8f8f2;">
+            <h3 style="color: #a6e22e;">Codice HTML</h3>
+            <pre style="white-space: pre-wrap; font-size: 12px;"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="it"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Homework 2&lt;/title&gt;
+    &lt;link rel="stylesheet" href="settimana2.css"&gt; 
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Il tuo codice HTML --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <hr>
+            <h3 style="color: #66d9ef;">Codice CSS</h3>
+            <pre style="white-space: pre-wrap; font-size: 12px;"><code>body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #fafafa;
+}
+/* ... resto del tuo CSS ... */</code></pre>
+            <hr>
+            <h3 style="color: #fd971f;">Codice JavaScript</h3>
+            <pre style="white-space: pre-wrap; font-size: 12px;"><code>let datiGenerati = []; 
+
+function eseguiHomework2() {
+    const n_dati = 10000; 
+    datiGenerati = []; 
+    // ... resto del tuo JS ...
+}</code></pre>
+        </div>
     </div>
 
     <div class="teoria-container">
         <h2>📚 Teoria: Generare distribuzioni partendo dall'Uniforme</h2>
-        <p>I computer generano numeri pseudo-casuali con distribuzione <strong>Uniforme tra 0 e 1</strong>. Per ottenere altre distribuzioni, si applicano specifiche trasformazioni matematiche a questi valori di base.</p>
+        <p>I computer generano numeri pseudo-casuali con distribuzione <strong>Uniforme tra 0 e 1</strong>.</p>
         
         <div class="teoria-grid">
             <div class="teoria-card">
                 <h3>🟢 Distribuzioni Continue</h3>
                 <ul>
-                    <li><strong>Esponenziale</strong> (Metodo Trasformata Inversa)<br>
-                        <em>Formula:</em> X = -ln(U) / &lambda;</li>
-                    <li><strong>Normale / Gaussiana</strong> (Box-Muller)<br>
-                        <em>Formula:</em> Z = &radic;(-2 ln(U<sub>1</sub>)) &times; cos(2&pi; U<sub>2</sub>)</li>
-                    <li><strong>Cauchy</strong> (Trasformata Inversa)<br>
-                        <em>Formula:</em> X = x<sub>0</sub> + &gamma; tan(&pi;(U - 0.5))</li>
-                    <li><strong>Chi-Quadro (&chi;<sup>2</sup>)</strong> (Composizione)<br>
-                        <em>Formula:</em> Somma di k variabili Normali standard al quadrato.</li>
-                    <li><strong>F di Fisher</strong> (Rapporto)<br>
-                        <em>Formula:</em> Rapporto tra due Chi-Quadro divise per i gradi di libertà.</li>
-                    <li><strong>Triangolare</strong> (Trasformata Inversa a tratti)<br>
-                        <em>Formula:</em> Uso delle radici quadrate di U basate su minimo, massimo e moda.</li>
+                    <li><strong>Esponenziale</strong>: X = -ln(U) / &lambda;</li>
+                    <li><strong>Normale / Gaussiana</strong>: Z = &radic;(-2 ln(U<sub>1</sub>)) &times; cos(2&pi; U<sub>2</sub>)</li>
+                    <li><strong>Cauchy</strong>: X = x<sub>0</sub> + &gamma; tan(&pi;(U - 0.5))</li>
                 </ul>
             </div>
 
             <div class="teoria-card">
                 <h3>🔵 Distribuzioni Discrete</h3>
                 <ul>
-                    <li><strong>Bernoulli</strong> (Soglia diretta)<br>
-                        <em>Formula:</em> Se U &lt; p &rarr; 1 (Successo), altrimenti 0.</li>
-                    <li><strong>Binomiale</strong> (Somma di Bernoulli)<br>
-                        <em>Formula:</em> Somma dei successi in n test di Bernoulli indipendenti.</li>
-                    <li><strong>Geometrica</strong> (Trasformata Inversa discretizzata)<br>
-                        <em>Formula:</em> X = &lfloor; ln(U) / ln(1-p) &rfloor;</li>
-                    <li><strong>Poisson</strong> (Moltiplicazione sequenziale)<br>
-                        <em>Formula:</em> Si moltiplicano U<sub>1</sub> &times; U<sub>2</sub> finché il prodotto &lt; e<sup>-&lambda;</sup>.</li>
+                    <li><strong>Bernoulli</strong>: Se U &lt; p &rarr; 1 (Successo), altrimenti 0.</li>
+                    <li><strong>Binomiale</strong>: Somma dei successi in n test di Bernoulli indipendenti.</li>
                 </ul>
             </div>
         </div>
