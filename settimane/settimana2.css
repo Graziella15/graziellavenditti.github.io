@@ -1,1 +1,115 @@
-8b03caec0042608bb53f9c622703baac364fa975
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #fafafa;
+}
+
+/* STILI DEL CALCOLATORE */
+.settimana-container {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 800px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+button {
+    background-color: #6a5acd; 
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+button:hover {
+    background-color: #483d8b;
+}
+
+.risultati-box {
+    margin-top: 15px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-left: 5px solid #6a5acd;
+    border-radius: 4px;
+}
+
+.numeri-scroll {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-height: 250px; 
+    overflow-y: auto;  
+    font-size: 14px;
+    word-wrap: break-word; 
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #eee;
+    margin: 15px 0;
+}
+
+/* STILI DELLA TEORIA */
+.teoria-container {
+    background-color: #f0f8ff; 
+    border: 1px solid #b0c4de;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 800px;
+    margin-top: 30px; 
+}
+
+.teoria-container h2 {
+    color: #4682b4;
+    margin-top: 0;
+}
+
+.teoria-grid {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.teoria-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 6px;
+    flex: 1; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.teoria-card h3 {
+    margin-top: 0;
+    font-size: 18px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+}
+
+.teoria-card ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.teoria-card li {
+    margin-bottom: 12px;
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+.teoria-card em {
+    color: #6a5acd; 
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .teoria-grid {
+        flex-direction: column;
+    }
+}
