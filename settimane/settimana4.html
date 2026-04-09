@@ -2,29 +2,44 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settimana 4 - Arithmetic Brownian Motion</title>
-    <link rel="stylesheet" href="style_settimana.css">
-    <style>
-        canvas { border: 1px solid #ddd; background: #fff; width: 100%; max-width: 800px; height: 400px; }
-        .controls { margin-bottom: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-    </style>
+    <link rel="stylesheet" href="settimana4.css">
 </head>
 <body>
     <div class="container">
-        <h1>Simulazione Arithmetic Brownian Motion (ABM)</h1>
-        <p>Suddivisione dell'intervallo continuo e generazione di traiettorie stocastiche.</p>
+        <header>
+            <h1>🐋 Simulazione Arithmetic Brownian Motion</h1>
+            <p>Evoluzione nel continuo: Suddivisione di un intervallo $[0, T]$ e generazione di traiettorie stocastiche.</p>
+        </header>
 
-        <div class="controls">
-            <label>Drift (μ): <input type="number" id="mu" value="0.5" step="0.1"></label>
-            <label>Volatilità (σ): <input type="number" id="sigma" value="0.2" step="0.05"></label>
-            <label>Step (n): <input type="number" id="steps" value="1000"></label>
-            <label>Tempo (T): <input type="number" id="T" value="1"></label>
-            <button onclick="runSimulation()">Genera Traiettoria</button>
+        <section class="controls">
+            <div class="input-group">
+                <label>Drift (μ):</label>
+                <input type="number" id="mu" value="0.2" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>Volatilità (σ):</label>
+                <input type="number" id="sigma" value="0.3" step="0.05">
+            </div>
+            <div class="input-group">
+                <label>Step (n):</label>
+                <input type="number" id="steps" value="1000">
+            </div>
+            <div class="input-group">
+                <label>Tempo (T):</label>
+                <input type="number" id="T" value="1">
+            </div>
+            <button id="runBtn" onclick="runSimulation()">Genera Onda</button>
+        </section>
+
+        <div class="canvas-container">
+            <canvas id="abmCanvas" width="800" height="450"></canvas>
         </div>
-
-        <canvas id="abmCanvas"></canvas>
+        
+        <a href="index.html" class="back-link">← Torna all'Hub</a>
     </div>
 
-    <script src="js/abm_sim.js"></script>
+    <script src="settimana4.js"></script>
 </body>
 </html>
