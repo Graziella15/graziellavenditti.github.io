@@ -1,107 +1,83 @@
-/* Palette Marina: #001f3f (Blu Notte), #0074D9 (Blu Mare), #2ECC71 (Verde Smeraldo) */
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f4f8;
-    color: #333;
+    background: linear-gradient(135deg, #001f3f 0%, #0074D9 100%);
+    color: #fff;
     margin: 0;
     padding: 20px;
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
 
 .container {
     max-width: 900px;
     width: 100%;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
     padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    border-top: 5px solid #0074D9; /* Dettaglio blu mare */
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
-h1 {
-    color: #001f3f;
-    margin-top: 0;
-    font-size: 1.8rem;
-}
+h1 { color: #7FDBFF; margin-bottom: 5px; }
+p { color: #DDD; margin-bottom: 25px; }
 
-p {
-    color: #666;
-    line-height: 1.6;
-}
-
-/* Griglia controlli */
 .controls {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 15px;
-    background: #eef2f7;
+    background: rgba(0, 0, 0, 0.2);
     padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
 }
 
-.controls label {
-    font-weight: bold;
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    color: #004080;
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: #7FDBFF;
 }
 
-.controls input {
-    margin-top: 5px;
+.input-group input {
+    width: 90%;
     padding: 8px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-    outline: none;
+    border: none;
+    background: #fff;
+    color: #333;
 }
 
-.controls input:focus {
-    border-color: #0074D9;
-}
-
-/* Bottone stile "Acqua" */
 button {
     grid-column: 1 / -1;
-    background-color: #2ECC71;
+    background: #2ECC40;
     color: white;
     border: none;
     padding: 12px;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 8px;
     font-weight: bold;
-    font-size: 1rem;
-    transition: background 0.3s ease;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-button:hover {
-    background-color: #27ae60;
-    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+button:hover { background: #3D9970; transform: translateY(-2px); }
+
+.canvas-container {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
 }
 
-/* Canvas del grafico */
 canvas {
     display: block;
     width: 100%;
     height: auto;
-    background: #fafafa;
-    border: 1px solid #d1d9e0;
-    border-radius: 8px;
-    margin-top: 10px;
 }
 
-/* Footer o link di ritorno */
 .back-link {
-    margin-top: 20px;
-    display: inline-block;
-    color: #0074D9;
+    color: #7FDBFF;
     text-decoration: none;
-    font-weight: 500;
-}
-
-.back-link:hover {
-    text-decoration: underline;
+    font-size: 0.9rem;
 }
