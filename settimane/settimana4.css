@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: linear-gradient(135deg, #001f3f 0%, #0074D9 100%);
     color: #fff;
     margin: 0;
@@ -9,57 +9,65 @@ body {
 }
 
 .container {
-    max-width: 850px;
+    max-width: 900px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(15px);
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.4);
 }
 
 .controls {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 15px;
     background: rgba(0, 0, 0, 0.3);
     padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
 }
 
-.input-group label { display: block; font-size: 0.8rem; color: #7FDBFF; margin-bottom: 5px; }
-.input-group input { width: 90%; padding: 8px; border-radius: 5px; border: none; }
+.input-group label { display: block; font-size: 0.85rem; color: #7FDBFF; margin-bottom: 5px; }
+.input-group input { width: 90%; padding: 10px; border-radius: 6px; border: none; font-size: 1rem; }
 
 button {
     grid-column: 1 / -1;
     background: #2ECC40;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 14px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s;
 }
+button:hover { background: #3D9970; transform: translateY(-2px); }
 
-.canvas-container { background: #fff; border-radius: 8px; margin-bottom: 25px; overflow: hidden; }
+.canvas-container { background: #fff; border-radius: 12px; margin-bottom: 30px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 canvas { width: 100%; display: block; }
 
 .theory-card {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 25px;
-    border-radius: 10px;
-    border-left: 5px solid #7FDBFF;
-    line-height: 1.6;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 30px;
+    border-radius: 12px;
+    border-left: 6px solid #7FDBFF;
+    line-height: 1.8;
 }
+
+.theory-card h2 { color: #7FDBFF; margin-top: 0; }
+.theory-card h3 { color: #eee; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
 
 .formula {
     background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
     text-align: center;
-    color: #7FDBFF;
+    font-size: 1.1rem;
 }
 
-.back-link { color: #7FDBFF; text-decoration: none; font-weight: bold; }
+.back-link { color: #7FDBFF; text-decoration: none; font-weight: bold; border-bottom: 1px solid transparent; transition: 0.3s; }
+.back-link:hover { border-bottom: 1px solid #7FDBFF; }
