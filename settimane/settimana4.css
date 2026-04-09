@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
     background: linear-gradient(135deg, #001f3f 0%, #0074D9 100%);
     color: #fff;
     margin: 0;
@@ -9,73 +9,57 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 850px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .controls {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 15px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 10px;
     margin-bottom: 20px;
 }
 
-.input-group label {
-    display: block;
-    font-size: 0.8rem;
-    color: #7FDBFF;
-    margin-bottom: 5px;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-}
+.input-group label { display: block; font-size: 0.8rem; color: #7FDBFF; margin-bottom: 5px; }
+.input-group input { width: 90%; padding: 8px; border-radius: 5px; border: none; }
 
 button {
     grid-column: 1 / -1;
     background: #2ECC40;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 12px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
 }
 
-.canvas-container {
-    background: #fff;
-    border-radius: 10px;
-    margin-bottom: 25px;
-}
-
+.canvas-container { background: #fff; border-radius: 8px; margin-bottom: 25px; overflow: hidden; }
 canvas { width: 100%; display: block; }
 
 .theory-card {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    border-radius: 10px;
+    border-left: 5px solid #7FDBFF;
     line-height: 1.6;
-    margin-bottom: 20px;
 }
 
 .formula {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.05);
     padding: 15px;
-    border-radius: 8px;
     margin: 15px 0;
-    font-family: 'Courier New', Courier, monospace;
+    border-radius: 8px;
     text-align: center;
+    color: #7FDBFF;
 }
 
-.back-link { color: #7FDBFF; text-decoration: none; }
+.back-link { color: #7FDBFF; text-decoration: none; font-weight: bold; }
