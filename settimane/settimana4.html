@@ -1,1 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Settimana 4 - Arithmetic Brownian Motion</title>
+    <link rel="stylesheet" href="style_settimana.css">
+    <style>
+        canvas { border: 1px solid #ddd; background: #fff; width: 100%; max-width: 800px; height: 400px; }
+        .controls { margin-bottom: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simulazione Arithmetic Brownian Motion (ABM)</h1>
+        <p>Suddivisione dell'intervallo continuo e generazione di traiettorie stocastiche.</p>
 
+        <div class="controls">
+            <label>Drift (μ): <input type="number" id="mu" value="0.5" step="0.1"></label>
+            <label>Volatilità (σ): <input type="number" id="sigma" value="0.2" step="0.05"></label>
+            <label>Step (n): <input type="number" id="steps" value="1000"></label>
+            <label>Tempo (T): <input type="number" id="T" value="1"></label>
+            <button onclick="runSimulation()">Genera Traiettoria</button>
+        </div>
+
+        <canvas id="abmCanvas"></canvas>
+    </div>
+
+    <script src="js/abm_sim.js"></script>
+</body>
+</html>
