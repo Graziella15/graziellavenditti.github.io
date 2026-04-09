@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settimana 4 - ABM & Teorema di Donsker</title>
+    <title>Settimana 4 - ABM, Donsker & Invarianza</title>
     <link rel="stylesheet" href="settimana4.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -12,7 +12,7 @@
     <div class="container">
         <header>
             <h1>🐋 Arithmetic Brownian Motion</h1>
-            <p>Simulazione nel continuo basata sul Principio di Invarianza.</p>
+            <p>Evoluzione stocastica e dimostrazione del Teorema di Donsker.</p>
         </header>
 
         <section class="controls">
@@ -32,7 +32,7 @@
                 <label>Tempo (T):</label>
                 <input type="number" id="T" value="1">
             </div>
-            <button id="runBtn" onclick="runSimulation()">Genera Traiettoria</button>
+            <button id="runBtn" onclick="runSimulation()">Avvia Simulazione</button>
         </section>
 
         <div class="canvas-container">
@@ -40,25 +40,33 @@
         </div>
 
         <section class="theory-card">
-            <h2>📘 Teoria: Il Teorema di Donsker</h2>
+            <h2>🔬 Analisi Matematica e Teorema di Donsker</h2>
+            
+            <h3>1. Dal Discreto al Continuo</h3>
             <p>
-                Il <strong>Teorema di Donsker</strong> (o Principio di Invarianza) è il pilastro che permette di passare dal discreto al continuo. Esso afferma che una passeggiata aleatoria riscalata converge debolmente a un <strong>Moto Browniano</strong>.
+                Il passaggio fondamentale tra una passeggiata aleatoria discreta e il moto browniano è garantito dal <b>Teorema di Donsker</b> (o Principio di Invarianza Funzionale). 
+                Sia $\{X_i\}$ una successione di variabili i.i.d. con $E[X] = 0$ e $Var(X) = \sigma^2$. Definiamo il processo riscalato:
+                $$W_n(t) = \frac{1}{\sigma\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$$
+                Per $n \to \infty$, $W_n(t)$ converge debolmente al <b>Moto Browniano Standard</b> $W(t)$. 
             </p>
-            <div class="formula">
-                $$W_n(t) = \frac{1}{\sigma\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i \xrightarrow{d} W(t)$$
-            </div>
+
+            <h3>2. L'Equazione Differenziale Stocastica (SDE)</h3>
             <p>
-                <strong>Invarianza:</strong> Il limite è indipendente dalla distribuzione degli incrementi $X_i$ (purché i.i.d. con media 0 e varianza finita). Nella simulazione, implementiamo l'equazione differenziale stocastica (SDE) per l'ABM:
-            </p>
-            <div class="formula">
+                L'Arithmetic Brownian Motion (ABM) aggiunge una componente deterministica (drift) alla dinamica. La SDE associata è:
                 $$dX_t = \mu dt + \sigma dW_t$$
-            </div>
+                Integrando, otteniamo la soluzione esplicita che modella la nostra traiettoria:
+                $$X_t = X_0 + \mu t + \sigma W_t \implies X_t \sim \mathcal{N}(X_0 + \mu t, \sigma^2 t)$$
+            </p>
+
+            <h3>3. Schema di Eulero-Maruyama</h3>
             <p>
-                L'incremento $dW_t$ è modellato come $\epsilon\sqrt{dt}$, dove $\sqrt{dt}$ è il fattore di riscalamento previsto da Donsker per mantenere la varianza coerente nel tempo.
+                Per la simulazione numerica, discretizziamo il tempo in intervalli $\Delta t = T/n$. L'approssimazione utilizzata nel codice segue lo schema:
+                $$X_{t+\Delta t} = X_t + \mu \Delta t + \sigma \epsilon \sqrt{\Delta t}$$
+                dove $\epsilon \sim \mathcal{N}(0, 1)$. Il fattore $\sqrt{\Delta t}$ è l'elemento chiave derivante dal riscalamento di Donsker, necessario per garantire che la varianza del processo rimanga finita nel limite continuo.
             </p>
         </section>
         
-        <footer>
+        <footer style="margin-top: 30px; text-align: center;">
             <a href="../index.html" class="back-link">← Torna all'Hub principale</a>
         </footer>
     </div>
