@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settimana 4 - Arithmetic Brownian Motion</title>
+    <title>Settimana 4 - ABM & Teorema di Donsker</title>
     <link rel="stylesheet" href="settimana4.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🐋 Simulazione Arithmetic Brownian Motion</h1>
-            <p>Evoluzione nel continuo: Suddivisione di un intervallo $[0, T]$ e generazione di traiettorie stocastiche.</p>
+            <h1>🐋 Arithmetic Brownian Motion</h1>
+            <p>Simulazione nel continuo e Principio di Invarianza.</p>
         </header>
 
         <section class="controls">
@@ -30,14 +30,29 @@
                 <label>Tempo (T):</label>
                 <input type="number" id="T" value="1">
             </div>
-            <button id="runBtn" onclick="runSimulation()">Genera Onda</button>
+            <button id="runBtn" onclick="runSimulation()">Genera Traiettoria</button>
         </section>
 
         <div class="canvas-container">
-            <canvas id="abmCanvas" width="800" height="450"></canvas>
+            <canvas id="abmCanvas" width="800" height="400"></canvas>
         </div>
+
+        <section class="theory-card">
+            <h2>📘 Teoria: Il Teorema di Donsker</h2>
+            <p>
+                Il <strong>Teorema di Donsker</strong> (o Principio di Invarianza) è fondamentale per questa simulazione. Esso afferma che una passeggiata aleatoria discretizzata, se opportunamente riscalata, converge a un <strong>Moto Browniano</strong>.
+            </p>
+            <div class="formula">
+                Dato un processo di somma parziale $S_n$, il processo riscalato:
+                $$W_n(t) = \frac{1}{\sigma\sqrt{n}} S_{\lfloor nt \rfloor}$$
+                converge debolmente a un Moto Browniano Standard per $n \to \infty$.
+            </div>
+            <p>
+                <strong>Invarianza:</strong> Non importa la distribuzione dei singoli "passi" (moneta, uniforme, ecc.), purché abbiano media nulla e varianza finita. Il limite sarà sempre una distribuzione normale, rendendo il Moto Browniano un modello universale per i sistemi stocastici nel continuo.
+            </p>
+        </section>
         
-        <a href="index.html" class="back-link">← Torna all'Hub</a>
+        <a href="../index.html" class="back-link">← Torna all'Hub principale</a>
     </div>
 
     <script src="settimana4.js"></script>
