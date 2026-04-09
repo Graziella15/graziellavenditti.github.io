@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settimana 4 - ABM & Teorema di Donsker</title>
     <link rel="stylesheet" href="settimana4.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🐋 Arithmetic Brownian Motion</h1>
-            <p>Simulazione nel continuo e Principio di Invarianza.</p>
+            <p>Simulazione nel continuo basata sul Principio di Invarianza.</p>
         </header>
 
         <section class="controls">
@@ -40,19 +42,25 @@
         <section class="theory-card">
             <h2>📘 Teoria: Il Teorema di Donsker</h2>
             <p>
-                Il <strong>Teorema di Donsker</strong> (o Principio di Invarianza) è fondamentale per questa simulazione. Esso afferma che una passeggiata aleatoria discretizzata, se opportunamente riscalata, converge a un <strong>Moto Browniano</strong>.
+                Il <strong>Teorema di Donsker</strong> (o Principio di Invarianza) è il pilastro che permette di passare dal discreto al continuo. Esso afferma che una passeggiata aleatoria riscalata converge debolmente a un <strong>Moto Browniano</strong>.
             </p>
             <div class="formula">
-                Dato un processo di somma parziale $S_n$, il processo riscalato:
-                $$W_n(t) = \frac{1}{\sigma\sqrt{n}} S_{\lfloor nt \rfloor}$$
-                converge debolmente a un Moto Browniano Standard per $n \to \infty$.
+                $$W_n(t) = \frac{1}{\sigma\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i \xrightarrow{d} W(t)$$
             </div>
             <p>
-                <strong>Invarianza:</strong> Non importa la distribuzione dei singoli "passi" (moneta, uniforme, ecc.), purché abbiano media nulla e varianza finita. Il limite sarà sempre una distribuzione normale, rendendo il Moto Browniano un modello universale per i sistemi stocastici nel continuo.
+                <strong>Invarianza:</strong> Il limite è indipendente dalla distribuzione degli incrementi $X_i$ (purché i.i.d. con media 0 e varianza finita). Nella simulazione, implementiamo l'equazione differenziale stocastica (SDE) per l'ABM:
+            </p>
+            <div class="formula">
+                $$dX_t = \mu dt + \sigma dW_t$$
+            </div>
+            <p>
+                L'incremento $dW_t$ è modellato come $\epsilon\sqrt{dt}$, dove $\sqrt{dt}$ è il fattore di riscalamento previsto da Donsker per mantenere la varianza coerente nel tempo.
             </p>
         </section>
         
-        <a href="../index.html" class="back-link">← Torna all'Hub principale</a>
+        <footer>
+            <a href="../index.html" class="back-link">← Torna all'Hub principale</a>
+        </footer>
     </div>
 
     <script src="settimana4.js"></script>
