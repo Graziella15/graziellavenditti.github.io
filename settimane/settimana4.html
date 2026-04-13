@@ -2,40 +2,46 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework 4 - Donsker Invariance Principle</title>
+    <title>Homework 4 - Theory & Application</title>
     <link rel="stylesheet" href="settimana4.css">
 </head>
 <body>
-    <header>
-        <h1>Settimana 4: Teorema di Donsker</h1>
-        <p>Convergenza della Random Walk al Moto Browniano Aritmetico (ABM)</p>
-    </header>
 
-    <section id="theory-section">
-        <h2>Parte Teorica</h2>
-        <p>Il <strong>Principio di Invarianza di Donsker</strong> (o teorema del limite funzionale) stabilisce che una Random Walk scalata converge a un Moto Browniano quando il numero di passi $n$ tende all'infinito.</p>
-        <p>Data una somma di variabili di Rademacher $X_i \in \{-1, 1\}$, il processo riscalato è definito come:</p>
-        <div class="formula">
-            $$W_n(t) = \frac{1}{\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$$
+    <div class="main-container">
+        <div class="panel theory-panel">
+            <h1>Theory: Donsker's Invariance Principle</h1>
+            <hr>
+            <p>Il Principio di Invarianza di Donsker è un'estensione del Teorema del Limite Centrale. Mentre il CLT ci dice che la somma di variabili aleatorie tende a una distribuzione normale, Donsker ci dice che l'intero <strong>percorso</strong> di una Random Walk tende a un <strong>Moto Browniano</strong>.</p>
+            
+            <div class="box">
+                <strong>Definizione:</strong> 
+                Si considera una somma di variabili di Rademacher $X_i$ (passi +1 o -1). 
+                Dividendo l'intervallo $T$ in $n$ parti, il processo riscalato:
+                <br><br>
+                $$W_n(t) = \frac{1}{\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$$
+                <br>
+                converge al Moto Browniano per $n \to \infty$.
+            </div>
+            
+            <p>Lo scaling per $1/\sqrt{n}$ è fondamentale: serve a stabilizzare la varianza in modo che il processo non "esploda" o non svanisca all'aumentare dei passi.</p>
         </div>
-        <p>Questo limite è "invariante" perché non dipende dalla distribuzione specifica dei passi, purché abbiano media 0 e varianza finita.</p>
-    </section>
 
-    <hr>
-
-    <section id="application-section">
-        <h2>Parte Pratica: Simulazione</h2>
-        <div class="ui-controls">
-            <label for="stepsInput">Numero di passi (n): </label>
-            <input type="number" id="stepsInput" value="2000" min="10" max="50000">
-            <button id="runBtn">Simula Processo</button>
+        <div class="panel application-panel">
+            <h1>HWK ==> Application</h1>
+            <hr>
+            <div class="controls">
+                <span>Numero di passi (n):</span>
+                <input type="number" id="nSteps" value="2000">
+                <button id="btnSimula">Esegui Simulazione</button>
+            </div>
+            <canvas id="chartCanvas"></canvas>
+            <p class="caption">Visualizzazione della convergenza al Moto Browniano Aritmetico (ABM).</p>
         </div>
-        <canvas id="brownianCanvas"></canvas>
-    </section>
+    </div>
 
     <script src="settimana4.js"></script>
 </body>
 </html>
+
 
 
