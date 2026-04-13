@@ -2,46 +2,120 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Homework 4 - Theory & Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 4 - Teoria e Applicazione</title>
+    
     <link rel="stylesheet" href="settimana4.css">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
 </head>
 <body>
 
+<header class="main-header">
+    <a href="../home.html" class="logo">Homeworks</a>
+    <nav>
+        <ul>
+            <li><a href="../home.html">Home page</a></li>
+            <li><a href="#">week 1</a></li>
+            <li><a href="#">week 2</a></li>
+            <li><a href="#">week 3</a></li>
+            <li class="active"><a href="settimana4.html">week 4</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
     <div class="main-container">
-        <div class="panel theory-panel">
-            <h1>Theory: Donsker's Invariance Principle</h1>
+        
+        <section class="panel theory-panel">
+            <h1>Principio di Invarianza di Donsker</h1>
+            <p class="subtitle">Statistica Applicata</p>
             <hr>
-            <p>Il Principio di Invarianza di Donsker è un'estensione del Teorema del Limite Centrale. Mentre il CLT ci dice che la somma di variabili aleatorie tende a una distribuzione normale, Donsker ci dice che l'intero <strong>percorso</strong> di una Random Walk tende a un <strong>Moto Browniano</strong>.</p>
-            
-            <div class="box">
-                <strong>Definizione:</strong> 
-                Si considera una somma di variabili di Rademacher $X_i$ (passi +1 o -1). 
-                Dividendo l'intervallo $T$ in $n$ parti, il processo riscalato:
-                <br><br>
-                $$W_n(t) = \frac{1}{\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$$
-                <br>
-                converge al Moto Browniano per $n \to \infty$.
-            </div>
-            
-            <p>Lo scaling per $1/\sqrt{n}$ è fondamentale: serve a stabilizzare la varianza in modo che il processo non "esploda" o non svanisca all'aumentare dei passi.</p>
-        </div>
 
-        <div class="panel application-panel">
-            <h1>HWK ==> Application</h1>
-            <hr>
-            <div class="controls">
-                <span>Numero di passi (n):</span>
-                <input type="number" id="nSteps" value="2000">
-                <button id="btnSimula">Esegui Simulazione</button>
+            <div class="theory-box-header">Idea principale</div>
+            <div class="theory-box-content">
+                Il Principio di Invarianza di Donsker, noto anche come <em>Teorema del Limite Funzionale</em>, afferma che una Random Walk discreta con incrementi indipendenti, media nulla e varianza finita, se opportunamente riscalata, converge al Moto Browniano Aritmetico quando il numero di passi tende all'infinito.
             </div>
-            <canvas id="chartCanvas"></canvas>
-            <p class="caption">Visualizzazione della convergenza al Moto Browniano Aritmetico (ABM).</p>
-        </div>
-    </div>
 
-    <script src="settimana4.js"></script>
-</body>
-</html>
+            <h2>1. Enunciato del teorema</h2>
+            <p>Sia $(X_i)_{i\ge1}$ una successione di variabili aleatorie indipendenti e identicamente distribuite tali che:</p>
+            $$ E[X_i] = 0 \quad e \quad Var(X_i) = \sigma^2 < \infty. $$
+            <p>Definiamo le somme parziali:</p>
+            $$ S_k = \sum_{i=1}^k X_i, $$
+            <p>e il processo riscalato:</p>
+            $$ W_n(t) = \frac{1}{\sigma\sqrt{n}} S_{\lfloor nt \rfloor}, \quad t \in [0, 1]. $$
+            <p>Allora, per $n \to \infty$, il processo $W_n(t)$ converge in distribuzione al Moto Browniano standard $B(t)$.</p>
+
+            <h2>2. Interpretazione</h2>
+            <p>Questo teorema è fondamentale perché mette in relazione un <strong>processo stocastico discreto</strong> con uno <strong>continuo</strong>.</p>
+            <p>Una Random Walk è costruita passo dopo passo, mentre il Moto Browniano è continuo nel tempo. Il teorema di Donsker mostra che, osservando la Random Walk su una scala temporale sempre più fine e applicando una corretta normalizzazione, la traiettoria converge a quella del Moto Browniano.</p>
+
+            <h2>3. Ruolo della scalatura</h2>
+            <p>Il fattore di scalatura $\sqrt{n}$ è essenziale. Infatti:</p>
+            $$ Var(S_k) = k\sigma^2 $$
+            <p>e quindi:</p>
+            $$ Var\left( \frac{S_{\lfloor nt \rfloor}}{\sigma\sqrt{n}} \right) = \frac{\lfloor nt \rfloor}{n} \approx t. $$
+            <p>Questo è esattamente il comportamento della varianza del Moto Browniano, che cresce linearmente nel tempo.</p>
+
+            <h2>4. Proprietà di invarianza</h2>
+            <p>L'aspetto più importante del teorema è l'<strong>invarianza</strong>. Il limite non dipende dalla distribuzione specifica delle variabili $X_i$, ma solo dal fatto che siano:</p>
+            <ul>
+                <li>indipendenti,</li>
+                <li>con media nulla,</li>
+                <li>con varianza finita.</li>
+            </ul>
+            <p>Questo significa che molte diverse Random Walk, costruite con distribuzioni differenti, convergono tutte allo stesso processo limite: il Moto Browniano.</p>
+
+            <h2>5. Collegamento con l'applicazione</h2>
+            <p>Nell'applicazione, le variabili utilizzate sono le <strong>variabili di Rademacher</strong>, definite come:</p>
+            $$ X_i = \begin{cases} +1 & \text{con probabilità } \frac{1}{2}, \\ -1 & \text{con probabilità } \frac{1}{2}. \end{cases} $$
+            <p>Queste soddisfano tutte le ipotesi del teorema:</p>
+            $$ E[X_i] = 0, \quad Var(X_i) = 1. $$
+            <p>Pertanto, il processo:</p>
+            $$ S_n(t_k) = \frac{1}{\sqrt{n}} \sum_{i=1}^k X_i, \quad t_k = \frac{kT}{n}, $$
+            <p>converge al Moto Browniano Aritmetico al crescere di $n$.</p>
+
+            <h2>6. Conclusione</h2>
+            <p>Il Principio di Invarianza di Donsker mostra come un processo discreto possa approssimare un processo continuo. In particolare:</p>
+            <ul>
+                <li>consente il passaggio da tempo discreto a tempo continuo,</li>
+                <li>evidenzia l'importanza della scalatura,</li>
+                <li>dimostra che il Moto Browniano è un limite universale.</li>
+            </ul>
+            <p>Questo risultato giustifica teoricamente la simulazione svolta nell'application, dove aumentando il numero di passi la Random Walk riscalata diventa sempre più simile a un Moto Browniano.</p>
+        </section>
+
+        <section class="panel application-panel">
+            <h1>Week 4 - Application</h1>
+            <h2>From Random Walk to Arithmetic Brownian Motion</h2>
+            
+            <div class="app-description">
+                <p>In this application we show how a properly rescaled Random Walk converges to the Arithmetic Brownian Motion as the number of steps increases.</p>
+                <div class="formula-box">
+                    <strong>Scaled Random Walk:</strong><br>
+                    $ S_n(t_k) = (1 / \sqrt{n}) \cdot \sum_{i=1}^k X_i $, where $X_i$ are Rademacher random variables taking values +1 and -1 with probability 1/2.
+                </div>
+                <p>The time interval $[0, T]$ is divided into $n$ parts. For each $t_k = kT/n$, we compute the partial sum of the Rademacher variables and rescale it by $1/\sqrt{n}$. As $n$ grows, the path becomes a better approximation of Brownian Motion.</p>
+            </div>
+
+            <div class="controls-grid">
+                <div class="control-item">
+                    <label>Number of steps $n$</label>
+                    <input type="number" id="stepsN" value="200" min="10" max="50000">
+                </div>
+                <div class="control-item">
+                    <label>Number of paths</label>
+                    <input type="number" id
+
 
 
 
