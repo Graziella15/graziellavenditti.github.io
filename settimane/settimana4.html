@@ -3,74 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settimana 4 - ABM, Donsker & Invarianza</title>
+    <title>Homework 4 - Donsker Invariance Principle</title>
     <link rel="stylesheet" href="settimana4.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🐋 Arithmetic Brownian Motion</h1>
-            <p>Evoluzione stocastica e dimostrazione del Teorema di Donsker.</p>
-        </header>
+    <header>
+        <h1>Settimana 4: Teorema di Donsker</h1>
+        <p>Convergenza della Random Walk al Moto Browniano Aritmetico (ABM)</p>
+    </header>
 
-        <section class="controls">
-            <div class="input-group">
-                <label>Drift (μ):</label>
-                <input type="number" id="mu" value="0.2" step="0.1">
-            </div>
-            <div class="input-group">
-                <label>Volatilità (σ):</label>
-                <input type="number" id="sigma" value="0.3" step="0.05">
-            </div>
-            <div class="input-group">
-                <label>Step (n):</label>
-                <input type="number" id="steps" value="1000">
-            </div>
-            <div class="input-group">
-                <label>Tempo (T):</label>
-                <input type="number" id="T" value="1">
-            </div>
-            <button id="runBtn" onclick="runSimulation()">Avvia Simulazione</button>
-        </section>
-
-        <div class="canvas-container">
-            <canvas id="abmCanvas" width="800" height="400"></canvas>
+    <section id="theory-section">
+        <h2>Parte Teorica</h2>
+        <p>Il <strong>Principio di Invarianza di Donsker</strong> (o teorema del limite funzionale) stabilisce che una Random Walk scalata converge a un Moto Browniano quando il numero di passi $n$ tende all'infinito.</p>
+        <p>Data una somma di variabili di Rademacher $X_i \in \{-1, 1\}$, il processo riscalato è definito come:</p>
+        <div class="formula">
+            $$W_n(t) = \frac{1}{\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$$
         </div>
+        <p>Questo limite è "invariante" perché non dipende dalla distribuzione specifica dei passi, purché abbiano media 0 e varianza finita.</p>
+    </section>
 
-        <section class="theory-card">
-            <h2>🔬 Analisi Matematica e Teorema di Donsker</h2>
-            
-            <h3>1. Dal Discreto al Continuo</h3>
-            <p>
-                Il passaggio fondamentale tra una passeggiata aleatoria discreta e il moto browniano è garantito dal <b>Teorema di Donsker</b> (o Principio di Invarianza Funzionale). 
-                Sia $\{X_i\}$ una successione di variabili i.i.d. con $E[X] = 0$ e $Var(X) = \sigma^2$. Definiamo il processo riscalato:
-                $$W_n(t) = \frac{1}{\sigma\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$$
-                Per $n \to \infty$, $W_n(t)$ converge debolmente al <b>Moto Browniano Standard</b> $W(t)$. 
-            </p>
+    <hr>
 
-            <h3>2. L'Equazione Differenziale Stocastica (SDE)</h3>
-            <p>
-                L'Arithmetic Brownian Motion (ABM) aggiunge una componente deterministica (drift) alla dinamica. La SDE associata è:
-                $$dX_t = \mu dt + \sigma dW_t$$
-                Integrando, otteniamo la soluzione esplicita che modella la nostra traiettoria:
-                $$X_t = X_0 + \mu t + \sigma W_t \implies X_t \sim \mathcal{N}(X_0 + \mu t, \sigma^2 t)$$
-            </p>
-
-            <h3>3. Schema di Eulero-Maruyama</h3>
-            <p>
-                Per la simulazione numerica, discretizziamo il tempo in intervalli $\Delta t = T/n$. L'approssimazione utilizzata nel codice segue lo schema:
-                $$X_{t+\Delta t} = X_t + \mu \Delta t + \sigma \epsilon \sqrt{\Delta t}$$
-                dove $\epsilon \sim \mathcal{N}(0, 1)$. Il fattore $\sqrt{\Delta t}$ è l'elemento chiave derivante dal riscalamento di Donsker, necessario per garantire che la varianza del processo rimanga finita nel limite continuo.
-            </p>
-        </section>
-        
-        <footer style="margin-top: 30px; text-align: center;">
-            <a href="../index.html" class="back-link">← Torna all'Hub principale</a>
-        </footer>
-    </div>
+    <section id="application-section">
+        <h2>Parte Pratica: Simulazione</h2>
+        <div class="ui-controls">
+            <label for="stepsInput">Numero di passi (n): </label>
+            <input type="number" id="stepsInput" value="2000" min="10" max="50000">
+            <button id="runBtn">Simula Processo</button>
+        </div>
+        <canvas id="brownianCanvas"></canvas>
+    </section>
 
     <script src="settimana4.js"></script>
 </body>
 </html>
+
+
