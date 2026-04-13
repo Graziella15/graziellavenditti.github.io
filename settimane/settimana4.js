@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const n = parseInt(document.getElementById('stepsN').value) || 1000;
         const m = parseInt(document.getElementById('pathsM').value) || 5;
 
-        // Adatta dimensioni canvas
+        // Reset dimensioni canvas per alta risoluzione
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
         
@@ -17,36 +17,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ctx.clearRect(0, 0, w, h);
 
-        // Disegno asse zero
-        ctx.strokeStyle = '#e1e4e8';
-        ctx.setLineDash([5, 5]);
+        // Disegno asse orizzontale di riferimento
+        ctx.strokeStyle = '#ecf0f1';
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(0, midY); ctx.lineTo(w, midY);
+        ctx.moveTo(0, midY);
+        ctx.lineTo(w, midY);
         ctx.stroke();
-        ctx.setLineDash([]); // Reset tratteggio
 
-        const colors = ['#4267B2', '#DB4437', '#0F9D58', '#F4B400', '#AB47BC'];
+        const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
 
+        // Simulazione delle traiettorie
         for (let j = 0; j < m; j++) {
             let currentSum = 0;
             const dx = w / n;
             
-            // Scaling verticale: ampiezza visiva per vedere bene i movimenti
-            // Il fattore critico è 1/Math.sqrt(n)
-            const visualHeight = h * 0.4; 
+            // Ampiezza visiva verticale: 
+            // Scaliamo il grafico in modo che la deviazione standard occupi una buona parte del canvas
+            const visualHeight = h * 0.35; 
 
             ctx.beginPath();
             ctx.strokeStyle = colors[j % colors.length];
-            ctx.lineWidth = 1.5;
+            ctx.lineWidth = 1.2;
             ctx.moveTo(0, midY);
 
             for (let i = 1; i <= n; i++) {
-                // Variabile di Rademacher
+                // Passo di Rademacher: +1 o -1
                 const step = Math.random() < 0.5 ? 1 : -1;
                 currentSum += step;
                 
                 const x = i * dx;
-                // APPLICAZIONE DELLO SCALING 1/sqrt(n)
+                // FORMULA DI DONSKER: scaling spaziale per 1/sqrt(n)
                 const y = midY - (currentSum / Math.sqrt(n)) * visualHeight;
                 
                 ctx.lineTo(x, y);
@@ -55,10 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Listener per il pulsante
     btn.addEventListener('click', simulate);
-    simulate(); // Avvia simulazione al caricamento
-});
 
+    // Esegui una simulazione iniziale all'avvio
+    simulate();
+});
 
  
 
