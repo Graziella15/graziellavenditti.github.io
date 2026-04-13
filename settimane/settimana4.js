@@ -1,62 +1,62 @@
-/**
- * Generatore di numeri casuali con distribuzione Normale Standard (Z ~ N(0,1))
- * Metodo di Box-Muller
- */
-function gaussianRandom() {
-    let u = 0, v = 0;
-    while(u === 0) u = Math.random(); 
-    while(v === 0) v = Math.random();
-    return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-}
-
-function runSimulation() {
-    const canvas = document.getElementById('abmCanvas');
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('brownianCanvas');
     const ctx = canvas.getContext('2d');
-    
-    // Recupero parametri
-    const mu = parseFloat(document.getElementById('mu').value);
-    const sigma = parseFloat(document.getElementById('sigma').value);
-    const n = parseInt(document.getElementById('steps').value);
-    const T = parseFloat(document.getElementById('T').value);
-    
-    // Calcolo dt e riscalamento per la componente stocastica
-    const dt = T / n;
-    const sqrtDt = Math.sqrt(dt);
+    const btn = document.getElementById('runBtn');
+    const inputSteps = document.getElementById('stepsInput');
 
-    // Pulizia e Setup Grafico
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Disegno asse zero
-    ctx.strokeStyle = '#e0e0e0';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([5, 5]);
-    ctx.beginPath();
-    ctx.moveTo(0, canvas.height / 2);
-    ctx.lineTo(canvas.width, canvas.height / 2);
-    ctx.stroke();
-    ctx.setLineDash([]); // Reset tratteggio
-
-    // Inizio simulazione traiettoria
-    let x = 0; 
-    ctx.beginPath();
-    ctx.strokeStyle = '#0074D9';
-    ctx.lineWidth = 2.5;
-    ctx.lineJoin = 'round';
-    ctx.moveTo(0, canvas.height / 2);
-
-    for (let i = 1; i <= n; i++) {
-        // Equazione ABM discretizzata: X = X + mu*dt + sigma*Z*sqrt(dt)
-        let dW = gaussianRandom() * sqrtDt;
-        x += (mu * dt) + (sigma * dW);
-
-        // Mapping su canvas (moltiplico x per 100 per lo scaling verticale)
-        let canvasX = (i / n) * canvas.width;
-        let canvasY = (canvas.height / 2) - (x * 120); 
+    function drawSimulation() {
+        const n = parseInt(inputSteps.value) || 1000;
         
-        ctx.lineTo(canvasX, canvasY);
-    }
-    ctx.stroke();
-}
+        // Adatta il canvas alla larghezza del contenitore
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        
+        const width = canvas.width;
+        const height = canvas.height;
+        const centerY = height / 2;
+        
+        // Pulizia canvas
+        ctx.clearRect(0, 0, width, height);
 
-// Avvio automatico al caricamento della pagina
-window.onload = runSimulation;
+        // Disegno asse orizzontale (Media)
+        ctx.strokeStyle = '#eee';
+        ctx.beginPath();
+        ctx.moveTo(0, centerY);
+        ctx.lineTo(width, centerY);
+        ctx.stroke();
+
+        // Parametri Random Walk
+        let currentSum = 0;
+        const stepX = width / n;
+        
+        // Scaling factor: 1/sqrt(n)
+        // Aggiungiamo un moltiplicatore visivo (es. 150) per rendere i movimenti visibili sul canvas
+        const visualScaling = 150 * (Math.sqrt(2000) / Math.sqrt(n)); 
+
+        ctx.beginPath();
+        ctx.strokeStyle = '#e67e22'; // Arancione per la traiettoria
+        ctx.lineWidth = 1.5;
+        ctx.moveTo(0, centerY);
+
+        for (let k = 1; k <= n; k++) {
+            // Variabile di Rademacher (-1 o +1)
+            const rademacher = Math.random() < 0.5 ? 1 : -1;
+            currentSum += rademacher;
+
+            // Coordinate: X è il tempo (k/n), Y è la somma riscalata per 1/sqrt(n)
+            const x = k * stepX;
+            const y = centerY - (currentSum / Math.sqrt(n)) * visualScaling;
+
+            ctx.lineTo(x, y);
+        }
+
+        ctx.stroke();
+    }
+
+    // Event listener per il bottone
+    btn.addEventListener('click', drawSimulation);
+
+    // Esegui una prima simulazione all'avvio
+    drawSimulation();
+});
+
