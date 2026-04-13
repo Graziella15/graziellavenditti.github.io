@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulazione Moto Browniano - HWK 4</title>
+    <title>HWK 4 - Simulazione e Teoria Donsker</title>
     <link rel="stylesheet" href="settimana4.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 
@@ -13,15 +15,16 @@
         <span class="nav-logo">Homework 4</span>
         <nav>
             <a href="../home.html">Home</a>
-            <a href="settimana4.html" class="active">Simulation</a>
+            <a href="settimana4.html" class="active">Week 4</a>
         </nav>
     </div>
 </header>
 
-<main class="app-container">
-    <div class="card">
+<main class="container">
+    
+    <section class="card application-section">
         <h1>Application: Scaled Random Walk</h1>
-        <p>Convergenza al Moto Browniano Aritmetico (Scaling $1/\sqrt{n}$)</p>
+        <p>Questa simulazione mostra come una Random Walk, scalata per $1/\sqrt{n}$, converga visivamente al Moto Browniano Aritmetico (ABM).</p>
 
         <div class="controls">
             <div class="input-group">
@@ -38,11 +41,35 @@
         <div class="canvas-wrapper">
             <canvas id="brownianCanvas"></canvas>
         </div>
-        
-        <div class="info-footer">
-            Ogni traiettoria è calcolata come $W_n(t) = \frac{1}{\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$, dove $X_i \in \{-1, 1\}$.
+        <p class="caption">Grafico delle traiettorie riscalate nell'intervallo temporale $T$.</p>
+    </section>
+
+    <section class="card theory-section">
+        <h1>Teoria: Principio di Invarianza di Donsker</h1>
+        <p class="subtitle">Il Teorema del Limite Funzionale</p>
+        <hr>
+
+        <h2>Il Concetto di Invarianza</h2>
+        <p>Il <strong>Principio di Invarianza di Donsker</strong> è un risultato fondamentale della teoria della probabilità che estende il Teorema del Limite Centrale (CLT) allo spazio dei processi stocastici. La sua importanza risiede nel termine "Invarianza": esso afferma che il limite di una Random Walk riscalata <strong>non dipende dalla distribuzione specifica dei singoli passi</strong>, a patto che questi siano indipendenti, abbiano media nulla e varianza finita.</p>
+
+        <h2>Enunciato e Modello Matematico</h2>
+        <p>Sia $X_1, X_2, \dots$ una successione di variabili aleatorie indipendenti e identicamente distribuite (i.i.d.) con:</p>
+        <div class="math-box">
+            $$E[X_i] = 0, \quad Var(X_i) = \sigma^2 < \infty$$
         </div>
-    </div>
+        <p>Se definiamo la somma parziale $S_k = \sum_{i=1}^k X_i$, il teorema di Donsker analizza il comportamento del processo riscalato $W_n(t)$ definito su un intervallo temporale $[0, 1]$ come:</p>
+        <div class="math-box">
+            $$W_n(t) = \frac{1}{\sigma\sqrt{n}} S_{\lfloor nt \rfloor}$$
+        </div>
+        <p>Dove $\lfloor nt \rfloor$ rappresenta la parte intera di $nt$. Il teorema assicura che al tendere di $n$ all'infinito, l'intero processo $W_n(t)$ converge in distribuzione al <strong>Moto Browniano standard</strong> $B(t)$.</p>
+
+        <h2>Perché lo scaling $1/\sqrt{n}$ è cruciale?</h2>
+        <p>Nella Random Walk discreta, la varianza della somma cresce linearmente con il numero di passi: $Var(S_n) = n\sigma^2$. Senza un'adeguata correzione, la traiettoria divergerebbe all'infinito. Lo scaling per $1/\sqrt{n}$ (o $1/\sigma\sqrt{n}$) serve esattamente a <strong>stabilizzare la varianza</strong>, rendendo il limite un processo stocastico ben definito con varianza $t$ al tempo $t$.</p>
+
+        <h2>Dal Discreto al Continuo</h2>
+        <p>Questo principio giustifica formalmente perché il Moto Browniano (un processo a tempo continuo con salti normali) possa essere utilizzato per modellare fenomeni che hanno origini discrete e microscopiche. Nell'applicazione sopra riportata, utilizziamo variabili di <strong>Rademacher</strong> ($\pm 1$), ma il risultato (il Moto Browniano Aritmetico) sarebbe lo stesso anche se usassimo passi distribuiti uniformemente o secondo altre leggi, confermando l'universalità del limite.</p>
+    </section>
+
 </main>
 
 <script src="settimana4.js"></script>
