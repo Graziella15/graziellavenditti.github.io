@@ -2,39 +2,56 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Homework 5 - Geometric Brownian Motion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMWK 5 - GBM & Stochastic Processes</title>
     <link rel="stylesheet" href="settimana5.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Simulazione Geometric Brownian Motion (GBM)</h1>
-        <p>Evoluzione del prezzo basata sulla formula: dS = μS dt + σS dW</p>
         
         <div class="controls">
             <div class="input-group">
-                <label>Prezzo Iniziale (S0):</label>
+                <label>S₀ (Prezzo Iniziale):</label>
                 <input type="number" id="s0" value="100">
             </div>
             <div class="input-group">
-                <label>Drift (μ):</label>
+                <label>μ (Drift):</label>
                 <input type="number" id="mu" step="0.01" value="0.05">
             </div>
             <div class="input-group">
-                <label>Volatilità (σ):</label>
+                <label>σ (Volatilità):</label>
                 <input type="number" id="sigma" step="0.01" value="0.2">
             </div>
             <div class="input-group">
-                <label>Passi (n):</label>
+                <label>n (Passi):</label>
                 <input type="number" id="steps" value="1000">
             </div>
             <div class="input-group">
-                <label>Traiettorie (m):</label>
+                <label>m (Traiettorie):</label>
                 <input type="number" id="paths" value="5">
             </div>
             <button onclick="generateGBM()">Genera Simulazione</button>
         </div>
 
         <canvas id="gbmCanvas"></canvas>
+
+        <hr>
+
+        <section class="theory">
+            <h2>Analisi Teorica dei Processi Stocastici</h2>
+            
+            <h3>1. Arithmetic Brownian Motion (ABM)</h3>
+            <p>L'ABM rappresenta l'estensione continua della Random Walk scalata. È definito dalla SDE: $$dX_t = \mu dt + \sigma dW_t$$ In questo modello, i cambiamenti sono <b>additivi</b>. Il limite principale dell'ABM in ambito finanziario è che il processo può assumere valori negativi, rendendolo inadatto per modellare i prezzi dei titoli, ma utile per modellare tassi d'interesse o flussi di cassa.</p>
+
+            <h3>2. Geometric Brownian Motion (GBM)</h3>
+            <p>Il GBM risolve il problema dei valori negativi introducendo una dinamica <b>moltiplicativa</b>: $$dS_t = \mu S_t dt + \sigma S_t dW_t$$ Qui, la variazione del prezzo è proporzionale al livello del prezzo stesso. È il modello base per il pricing delle opzioni (Black-Scholes) poiché garantisce che il prezzo rimanga sempre positivo ($S_t > 0$) e riflette il concetto di rendimento percentuale costante.</p>
+
+            <h3>3. Mean Reversion (Processo di Ornstein–Uhlenbeck)</h3>
+            <p>A differenza dei modelli precedenti che possono divergere all'infinito, i processi <b>Mean Reverting</b> tendono a tornare verso un equilibrio di lungo periodo $L$: $$dr_t = \theta (L - r_t) dt + \sigma dW_t$$ Se il valore attuale $r_t$ è lontano dalla media $L$, il termine di "richiamo" $\theta$ (velocità di convergenza) spinge il processo verso $L$. Questo è il modello ideale per variabili che non crescono esponenzialmente, come la <b>volatilità</b> o i <b>prezzi delle commodity</b>.</p>
+        </section>
     </div>
 
     <script src="settimana5.js"></script>
