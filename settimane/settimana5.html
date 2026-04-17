@@ -1,1 +1,42 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework 5 - Geometric Brownian Motion</title>
+    <link rel="stylesheet" href="settimana5.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simulazione Geometric Brownian Motion (GBM)</h1>
+        <p>Evoluzione del prezzo basata sulla formula: dS = μS dt + σS dW</p>
+        
+        <div class="controls">
+            <div class="input-group">
+                <label>Prezzo Iniziale (S0):</label>
+                <input type="number" id="s0" value="100">
+            </div>
+            <div class="input-group">
+                <label>Drift (μ):</label>
+                <input type="number" id="mu" step="0.01" value="0.05">
+            </div>
+            <div class="input-group">
+                <label>Volatilità (σ):</label>
+                <input type="number" id="sigma" step="0.01" value="0.2">
+            </div>
+            <div class="input-group">
+                <label>Passi (n):</label>
+                <input type="number" id="steps" value="1000">
+            </div>
+            <div class="input-group">
+                <label>Traiettorie (m):</label>
+                <input type="number" id="paths" value="5">
+            </div>
+            <button onclick="generateGBM()">Genera Simulazione</button>
+        </div>
 
+        <canvas id="gbmCanvas"></canvas>
+    </div>
+
+    <script src="settimana5.js"></script>
+</body>
+</html>
