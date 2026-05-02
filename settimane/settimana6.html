@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settimana 6 - Trading Simulation</title>
+    <link rel="stylesheet" href="settimana6.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Simulazione GBM con Strategia Buy/Sell</h1>
+        <p>Strategia: **Trend Following** (Compra se il prezzo sale, Vendi se scende).</p>
+        
+        <div class="controls">
+            <button onclick="runSimulation()">Avvia Simulazione</button>
+        </div>
 
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>PnL Finale</h4>
+                <p id="pnl-value">€ 0.00</p>
+            </div>
+            <div class="stat-card">
+                <h4>Massimo Drawdown (DD)</h4>
+                <p id="dd-value">0.00 %</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="tradingChart"></canvas>
+        </div>
+    </div>
+
+    <script src="settimana6.js"></script>
+</body>
+</html>
