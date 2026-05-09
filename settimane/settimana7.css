@@ -53,3 +53,9 @@ h2 {
 strong {
     color: var(--primary-color);
 }
+
+/* Stile per la lista assiomi */
+.proof ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
