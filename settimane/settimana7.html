@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Settimana 7: Kolmogorov & Teoremi Limite</title>
+    <link rel="stylesheet" href="settimana7.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Settimana 7: Fondamenti di Probabilità</h1>
+            <p>Dalla Teoria della Misura ai Processi di Wiener</p>
+        </header>
 
+        <section class="theory">
+            <h2>1. Assiomatica di Kolmogorov</h2>
+            <div class="formula-box">
+                <p>La probabilità è uno spazio di misura $(\Omega, \mathcal{F}, P)$ tale che:</p>
+                <ul>
+                    <li><strong>P1:</strong> $P(A) \in [0, 1]$ per ogni $A \in \mathcal{F}$</li>
+                    <li><strong>P2:</strong> $P(\Omega) = 1$</li>
+                    <li><strong>P3:</strong> $\sigma$-additività per eventi disgiunti</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="simulation">
+            <h2>2. Simulazione Processi Aleatori</h2>
+            <div class="controls">
+                <button onclick="runLLN()">Esegui LLN (Grandi Numeri)</button>
+                <button onclick="runCLT()">Esegui CLT (Limite Centrale)</button>
+                <button onclick="runWiener()">Invariance Principle (Wiener)</button>
+            </div>
+            <canvas id="mainCanvas"></canvas>
+            <div id="description">Seleziona una simulazione per visualizzare i risultati.</div>
+        </section>
+    </div>
+    <script src="settimana7.js"></script>
+</body>
+</html>
