@@ -1,62 +1,109 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>Settimana 7: Fondamenti e Dimostrazioni</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="settimana7.css">
+  <meta charset="UTF-8">
+  <title>Settimana 7: Dimostrazioni Formali</title>
+  <link rel="stylesheet" href="../style.css">
+  
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    .proof-section { max-width: 850px; margin: 40px auto; padding: 20px; font-family: 'Segoe UI', serif; }
+    .theorem { background: #f0f7ff; border-left: 5px solid #007bff; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .step-list { list-style-type: none; padding-left: 0; }
+    .step-list li { margin-bottom: 15px; padding-left: 25px; position: relative; }
+    .step-list li::before { content: "•"; color: #007bff; font-weight: bold; position: absolute; left: 0; }
+    .formula-display { background: white; padding: 15px; border-radius: 5px; text-align: center; margin: 10px 0; box-shadow: inset 0 0 5px rgba(0,0,0,0.05); }
+  </style>
 </head>
 <body>
-    <div class="theory-container">
-        <header class="theory-header">
-            <h1>Settimana 7: Teoria Assiomatica e Convergenze</h1>
-            <p>Un'analisi formale dei pilastri della probabilità moderna.</p>
-        </header>
 
-        <section class="theory-block">
-            <h2>1. Kolmogorov e la Teoria della Misura</h2>
-            <p>La probabilità moderna poggia sulla teoria della misura di Borel-Lebesgue. Uno spazio di probabilità è una terna $(\Omega, \mathcal{F}, P)$ dove $P$ è una misura finita con massa totale unitaria.</p>
-            <div class="proof-box">
-                <h3>Relazione Fondamentale</h3>
-                <p>Ogni variabile aleatoria $X$ è una funzione misurabile $X: \Omega \to \mathbb{R}$. La speranza matematica $E[X]$ non è altro che l'integrale di Lebesgue di $X$ rispetto alla misura $P$:</p>
-                <div class="formula">$$E[X] = \int_{\Omega} X(\omega) dP(\omega)$$</div>
-            </div>
-        </section>
+  <div class="proof-section">
+    <h1>Approfondimento Teorico - Settimana 7</h1>
 
-        <section class="theory-block">
-            <h2>2. Legge dei Grandi Numeri (LLN)</h2>
-            <div class="proof-box">
-                <h3>Dimostrazione (WLLN) via Disuguaglianza di Chebyshev</h3>
-                <p>Sia $S_n = \sum_{i=1}^n X_i$ con $X_i$ i.i.d., $E[X_i]=\mu$ e $Var(X_i)=\sigma^2$.</p>
-                <ol>
-                    <li>Sia $\bar{X}_n = S_n/n$. Per linearità, $E[\bar{X}_n] = \mu$ e $Var(\bar{X}_n) = \frac{\sigma^2}{n}$.</li>
-                    <li>Applicando Chebyshev: $P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{Var(\bar{X}_n)}{\epsilon^2}$.</li>
-                    <li>Sostituendo la varianza: $P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{\sigma^2}{n\epsilon^2}$.</li>
-                    <li>Per $n \to \infty$, il termine a destra converge a 0, dimostrando la convergenza in probabilità.</li>
-                </ol>
-            </div>
-        </section>
+    <section>
+      <h2>1. Assiomatica di Kolmogorov</h2>
+      <p>La probabilità non è solo "conteggio", ma una <strong>misura</strong>. Kolmogorov ha formalizzato questo concetto definendo la probabilità su uno spazio $(\Omega, \mathcal{F}, P)$.</p>
+      <div class="theorem">
+        <strong>Proprietà di Misura:</strong> Una variabile aleatoria $X$ è una funzione misurabile. Il valore atteso (media) è l'integrale di Lebesgue:
+        <div class="formula-display">
+          $$ E[X] = \int_{\Omega} X(\omega) dP(\omega) $$
+        </div>
+      </div>
+    </section>
 
-        <section class="theory-block">
-            <h2>3. Central Limit Theorem (CLT)</h2>
-            <div class="proof-box">
-                <h3>Idea della Dimostrazione via Funzioni Caratteristiche</h3>
-                <p>Sia $Z_n = \frac{S_n - n\mu}{\sigma\sqrt{n}}$. La funzione caratteristica di $Z_n$ è $\phi_{Z_n}(t)$.</p>
-                <p>Sviluppando in serie di Taylor la funzione caratteristica della variabile standardizzata intorno a 0:</p>
-                <div class="formula">$$\phi_{Z_n}(t) = \left( 1 - \frac{t^2}{2n} + o(\frac{t^2}{n}) \right)^n \longrightarrow e^{-\frac{t^2}{2}}$$</div>
-                <p>Il limite è la funzione caratteristica di una normale standard $N(0,1)$.</p>
+    <section>
+      <h2>2. Dimostrazione: Legge dei Grandi Numeri (WLLN)</h2>
+      <p>Perché la media di molti esperimenti si avvicina alla media teorica?</p>
+      <div class="theorem">
+        <strong>Dimostrazione via Chebyshev:</strong>
+        <ul class="step-list">
+          <li>Definiamo la media campionaria come $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$.</li>
+          <li>Sappiamo che $E[\bar{X}_n] = \mu$ e $Var(\bar{X}_n) = \frac{\sigma^2}{n}$.</li>
+          <li>Applichiamo la <strong>Disuguaglianza di Chebyshev</strong>, che dice che la probabilità che una variabile si allontani dalla sua media è limitata dalla sua varianza:
+            <div class="formula-display">
+              $$ P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{Var(\bar{X}_n)}{\epsilon^2} $$
             </div>
-        </section>
+          </li>
+          <li>Sostituendo la varianza otteniamo: $\frac{\sigma^2}{n\epsilon^2}$.</li>
+          <li>Dato che $n$ è al denominatore, quando $n \to \infty$, il limite è $0$. La media "colpisce" il valore atteso.</li>
+        </ul>
+      </div>
+    </section>
 
-        <section class="theory-block">
-            <h2>4. Invariance Principle (Donsker)</h2>
-            <p>Il principio di invarianza afferma che non solo la somma finale converge, ma l'intero percorso (path) della somma parziale converge a un processo continuo.</p>
-            <div class="simulation-area">
-                <button onclick="runDonskerSimulation()">Simula Convergenza al Moto Browniano</button>
-                <canvas id="wienerCanvas"></canvas>
+    <section>
+      <h2>3. Dimostrazione: Teorema del Limite Centrale (CLT)</h2>
+      <p>Perché tutto diventa una "Campana di Gauss"?</p>
+      <div class="theorem">
+        <strong>Idea tramite Funzioni Caratteristiche:</strong>
+        <p>Usiamo la funzione caratteristica $\phi_X(t) = E[e^{itX}]$, che è come l'impronta digitale di una distribuzione.</p>
+        <ul class="step-list">
+          <li>Standardizziamo la somma: $Z_n = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}}$.</li>
+          <li>La funzione caratteristica di $Z_n$ si sviluppa con Taylor vicino a zero:
+            <div class="formula-display">
+              $$ \phi_{Z_n}(t) \approx \left( 1 - \frac{t^2}{2n} \right)^n $$
             </div>
-        </section>
-    </div>
-    <script src="settimana7.js"></script>
+          </li>
+          <li>Ricordando il limite notevole $(1 + \frac{x}{n})^n \to e^x$, otteniamo:
+            <div class="formula-display">
+              $$ \lim_{n \to \infty} \phi_{Z_n}(t) = e^{-\frac{t^2}{2}} $$
+            </div>
+          </li>
+          <li>Questa è esattamente la funzione caratteristica della <strong>Normale Standard</strong>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Invariance Principle (Moto Browniano)</h2>
+      <p>Il Principio di Donsker estende il CLT. Se prendiamo una passeggiata aleatoria e "zoomiamo fuori" (riscaliamo spazio e tempo), otteniamo un processo continuo: il <strong>Processo di Wiener</strong>.</p>
+      <canvas id="wienerCanvas" style="width:100%; height:300px; background:#f8f9fa; border:1px solid #ddd;"></canvas>
+      <button onclick="simulate()" style="margin-top:10px; padding:10px; cursor:pointer;">Genera Path</button>
+    </section>
+
+  </div>
+
+  <script>
+    function simulate() {
+      const canvas = document.getElementById('wienerCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      ctx.clearRect(0,0,canvas.width, canvas.height);
+      
+      ctx.beginPath();
+      ctx.strokeStyle = '#007bff';
+      let y = canvas.height / 2;
+      ctx.moveTo(0, y);
+      
+      for(let x = 0; x < canvas.width; x++) {
+        y += (Math.random() - 0.5) * 10;
+        ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    window.onload = simulate;
+  </script>
 </body>
 </html>
