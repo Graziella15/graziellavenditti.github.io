@@ -3,65 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework 7 - Theory</title>
+    <title>Teoria Settimana 7 - Analisi Statistica</title>
     <link rel="stylesheet" href="settimana7.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header class="main-header">
-            <a href="../index.html" class="back-link">← Torna a Homework 7</a>
-            <h1>Homework 7 - Theory</h1>
-            <p>Questa ricerca approfondisce le basi matematiche della probabilità moderna, partendo dall’impostazione assiomatica di Kolmogorov e dal suo collegamento con la teoria della misura. Successivamente vengono richiamati alcuni risultati fondamentali della probabilità e dei processi aleatori: la legge dei grandi numeri, il teorema del limite centrale e il principio di invarianza.</p>
-        </header>
+    <header>
+        <h1>Settimana 7: Teoremi Limite & Processi</h1>
+        <p>Approfondimento su LLN, CLT e Principi di Invarianza</p>
+    </header>
 
-        <section class="card">
-            <h2>1. L’impostazione assiomatica di Kolmogorov</h2>
-            <p>L’impostazione moderna della probabilità si basa sugli assiomi formulati da Andrey Kolmogorov nel 1933. L’idea centrale è trattare la probabilità come una misura definita su una famiglia di eventi.</p>
-            <p>Uno spazio di probabilità è una terna:</p>
-            <div class="math-block">$$(\Omega, \mathcal{F}, \mathbb{P})$$</div>
-            <p>dove $\Omega$ è lo spazio campionario, cioè l’insieme di tutti i possibili esiti; $\mathcal{F}$ è una $\sigma$-algebra, cioè una collezione di eventi su cui è possibile assegnare una probabilità; $\mathbb{P}$ è la misura di probabilità.</p>
-            <p>Gli assiomi fondamentali sono tre.</p>
-            <p><strong>Non negatività:</strong> $\mathbb{P}(A) \geq 0$ per ogni evento $A \in \mathcal{F}$.</p>
-            <p><strong>Normalizzazione:</strong> $\mathbb{P}(\Omega) = 1$ cioè la probabilità dell’evento certo è pari a 1.</p>
-            <p><strong>Additività numerabile:</strong> se $A_1, A_2, \dots$ sono eventi a due a due disgiunti, allora:</p>
-            <div class="math-block">$$\mathbb{P} \left( \bigcup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} \mathbb{P}(A_i)$$</div>
+    <main>
+        <section id="lln">
+            <h2>1. Legge dei Grandi Numeri (LLN)</h2>
+            <p>La LLN garantisce che la media campionaria $\bar{X}_n$ converga al valore atteso $\mu$.</p>
+            
+            <article class="proof">
+                <h3>Dimostrazione (WLLN via Chebyshev)</h3>
+                <p>Siano $X_1, \dots, X_n$ i.i.d. con $E[X_i] = \mu$ e $Var(X_i) = \sigma^2$.</p>
+                <div class="math-box">
+                    $$Var(\bar{X}_n) = Var\left(\frac{1}{n}\sum X_i\right) = \frac{1}{n^2} \sum Var(X_i) = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}$$
+                    Applicando la disuguaglianza di Chebyshev:
+                    $$P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{Var(\bar{X}_n)}{\epsilon^2} = \frac{\sigma^2}{n\epsilon^2}$$
+                    Per $n \to \infty$, il termine a destra tende a 0, dimostrando la convergenza in probabilità.
+                </div>
+            </article>
         </section>
 
-        <section class="card">
-            <h2>2. Relazione con la teoria della misura</h2>
-            <p>La probabilità può essere vista come un caso particolare di misura. In teoria della misura, una misura assegna una “grandezza” agli insiemi appartenenti a una $\sigma$-algebra. Una misura di probabilità è una misura positiva con massa totale pari a 1.</p>
-            <p>In generale, una misura $\mu$ può soddisfare $\mu(\Omega) < \infty$ oppure $\mu(\Omega) = \infty$. Nel caso della probabilità, invece, si impone $\mathbb{P}(\Omega) = 1$.</p>
-            <div class="math-block">$$E[X] = \int_{\Omega} X(\omega) d\mathbb{P}(\omega)$$</div>
+        <section id="clt">
+            <h2>2. Teorema del Limite Centrale (CLT)</h2>
+            <p>Il CLT descrive la distribuzione limite della somma scalata di variabili aleatorie.</p>
+
+            <article class="proof">
+                <h3>Dimostrazione (Funzioni Caratteristiche)</h3>
+                <p>Sia $Z_n = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}}$. Assumendo $\mu=0, \sigma=1$:</p>
+                <div class="math-box">
+                    $$\phi_{Z_n}(t) = \left[ \phi_X\left(\frac{t}{\sqrt{n}}\right) \right]^n$$
+                    Sviluppando $\phi_X$ in serie di Taylor attorno a 0:
+                    $$\phi_X\left(\frac{t}{\sqrt{n}}\right) \approx 1 + i(0) - \frac{(t/\sqrt{n})^2}{2} = 1 - \frac{t^2}{2n}$$
+                    Quindi:
+                    $$\lim_{n \to \infty} \left( 1 - \frac{t^2}{2n} \right)^n = e^{-\frac{t^2}{2}}$$
+                    che è la funzione caratteristica di una normale standard.
+                </div>
+            </article>
         </section>
 
-        <section class="card">
-            <h2>3. Legge dei grandi numeri</h2>
-            <p>La legge dei grandi numeri descrive il comportamento della media campionaria quando il numero di osservazioni cresce. Se $X_1, X_2, \dots, X_n$ sono variabili casuali indipendenti e identicamente distribuite con valore atteso finito $\mu$, la media campionaria è:</p>
-            <div class="math-block">$$\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i$$</div>
-            <p>La legge debole dei grandi numeri afferma che:</p>
-            <div class="math-block">$$\bar{X}_n \xrightarrow{P} \mu$$</div>
-            <p>La legge forte dei grandi numeri afferma invece che:</p>
-            <div class="math-block">$$\bar{X}_n \xrightarrow{a.s.} \mu$$</div>
-        </section>
+        <section id="invariance">
+            <h2>3. Invariance Principle & Wiener Process</h2>
+            <p>Il Principio di Donsker estende il CLT a processi stocastici (moto Browniano).</p>
 
-        <section class="card">
-            <h2>4. Teorema del limite centrale</h2>
-            <div class="math-block">$$\frac{\sum_{i=1}^{n} X_i - n\mu}{\sigma \sqrt{n}} \xrightarrow{d} N(0,1)$$</div>
-            <p>Esistono anche versioni non iid del teorema, in cui le variabili possono non avere la stessa distribuzione. In questi casi servono condizioni aggiuntive, come quelle di Lindeberg o Lyapunov, per evitare che una singola variabile domini l’intera somma.</p>
+            <article class="theory-detail">
+                <h3>Ruolo del Processo di Wiener ($W_t$)</h3>
+                <ul>
+                    <li><strong>Definizione:</strong> Un processo a incrementi indipendenti dove $W_t - W_s \sim N(0, t-s)$.</li>
+                    <li><strong>Invarianza:</strong> Qualsiasi passeggiata aleatoria con varianza finita, se opportunamente scalata, "appare" come un moto Browniano nel limite continuo.</li>
+                </ul>
+            </article>
         </section>
+    </main>
 
-        <section class="card">
-            <h2>5. Principio di invarianza e moto browniano</h2>
-            <p>Definendo il processo scalato:</p>
-            <div class="math-block">$$W_n(t) = \frac{1}{\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$$</div>
-            <p>il principio di invarianza afferma che, al crescere di $n$, questo processo converge in distribuzione a un processo di Wiener:</p>
-            <div class="math-block">$$W_n(t) \Rightarrow W(t)$$</div>
-            <canvas id="wienerCanvas"></canvas>
-            <button class="btn-sim" onclick="simulate()">Simula Processo</button>
-        </section>
-    </div>
+    <footer>
+        <button onclick="checkLearning()">Verifica Conoscenze</button>
+        <p id="status"></p>
+    </footer>
+
     <script src="settimana7.js"></script>
 </body>
 </html>
+
