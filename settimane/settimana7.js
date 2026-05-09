@@ -1,89 +1,37 @@
-const canvas = document.getElementById('mainCanvas');
+const canvas = document.getElementById('wienerCanvas');
 const ctx = canvas.getContext('2d');
-const desc = document.getElementById('description');
 
-function initCanvas() {
+function runDonskerSimulation() {
+    // Reset Canvas
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
 
-// 1. Weak/Strong Law of Large Numbers (LLN)
-function runLLN() {
-    initCanvas();
-    let sum = 0;
-    let points = [];
-    ctx.strokeStyle = '#64ffda';
-    ctx.beginPath();
+    const steps = 2000;
+    const paths = 3;
+    const colors = ['#3498db', '#e74c3c', '#2ecc71'];
 
-    for (let n = 1; n <= 1000; n++) {
-        sum += Math.random(); // Uniforme (0,1), media = 0.5
-        let average = sum / n;
-        let x = (n / 1000) * canvas.width;
-        let y = canvas.height - (average * canvas.height);
+    paths.forEach((color, p) => {
+        let x = 0;
+        let y = canvas.height / 2;
+        let sum = 0;
         
-        if (n === 1) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-    
-    // Linea del Valore Atteso
-    ctx.setLineDash([5, 5]);
-    ctx.strokeStyle = '#ff5555';
-    ctx.beginPath();
-    ctx.moveTo(0, canvas.height/2);
-    ctx.lineTo(canvas.width, canvas.height/2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-    
-    desc.innerText = "LLN: La media campionaria converge quasi certamente al valore atteso E[X] = 0.5.";
-}
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.moveTo(x, y);
 
-// 2. Central Limit Theorem (CLT)
-function runCLT() {
-    initCanvas();
-    let sums = new Array(100).fill(0);
-    const iterations = 5000;
-    const nVariables = 10;
-
-    for (let i = 0; i < iterations; i++) {
-        let currentSum = 0;
-        for (let j = 0; j < nVariables; j++) currentSum += Math.random();
-        let bucket = Math.floor((currentSum / nVariables) * 100);
-        if (sums[bucket] !== undefined) sums[bucket]++;
-    }
-
-    ctx.fillStyle = '#64ffda';
-    sums.forEach((count, i) => {
-        let x = (i / 100) * canvas.width;
-        let h = (count / iterations) * canvas.height * 10;
-        ctx.fillRect(x, canvas.height - h, canvas.width/100, h);
+        for (let i = 0; i < steps; i++) {
+            // Incremento i.i.d Mean=0, Var=1
+            const increment = (Math.random() - 0.5) * 2; 
+            sum += increment;
+            
+            x = (i / steps) * canvas.width;
+            // Riscalamento di Donsker: 1/sqrt(n)
+            const scaledY = (canvas.height / 2) - (sum / Math.sqrt(steps)) * 250;
+            
+            ctx.lineTo(x, scaledY);
+        }
+        ctx.stroke();
     });
-    
-    desc.innerText = "CLT: La somma di variabili i.i.d. converge a una distribuzione Normale.";
-}
-
-// 3. Invariance Principle & Wiener Process (BM)
-function runWiener() {
-    initCanvas();
-    ctx.strokeStyle = '#64ffda';
-    ctx.lineWidth = 1.5;
-    
-    let x = 0;
-    let y = canvas.height / 2;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-
-    const steps = 1000;
-    const dx = canvas.width / steps;
-    
-    for (let i = 0; i < steps; i++) {
-        x += dx;
-        // Incrementi normali approssimati (Random Walk -> BM)
-        y += (Math.random() - 0.5) * 15; 
-        ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-    
-    desc.innerText = "Invariance Principle: Una random walk riscalata converge debolmente al moto browniano (W_t).";
 }
