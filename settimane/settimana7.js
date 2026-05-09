@@ -6,7 +6,7 @@ function simulate() {
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
-    ctx.strokeStyle = '#1e3a34';
+    ctx.strokeStyle = '#1a3c34';
     ctx.lineWidth = 2;
     
     let x = 0;
@@ -14,11 +14,9 @@ function simulate() {
     ctx.moveTo(x, y);
     
     for (let i = 0; i < canvas.width; i++) {
-        y += (Math.random() - 0.5) * 7;
+        y += (Math.random() - 0.5) * 6;
         ctx.lineTo(i, y);
     }
     ctx.stroke();
 }
-
-// Avvia la prima volta al caricamento
 window.onload = simulate;
