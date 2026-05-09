@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settimana 7: Teoremi Limite e Invarianza</title>
+    <title>Settimana 7: Teoria, Limiti e Derivati</title>
     <link rel="stylesheet" href="settimana7.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -11,21 +11,21 @@
 <body>
     <header>
         <h1>Probabilità e Processi: Settimana 7</h1>
-        <p>Analisi approfondita dei teoremi limite e del moto browniano</p>
+        <p>Dal rigore di Kolmogorov alla dinamica dei mercati finanziari</p>
     </header>
 
     <main>
         <section class="card">
             <h2>0. Assiomatica di Kolmogorov e Teoria della Misura</h2>
-            <p>La probabilità moderna formalizzata da Kolmogorov (1933) si basa sulla <strong>Teoria della Misura</strong>, definendo uno spazio di probabilità come una terna \((\Omega, \mathcal{F}, P)\).</p>
+            <p>La probabilità moderna si basa sulla terna \((\Omega, \mathcal{F}, P)\), dove \(P\) è una misura di probabilità.</p>
             <div class="proof">
-                <strong>I Tre Assiomi:</strong>
+                <strong>Assiomi Fondamentali:</strong>
                 <ul>
-                    <li>\(P(A) \geq 0\) per ogni evento \(A \in \mathcal{F}\).</li>
-                    <li>\(P(\Omega) = 1\) (Lo spazio campionario è l'evento certo).</li>
-                    <li><strong>\(\sigma\)-additività:</strong> Per ogni successione di eventi disgiunti \(A_1, A_2, \dots\), si ha \(P(\bigcup A_i) = \sum P(A_i)\).</li>
+                    <li>\(P(A) \geq 0\)</li>
+                    <li>\(P(\Omega) = 1\)</li>
+                    <li><strong>\(\sigma\)-additività:</strong> \(P(\bigcup A_i) = \sum P(A_i)\) per eventi disgiunti.</li>
                 </ul>
-                <strong>Relazione con la Misura:</strong> Una variabile aleatoria \(X\) è una funzione misurabile. Il valore atteso \(E[X]\) è definito come l'integrale di Lebesgue della funzione rispetto alla misura di probabilità:
+                <strong>Relazione con la Misura:</strong> Il valore atteso è l'integrale di Lebesgue rispetto alla misura \(P\):
                 \[ E[X] = \int_{\Omega} X(\omega) dP(\omega) \]
             </div>
         </section>
@@ -33,43 +33,61 @@
         <section class="card">
             <h2>1. Legge dei Grandi Numeri (LLN)</h2>
             <h3>Legge Debole (WLLN)</h3>
-            <p>Sia \(X_1, X_2, \dots\) i.i.d. con \(E[X_i] = \mu\). Allora \(\bar{X}_n \xrightarrow{P} \mu\).</p>
+            <p>Sia \(X_i\) i.i.d. con \(E[X_i] = \mu\). Allora \(\bar{X}_n \xrightarrow{P} \mu\).</p>
             <div class="proof">
                 <strong>Dimostrazione (Chebyshev):</strong><br>
-                Assumendo \(Var(X_i) = \sigma^2 < \infty\), abbiamo \(Var(\bar{X}_n) = \sigma^2/n\).<br>
-                Per Chebyshev: \(P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{\sigma^2}{n\epsilon^2}\).<br>
-                Al tendere di \(n \to \infty\), il membro destro tende a 0.
+                Assumendo \(Var(X_i) = \sigma^2\), si ha \(Var(\bar{X}_n) = \sigma^2/n\).<br>
+                Per Chebyshev: \(P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{\sigma^2}{n\epsilon^2} \xrightarrow{n \to \infty} 0\).
             </div>
-
             <h3>Legge Forte (SLLN)</h3>
-            <p>Afferma la convergenza quasi certa: \(P(\lim_{n \to \infty} \bar{X}_n = \mu) = 1\).</p>
-            <div class="proof">
-                <strong>Cenno Dimostrativo:</strong> Si dimostra utilizzando il Lemma di Borel-Cantelli o la disuguaglianza di Kolmogorov, provando che le fluttuazioni fuori da \(\mu\) avvengono solo un numero finito di volte con probabilità 1.
-            </div>
+            <p>Convergenza quasi certa: \(P(\lim_{n \to \infty} \bar{X}_n = \mu) = 1\). Analogo alla convergenza quasi ovunque in analisi.</p>
         </section>
 
         <section class="card">
             <h2>2. Teorema del Limite Centrale (CLT)</h2>
             <h3>Caso i.i.d. (Lindeberg-Lévy)</h3>
-            <p>Se \(X_i\) sono i.i.d. con media \(\mu\) e varianza \(\sigma^2\), allora \(Z_n = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1)\).</p>
+            <p>\(Z_n = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1)\).</p>
             <div class="proof">
                 <strong>Dimostrazione (Funzioni Caratteristiche):</strong><br>
-                Sia \(\phi_{X}(t)\) la f.c. di una variabile centrata. La f.c. di \(Z_n\) è \([\phi_X(t/(\sigma\sqrt{n}))]^n\).<br>
-                Usando Taylor: \(\phi_X(u) \approx 1 - \frac{\sigma^2 u^2}{2}\).<br>
-                Sostituendo: \(\left(1 - \frac{t^2}{2n} + o(1/n)\right)^n \to e^{-t^2/2}\).
+                Sviluppando \(\phi_X(t)\) con Taylor: \(\left(1 - \frac{t^2}{2n} + o(1/n)\right)^n \to e^{-t^2/2}\).
             </div>
-
             <h3>Caso non i.i.d.</h3>
-            <p>Vale se è soddisfatta la <strong>Condizione di Lindeberg</strong>, che assicura che nessuna singola variabile della somma domini la varianza totale.</p>
+            <p>Richiede la <strong>Condizione di Lindeberg</strong> per assicurare che nessuna singola variabile domini la varianza della somma.</p>
         </section>
 
         <section class="card">
             <h2>3. Principio di Invarianza e Processo di Wiener</h2>
-            <p>Il Teorema di Donsker estende il CLT allo spazio delle funzioni continue \(C[0,1]\).</p>
+            <p>Il Teorema di Donsker mostra che il Moto Browniano (BM) è il limite funzionale di una passeggiata aleatoria scalata.</p>
             <div class="proof">
-                <strong>Ruolo del Moto Browniano (BM):</strong><br>
-                La passeggiata aleatoria riscalata \(W_n(t) = \frac{1}{\sigma\sqrt{n}} S_{\lfloor nt \rfloor}\) converge debolmente al Processo di Wiener \(W(t)\).<br>
-                <strong>Dimostrazione:</strong> Si basa sulla verifica della convergenza delle distribuzioni finito-dimensionali (tramite CLT) e sulla prova della "tightness" (tensione) della sequenza di processi per garantire la continuità del limite.
+                <strong>Ruolo del Processo di Wiener \(W(t)\):</strong><br>
+                È un processo a incrementi indipendenti e stazionari \(W_t - W_s \sim N(0, t-s)\), con traiettorie quasi certamente continue.
+            </div>
+        </section>
+
+        <section class="card optional">
+            <h2>4. Opzioni e Dinamica dei Prezzi (Parte Opzionale)</h2>
+            <p>Le opzioni sono contratti derivati il cui valore dipende da un sottostante \(S_t\).</p>
+            
+            <h3>4.1 Dinamica del Prezzo (Sottostante)</h3>
+            <p>Il prezzo dell'underlying è modellato come un Moto Browniano Geometrico (GBM):</p>
+            <div class="proof">
+                \[ dS_t = \mu S_t dt + \sigma S_t dW_t \]
+                Qui \(dW_t\) rappresenta l'incertezza (processo di Wiener) introdotta nella Sezione 3.
+            </div>
+
+            <h3>4.2 Strategie e Combinazioni di Payoff</h3>
+            <div class="theory-box">
+                <strong>Payoff alla scadenza \(T\) con Strike \(K\):</strong>
+                <ul>
+                    <li><strong>Call:</strong> \( C_T = \max(S_T - K, 0) \)</li>
+                    <li><strong>Put:</strong> \( P_T = \max(K - S_T, 0) \)</li>
+                </ul>
+                <strong>Strategie Classiche:</strong>
+                <ul>
+                    <li><strong>Straddle:</strong> Long Call + Long Put (stesso \(K\)).</li>
+                    <li><strong>Bull Spread:</strong> Long Call (\(K_1\)) + Short Call (\(K_2\)).</li>
+                    <li><strong>Butterfly:</strong> Combinazione di call per scommettere su bassa volatilità.</li>
+                </ul>
             </div>
         </section>
     </main>
