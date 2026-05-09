@@ -3,76 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teoria Settimana 7 - Analisi Statistica</title>
+    <title>Settimana 7: Teoremi Limite e Invarianza</title>
     <link rel="stylesheet" href="settimana7.css">
-    <script>
-        window.MathJax = {
-            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] }
-        };
-    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <header>
-        <h1>Settimana 7: Teoremi Limite & Processi</h1>
-        <p>Approfondimento su LLN, CLT e Principi di Invarianza</p>
+        <h1>Probabilità e Processi: Settimana 7</h1>
+        <p>Analisi approfondita dei teoremi limite e del moto browniano</p>
     </header>
 
     <main>
-        <section id="lln">
+        <section class="card">
             <h2>1. Legge dei Grandi Numeri (LLN)</h2>
-            <p>La LLN garantisce che la media campionaria $\bar{X}_n$ converga al valore atteso $\mu$.</p>
-            
-            <article class="proof">
-                <h3>Dimostrazione (WLLN via Chebyshev)</h3>
-                <p>Siano $X_1, \dots, X_n$ i.i.d. con $E[X_i] = \mu$ e $Var(X_i) = \sigma^2$.</p>
-                <div class="math-box">
-                    $$Var(\bar{X}_n) = Var\left(\frac{1}{n}\sum X_i\right) = \frac{1}{n^2} \sum Var(X_i) = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}$$
-                    Applicando la disuguaglianza di Chebyshev:
-                    $$P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{Var(\bar{X}_n)}{\epsilon^2} = \frac{\sigma^2}{n\epsilon^2}$$
-                    Per $n \to \infty$, il termine a destra tende a 0, dimostrando la convergenza in probabilità.
-                </div>
-            </article>
+            <h3>Legge Debole (WLLN)</h3>
+            <p>Sia \(X_1, X_2, \dots\) i.i.d. con \(E[X_i] = \mu\). Allora \(\bar{X}_n \xrightarrow{P} \mu\).</p>
+            <div class="proof">
+                <strong>Dimostrazione (Chebyshev):</strong><br>
+                Assumendo \(Var(X_i) = \sigma^2 < \infty\), abbiamo \(Var(\bar{X}_n) = \sigma^2/n\).<br>
+                Per Chebyshev: \(P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{\sigma^2}{n\epsilon^2}\).<br>
+                Al tendere di \(n \to \infty\), il membro destro tende a 0.
+            </div>
+
+            <h3>Legge Forte (SLLN)</h3>
+            <p>Afferma la convergenza quasi certa: \(P(\lim_{n \to \infty} \bar{X}_n = \mu) = 1\).</p>
+            <div class="proof">
+                <strong>Cenno Dimostrativo:</strong> Si dimostra utilizzando il Lemma di Borel-Cantelli o la disuguaglianza di Kolmogorov, provando che le fluttuazioni fuori da \(\mu\) avvengono solo un numero finito di volte con probabilità 1.
+            </div>
         </section>
 
-        <section id="clt">
+        <section class="card">
             <h2>2. Teorema del Limite Centrale (CLT)</h2>
-            <p>Il CLT descrive la distribuzione limite della somma scalata di variabili aleatorie.</p>
+            <h3>Caso i.i.d. (Lindeberg-Lévy)</h3>
+            <p>Se \(X_i\) sono i.i.d. con media \(\mu\) e varianza \(\sigma^2\), allora \(Z_n = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1)\).</p>
+            <div class="proof">
+                <strong>Dimostrazione (Funzioni Caratteristiche):</strong><br>
+                Sia \(\phi_{X}(t)\) la f.c. di una variabile centrata. La f.c. di \(Z_n\) è \([\phi_X(t/(\sigma\sqrt{n}))]^n\).<br>
+                Usando Taylor: \(\phi_X(u) \approx 1 - \frac{\sigma^2 u^2}{2}\).<br>
+                Sostituendo: \(\left(1 - \frac{t^2}{2n} + o(1/n)\right)^n \to e^{-t^2/2}\).
+            </div>
 
-            <article class="proof">
-                <h3>Dimostrazione (Funzioni Caratteristiche)</h3>
-                <p>Sia $Z_n = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}}$. Assumendo $\mu=0, \sigma=1$:</p>
-                <div class="math-box">
-                    $$\phi_{Z_n}(t) = \left[ \phi_X\left(\frac{t}{\sqrt{n}}\right) \right]^n$$
-                    Sviluppando $\phi_X$ in serie di Taylor attorno a 0:
-                    $$\phi_X\left(\frac{t}{\sqrt{n}}\right) \approx 1 + i(0) - \frac{(t/\sqrt{n})^2}{2} = 1 - \frac{t^2}{2n}$$
-                    Quindi:
-                    $$\lim_{n \to \infty} \left( 1 - \frac{t^2}{2n} \right)^n = e^{-\frac{t^2}{2}}$$
-                    che è la funzione caratteristica di una normale standard.
-                </div>
-            </article>
+            <h3>Caso non i.i.d.</h3>
+            <p>Vale se è soddisfatta la <strong>Condizione di Lindeberg</strong>, che assicura che nessuna singola variabile della somma domini la varianza totale.</p>
         </section>
 
-        <section id="invariance">
-            <h2>3. Invariance Principle & Wiener Process</h2>
-            <p>Il Principio di Donsker estende il CLT a processi stocastici (moto Browniano).</p>
-
-            <article class="theory-detail">
-                <h3>Ruolo del Processo di Wiener ($W_t$)</h3>
-                <ul>
-                    <li><strong>Definizione:</strong> Un processo a incrementi indipendenti dove $W_t - W_s \sim N(0, t-s)$.</li>
-                    <li><strong>Invarianza:</strong> Qualsiasi passeggiata aleatoria con varianza finita, se opportunamente scalata, "appare" come un moto Browniano nel limite continuo.</li>
-                </ul>
-            </article>
+        <section class="card">
+            <h2>3. Principio di Invarianza e Processo di Wiener</h2>
+            <p>Il Teorema di Donsker estende il CLT allo spazio delle funzioni continue \(C[0,1]\).</p>
+            <div class="proof">
+                <strong>Ruolo del Moto Browniano (BM):</strong><br>
+                La passeggiata aleatoria riscalata \(W_n(t) = \frac{1}{\sigma\sqrt{n}} S_{\lfloor nt \rfloor}\) converge debolmente al Processo di Wiener \(W(t)\).<br>
+                <strong>Dimostrazione:</strong> Si basa sulla verifica della convergenza delle distribuzioni finito-dimensionali (tramite CLT) e sulla prova della "tightness" (tensione) della sequenza di processi per garantire la continuità del limite.
+            </div>
         </section>
     </main>
-
-    <footer>
-        <button onclick="checkLearning()">Verifica Conoscenze</button>
-        <p id="status"></p>
-    </footer>
 
     <script src="settimana7.js"></script>
 </body>
 </html>
+
 
