@@ -5,50 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homework 7 - Theory</title>
     <link rel="stylesheet" href="settimana7.css">
-    
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-
     <div class="container">
         <header class="main-header">
             <a href="../index.html" class="back-link">← Torna a Homework 7</a>
             <h1>Homework 7 - Theory</h1>
-            <p>Approfondimento sulle basi matematiche della probabilità moderna.</p>
+            <p>Questa ricerca approfondisce le basi matematiche della probabilità moderna, partendo dall’impostazione assiomatica di Kolmogorov e dal suo collegamento con la teoria della misura. Successivamente vengono richiamati alcuni risultati fondamentali della probabilità e dei processi aleatori: la legge dei grandi numeri, il teorema del limite centrale e il principio di invarianza.</p>
         </header>
 
         <section class="card">
-            <h2>1. L'impostazione assiomatica di Kolmogorov</h2>
+            <h2>1. L’impostazione assiomatica di Kolmogorov</h2>
+            <p>L’impostazione moderna della probabilità si basa sugli assiomi formulati da Andrey Kolmogorov nel 1933. L’idea centrale è trattare la probabilità come una misura definita su una famiglia di eventi.</p>
             <p>Uno spazio di probabilità è una terna:</p>
-            <div class="formula">$$ (\Omega, \mathcal{F}, \mathbb{P}) $$</div>
-            <p>Additività numerabile:</p>
-            <div class="formula">$$ \mathbb{P} \left( \bigcup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} \mathbb{P}(A_i) $$</div>
+            <div class="math-block">$$(\Omega, \mathcal{F}, \mathbb{P})$$</div>
+            <p>dove $\Omega$ è lo spazio campionario, cioè l’insieme di tutti i possibili esiti; $\mathcal{F}$ è una $\sigma$-algebra, cioè una collezione di eventi su cui è possibile assegnare una probabilità; $\mathbb{P}$ è la misura di probabilità.</p>
+            <p>Gli assiomi fondamentali sono tre.</p>
+            <p><strong>Non negatività:</strong> $\mathbb{P}(A) \geq 0$ per ogni evento $A \in \mathcal{F}$.</p>
+            <p><strong>Normalizzazione:</strong> $\mathbb{P}(\Omega) = 1$ cioè la probabilità dell’evento certo è pari a 1.</p>
+            <p><strong>Additività numerabile:</strong> se $A_1, A_2, \dots$ sono eventi a due a due disgiunti, allora:</p>
+            <div class="math-block">$$\mathbb{P} \left( \bigcup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} \mathbb{P}(A_i)$$</div>
+        </section>
+
+        <section class="card">
+            <h2>2. Relazione con la teoria della misura</h2>
+            <p>La probabilità può essere vista come un caso particolare di misura. In teoria della misura, una misura assegna una “grandezza” agli insiemi appartenenti a una $\sigma$-algebra. Una misura di probabilità è una misura positiva con massa totale pari a 1.</p>
+            <p>In generale, una misura $\mu$ può soddisfare $\mu(\Omega) < \infty$ oppure $\mu(\Omega) = \infty$. Nel caso della probabilità, invece, si impone $\mathbb{P}(\Omega) = 1$.</p>
+            <p>Questo collegamento è fondamentale perché consente di usare gli strumenti della teoria della misura per definire in modo rigoroso variabili casuali, valore atteso, integrali, convergenze e processi stocastici.</p>
+            <p>Una variabile casuale può infatti essere interpretata come una funzione misurabile:</p>
+            <div class="math-block">$$X: \Omega \to \mathbb{R}$$</div>
+            <p>Il valore atteso diventa un integrale rispetto alla misura di probabilità:</p>
+            <div class="math-block">$$E[X] = \int_{\Omega} X(\omega) d\mathbb{P}(\omega)$$</div>
         </section>
 
         <section class="card">
             <h2>3. Legge dei grandi numeri</h2>
-            <p>La legge debole afferma che:</p>
-            <div class="formula">$$ \bar{X}_n \xrightarrow{P} \mu $$</div>
-            <p>La legge forte afferma invece che:</p>
-            <div class="formula">$$ \bar{X}_n \xrightarrow{a.s.} \mu $$</div>
+            <p>La legge dei grandi numeri descrive il comportamento della media campionaria quando il numero di osservazioni cresce. Se $X_1, X_2, \dots, X_n$ sono variabili casuali indipendenti e identicamente distribuite con valore atteso finito $\mu$, la media campionaria è:</p>
+            <div class="math-block">$$\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i$$</div>
+            <p>La legge debole dei grandi numeri afferma che:</p>
+            <div class="math-block">$$\bar{X}_n \xrightarrow{P} \mu$$</div>
+            <p>cioè la media campionaria converge in probabilità al valore atteso. La legge forte dei grandi numeri afferma invece che:</p>
+            <div class="math-block">$$\bar{X}_n \xrightarrow{a.s.} \mu$$</div>
+            <p>cioè la convergenza avviene quasi sicuramente. La differenza principale è che la legge forte fornisce una forma di convergenza più robusta rispetto alla legge debole.</p>
         </section>
 
         <section class="card">
             <h2>4. Teorema del limite centrale</h2>
-            <p>Per variabili indipendenti e identicamente distribuite:</p>
-            <div class="formula">$$ \frac{\sum_{i=1}^n X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1) $$</div>
+            <p>Il teorema del limite centrale spiega perché la distribuzione normale compare così frequentemente in probabilità e statistica. Nel caso classico iid, se $X_1, \dots, X_n$ sono indipendenti e identicamente distribuite, con media $\mu$ e varianza finita $\sigma^2$, allora:</p>
+            <div class="math-block">$$\frac{\sum_{i=1}^{n} X_i - n\mu}{\sigma \sqrt{n}} \xrightarrow{d} N(0,1)$$</div>
+            <p>Questo significa che la somma normalizzata delle variabili converge in distribuzione a una normale standard.</p>
+            <p>Esistono anche versioni non iid del teorema, in cui le variabili possono non avere la stessa distribuzione. In questi casi servono condizioni aggiuntive, come quelle di Lindeberg o Lyapunov, per evitare che una singola variabile domini l’intera somma.</p>
         </section>
 
         <section class="card">
-            <h2>5. Principio di invarianza</h2>
-            <p>Il processo scalato converge al moto browniano:</p>
-            <div class="formula">$$ W_n(t) \Rightarrow W(t) $$</div>
-            <canvas id="wienerCanvas"></canvas>
-            <button class="btn" onclick="simulate()">Simula Traiettoria</button>
+            <h2>5. Principio di invarianza e moto browniano</h2>
+            <p>Il principio di invarianza, noto anche come teorema di Donsker, estende il teorema del limite centrale dal caso delle somme finite al caso dei processi stocastici.</p>
+            <p>Si considera una random walk costruita da variabili indipendenti con media zero e varianza finita. Definendo il processo scalato:</p>
+            <div class="math-block">$$W_n(t) = \frac{1}{\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$$</div>
+            <p>il principio di invarianza afferma che, al crescere di $n$, questo processo converge in distribuzione a un processo di Wiener:</p>
+            <div class="math-block">$$W_n(t) \Rightarrow W(t)$$</div>
+            <p>dove $W(t)$ è il moto browniano standard. L’aspetto importante è che il limite non dipende dalla distribuzione specifica dei passi, purché siano soddisfatte condizioni come indipendenza, media zero e varianza finita. Per questo si parla di principio di invarianza.</p>
         </section>
     </div>
-
-    <script src="settimana7.js"></script>
 </body>
 </html>
