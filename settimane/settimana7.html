@@ -2,37 +2,59 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Settimana 7: Kolmogorov & Teoremi Limite</title>
+    <title>Settimana 7: Fondamenti e Dimostrazioni</title>
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="settimana7.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Settimana 7: Fondamenti di Probabilità</h1>
-            <p>Dalla Teoria della Misura ai Processi di Wiener</p>
+    <div class="theory-container">
+        <header class="theory-header">
+            <h1>Settimana 7: Teoria Assiomatica e Convergenze</h1>
+            <p>Un'analisi formale dei pilastri della probabilità moderna.</p>
         </header>
 
-        <section class="theory">
-            <h2>1. Assiomatica di Kolmogorov</h2>
-            <div class="formula-box">
-                <p>La probabilità è uno spazio di misura $(\Omega, \mathcal{F}, P)$ tale che:</p>
-                <ul>
-                    <li><strong>P1:</strong> $P(A) \in [0, 1]$ per ogni $A \in \mathcal{F}$</li>
-                    <li><strong>P2:</strong> $P(\Omega) = 1$</li>
-                    <li><strong>P3:</strong> $\sigma$-additività per eventi disgiunti</li>
-                </ul>
+        <section class="theory-block">
+            <h2>1. Kolmogorov e la Teoria della Misura</h2>
+            <p>La probabilità moderna poggia sulla teoria della misura di Borel-Lebesgue. Uno spazio di probabilità è una terna $(\Omega, \mathcal{F}, P)$ dove $P$ è una misura finita con massa totale unitaria.</p>
+            <div class="proof-box">
+                <h3>Relazione Fondamentale</h3>
+                <p>Ogni variabile aleatoria $X$ è una funzione misurabile $X: \Omega \to \mathbb{R}$. La speranza matematica $E[X]$ non è altro che l'integrale di Lebesgue di $X$ rispetto alla misura $P$:</p>
+                <div class="formula">$$E[X] = \int_{\Omega} X(\omega) dP(\omega)$$</div>
             </div>
         </section>
 
-        <section class="simulation">
-            <h2>2. Simulazione Processi Aleatori</h2>
-            <div class="controls">
-                <button onclick="runLLN()">Esegui LLN (Grandi Numeri)</button>
-                <button onclick="runCLT()">Esegui CLT (Limite Centrale)</button>
-                <button onclick="runWiener()">Invariance Principle (Wiener)</button>
+        <section class="theory-block">
+            <h2>2. Legge dei Grandi Numeri (LLN)</h2>
+            <div class="proof-box">
+                <h3>Dimostrazione (WLLN) via Disuguaglianza di Chebyshev</h3>
+                <p>Sia $S_n = \sum_{i=1}^n X_i$ con $X_i$ i.i.d., $E[X_i]=\mu$ e $Var(X_i)=\sigma^2$.</p>
+                <ol>
+                    <li>Sia $\bar{X}_n = S_n/n$. Per linearità, $E[\bar{X}_n] = \mu$ e $Var(\bar{X}_n) = \frac{\sigma^2}{n}$.</li>
+                    <li>Applicando Chebyshev: $P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{Var(\bar{X}_n)}{\epsilon^2}$.</li>
+                    <li>Sostituendo la varianza: $P(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{\sigma^2}{n\epsilon^2}$.</li>
+                    <li>Per $n \to \infty$, il termine a destra converge a 0, dimostrando la convergenza in probabilità.</li>
+                </ol>
             </div>
-            <canvas id="mainCanvas"></canvas>
-            <div id="description">Seleziona una simulazione per visualizzare i risultati.</div>
+        </section>
+
+        <section class="theory-block">
+            <h2>3. Central Limit Theorem (CLT)</h2>
+            <div class="proof-box">
+                <h3>Idea della Dimostrazione via Funzioni Caratteristiche</h3>
+                <p>Sia $Z_n = \frac{S_n - n\mu}{\sigma\sqrt{n}}$. La funzione caratteristica di $Z_n$ è $\phi_{Z_n}(t)$.</p>
+                <p>Sviluppando in serie di Taylor la funzione caratteristica della variabile standardizzata intorno a 0:</p>
+                <div class="formula">$$\phi_{Z_n}(t) = \left( 1 - \frac{t^2}{2n} + o(\frac{t^2}{n}) \right)^n \longrightarrow e^{-\frac{t^2}{2}}$$</div>
+                <p>Il limite è la funzione caratteristica di una normale standard $N(0,1)$.</p>
+            </div>
+        </section>
+
+        <section class="theory-block">
+            <h2>4. Invariance Principle (Donsker)</h2>
+            <p>Il principio di invarianza afferma che non solo la somma finale converge, ma l'intero percorso (path) della somma parziale converge a un processo continuo.</p>
+            <div class="simulation-area">
+                <button onclick="runDonskerSimulation()">Simula Convergenza al Moto Browniano</button>
+                <canvas id="wienerCanvas"></canvas>
+            </div>
         </section>
     </div>
     <script src="settimana7.js"></script>
