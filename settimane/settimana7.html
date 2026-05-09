@@ -16,6 +16,21 @@
 
     <main>
         <section class="card">
+            <h2>0. Assiomatica di Kolmogorov e Teoria della Misura</h2>
+            <p>La probabilità moderna formalizzata da Kolmogorov (1933) si basa sulla <strong>Teoria della Misura</strong>, definendo uno spazio di probabilità come una terna \((\Omega, \mathcal{F}, P)\).</p>
+            <div class="proof">
+                <strong>I Tre Assiomi:</strong>
+                <ul>
+                    <li>\(P(A) \geq 0\) per ogni evento \(A \in \mathcal{F}\).</li>
+                    <li>\(P(\Omega) = 1\) (Lo spazio campionario è l'evento certo).</li>
+                    <li><strong>\(\sigma\)-additività:</strong> Per ogni successione di eventi disgiunti \(A_1, A_2, \dots\), si ha \(P(\bigcup A_i) = \sum P(A_i)\).</li>
+                </ul>
+                <strong>Relazione con la Misura:</strong> Una variabile aleatoria \(X\) è una funzione misurabile. Il valore atteso \(E[X]\) è definito come l'integrale di Lebesgue della funzione rispetto alla misura di probabilità:
+                \[ E[X] = \int_{\Omega} X(\omega) dP(\omega) \]
+            </div>
+        </section>
+
+        <section class="card">
             <h2>1. Legge dei Grandi Numeri (LLN)</h2>
             <h3>Legge Debole (WLLN)</h3>
             <p>Sia \(X_1, X_2, \dots\) i.i.d. con \(E[X_i] = \mu\). Allora \(\bar{X}_n \xrightarrow{P} \mu\).</p>
