@@ -1,37 +1,67 @@
-const canvas = document.getElementById('wienerCanvas');
-const ctx = canvas.getContext('2d');
+/**
+ * Simulazione del Principio di Invarianza (Teorema di Donsker)
+ * Mostra come una somma di variabili i.i.d. riscalata converge a un processo di Wiener.
+ */
 
-function runDonskerSimulation() {
-    // Reset Canvas
+function simulate() {
+    const canvas = document.getElementById('wienerCanvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Adatta il canvas alla larghezza del contenitore
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+    
+    // Pulizia
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Parametri
+    const steps = 1000;         // Numero di passi (n)
+    const dt = canvas.width / steps;
+    const scaleFactor = 30;     // Riscalamento visivo per la varianza
+    
+    // Punto di partenza (Origine: t=0, W(0)=0)
+    let x = 0;
+    let y = canvas.height / 2;
+    let currentW = 0;           // Valore del processo di Wiener
+    
+    ctx.beginPath();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#007bff';
+    ctx.moveTo(x, y);
 
-    const steps = 2000;
-    const paths = 3;
-    const colors = ['#3498db', '#e74c3c', '#2ecc71'];
-
-    paths.forEach((color, p) => {
-        let x = 0;
-        let y = canvas.height / 2;
-        let sum = 0;
+    for (let i = 0; i < steps; i++) {
+        // Generazione incremento: secondo la teoria, 
+        // gli incrementi devono avere Media 0 e Varianza proporzionale a dt.
+        // Qui usiamo una distribuzione uniforme riscalata per approssimare la normale.
+        const increment = (Math.random() - 0.5) * 2; 
         
-        ctx.beginPath();
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1.5;
-        ctx.moveTo(x, y);
-
-        for (let i = 0; i < steps; i++) {
-            // Incremento i.i.d Mean=0, Var=1
-            const increment = (Math.random() - 0.5) * 2; 
-            sum += increment;
-            
-            x = (i / steps) * canvas.width;
-            // Riscalamento di Donsker: 1/sqrt(n)
-            const scaledY = (canvas.height / 2) - (sum / Math.sqrt(steps)) * 250;
-            
-            ctx.lineTo(x, scaledY);
-        }
-        ctx.stroke();
-    });
+        // Accumuliamo (Somma parziale)
+        currentW += increment;
+        
+        // Calcoliamo le coordinate
+        x += dt;
+        // Invarianza: W(t) ~ sqrt(n). Qui applichiamo un riscalamento grafico.
+        const drawY = (canvas.height / 2) - (currentW * scaleFactor / Math.sqrt(steps / 10));
+        
+        ctx.lineTo(x, drawY);
+    }
+    
+    ctx.stroke();
+    
+    // Aggiungiamo una linea di base per lo zero
+    ctx.beginPath();
+    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = '#ccc';
+    ctx.moveTo(0, canvas.height / 2);
+    ctx.lineTo(canvas.width, canvas.height / 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
 }
+
+// Avvia la simulazione al caricamento della pagina
+window.addEventListener('load', simulate);
+
+// Rendi disponibile la funzione per il bottone
+window.runSimulation = simulate;
