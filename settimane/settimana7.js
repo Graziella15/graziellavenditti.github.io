@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     proofs.forEach(p => {
         p.addEventListener('mouseenter', () => {
             p.style.backgroundColor = "#e8f0fe";
+            p.style.transition = "background-color 0.3s ease";
         });
         p.addEventListener('mouseleave', () => {
             p.style.backgroundColor = "#f0f7ff";
