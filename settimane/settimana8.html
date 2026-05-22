@@ -1,1 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settimana 8 - Payoff Opzioni</title>
+  <link rel="stylesheet" href="settimana8.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
 
+  <header class="navbar">
+    <a href="index.html" class="back-btn">← Torna alla Home</a>
+    <h1>Analizzatore Payoff Opzioni (HMWK 8)</h1>
+  </header>
+
+  <main class="container">
+    
+    <section class="control-panel">
+      <h2>Aggiungi un'Opzione alla Strategia</h2>
+      <form id="option-form">
+        <div class="form-group">
+          <label for="option-type">Tipo Opzione</label>
+          <select id="option-type">
+            <option value="CALL">Call</option>
+            <option value="PUT">Put</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="option-position">Posizione</label>
+          <select id="option-position">
+            <option value="LONG">Long (Acquisto)</option>
+            <option value="SHORT">Short (Vendita)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="option-strike">Strike Price ($)</label>
+          <input type="number" id="option-strike" value="100" min="1" step="any" required>
+        </div>
+
+        <div class="form-group">
+          <label for="option-premium">Premio ($)</label>
+          <input type="number" id="option-premium" value="5" min="0" step="any" required>
+        </div>
+
+        <div class="form-group">
+          <label for="option-quantity">Quantità</label>
+          <input type="number" id="option-quantity" value="1" min="1" step="1" required>
+        </div>
+
+        <button type="button" id="add-btn">Aggiungi Opzione</button>
+      </form>
+    </section>
+
+    <section class="dashboard">
+      <div class="list-container">
+        <h3>Opzioni in Portafoglio</h3>
+        <ul id="options-list">
+          </ul>
+        <button id="clear-btn" class="secondary-btn">Svuota Portafoglio</button>
+      </div>
+
+      <div class="chart-container">
+        <h3>Grafico Payoff Globale</h3>
+        <canvas id="payoffChart"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="settimana8.js"></script>
+</body>
+</html>
