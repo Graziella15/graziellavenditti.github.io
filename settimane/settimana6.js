@@ -227,4 +227,8 @@ function simulate() {
     });
 }
 
+document
+    .getElementById("simulateBtn")
+    .addEventListener("click", simulate);
+
 simulate();
