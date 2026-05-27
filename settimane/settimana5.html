@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HMWK 5 - GBM & Stochastic Processes</title>
+    <title>HMWK 5 - ABM vs GBM Simulation</title>
     <link rel="stylesheet" href="settimana5.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Simulazione Geometric Brownian Motion (GBM)</h1>
+        <h1>Simulazione e Confronto: ABM vs GBM</h1>
         
         <div class="controls">
             <div class="input-group">
@@ -33,10 +33,19 @@
                 <label>m (Traiettorie):</label>
                 <input type="number" id="paths" value="5">
             </div>
-            <button onclick="generateGBM()">Genera Simulazione</button>
+            <button onclick="generateSimulation()">Genera Simulazione</button>
         </div>
 
-        <canvas id="gbmCanvas"></canvas>
+        <div class="canvas-container">
+            <div class="canvas-wrapper">
+                <h3>Moto Browniano Aritmetico (ABM)</h3>
+                <canvas id="abmCanvas"></canvas>
+            </div>
+            <div class="canvas-wrapper">
+                <h3>Moto Browniano Geometrico (GBM)</h3>
+                <canvas id="gbmCanvas"></canvas>
+            </div>
+        </div>
 
         <hr>
 
@@ -44,13 +53,13 @@
             <h2>Analisi Teorica dei Processi Stocastici</h2>
             
             <h3>1. Arithmetic Brownian Motion (ABM)</h3>
-            <p>L'ABM rappresenta l'estensione continua della Random Walk scalata. È definito dalla SDE: $$dX_t = \mu dt + \sigma dW_t$$ In questo modello, i cambiamenti sono <b>additivi</b>. Il limite principale dell'ABM in ambito finanziario è che il processo può assumere valori negativi, rendendolo inadatto per modellare i prezzi dei titoli, ma utile per modellare tassi d'interesse o flussi di cassa.</p>
+            <p>L'ABM rappresenta l'estensione continua della Random Walk scalata. È definito dalla SDE: $$dX_t = \alpha dt + \sigma dW_t$$ In questo modello, i cambiamenti sono <b>additivi</b>. Il limite principale dell'ABM in ambito finanziario è che il processo può assumere valori negativi, rendendolo inadatto per modellare i prezzi dei titoli, ma utile per modellare tassi d'interesse o flussi di cassa.</p>
 
             <h3>2. Geometric Brownian Motion (GBM)</h3>
             <p>Il GBM risolve il problema dei valori negativi introducendo una dinamica <b>moltiplicativa</b>: $$dS_t = \mu S_t dt + \sigma S_t dW_t$$ Qui, la variazione del prezzo è proporzionale al livello del prezzo stesso. È il modello base per il pricing delle opzioni (Black-Scholes) poiché garantisce che il prezzo rimanga sempre positivo ($S_t > 0$) e riflette il concetto di rendimento percentuale costante.</p>
 
-            <h3>3. Mean Reversion (Processo di Ornstein–Uhlenbeck)</h3>
-            <p>A differenza dei modelli precedenti che possono divergere all'infinito, i processi <b>Mean Reverting</b> tendono a tornare verso un equilibrio di lungo periodo $L$: $$dr_t = \theta (L - r_t) dt + \sigma dW_t$$ Se il valore attuale $r_t$ è lontano dalla media $L$, il termine di "richiamo" $\theta$ (velocità di convergenza) spinge il processo verso $L$. Questo è il modello ideale per variabili che non crescono esponenzialmente, come la <b>volatilità</b> o i <b>prezzi delle commodity</b>.</p>
+            <h3>3. Relazione di Passaggio e Convergenza</h3>
+            <p>I due grafici sopra sono generati usando <b>le stesse identiche traiettorie stocastiche</b> $W_t$. Applicando la correzione di Itô, il passaggio dall'ABM al GBM avviene tramite la trasformazione esponenziale: $$S_t = S_0 \cdot e^{X_t} = S_0 \cdot e^{(\mu - \frac{1}{2}\sigma^2)t + \sigma W_t}$$ Noterai come a parità di colore, le traiettorie dell'ABM e del GBM seguano gli stessi identici trend e oscillazioni, ma il GBM si distorce verso l'alto a causa della capitalizzazione geometrica (esponenziale).</p>
         </section>
     </div>
 
