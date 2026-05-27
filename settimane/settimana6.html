@@ -3,35 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settimana 6 - Trading Simulation</title>
+    <title>HMWK Settimana 6 - GBM Trading Strategy</title>
+
     <link rel="stylesheet" href="settimana6.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Simulazione GBM con Strategia Buy/Sell</h1>
-        <p>Strategia: **Trend Following** (Compra se il prezzo sale, Vendi se scende).</p>
-        
-        <div class="controls">
-            <button onclick="runSimulation()">Avvia Simulazione</button>
+
+<div class="container">
+
+    <h1>Geometric Brownian Motion + Trading Strategy</h1>
+
+    <div class="controls">
+
+        <div class="control-group">
+            <label>Prezzo iniziale</label>
+            <input type="number" id="S0" value="100">
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h4>PnL Finale</h4>
-                <p id="pnl-value">€ 0.00</p>
-            </div>
-            <div class="stat-card">
-                <h4>Massimo Drawdown (DD)</h4>
-                <p id="dd-value">0.00 %</p>
-            </div>
+        <div class="control-group">
+            <label>Drift μ</label>
+            <input type="number" id="mu" step="0.01" value="0.08">
         </div>
 
-        <div class="chart-container">
-            <canvas id="tradingChart"></canvas>
+        <div class="control-group">
+            <label>Volatilità σ</label>
+            <input type="number" id="sigma" step="0.01" value="0.2">
         </div>
+
+        <div class="control-group">
+            <label>Numero step</label>
+            <input type="number" id="steps" value="250">
+        </div>
+
+        <div class="control-group">
+            <label>Media mobile</label>
+            <input type="number" id="maWindow" value="20">
+        </div>
+
     </div>
 
-    <script src="settimana6.js"></script>
+    <button onclick="simulate()">Simula Strategia</button>
+
+    <div class="results">
+
+        <div class="card">
+            <h2>PnL Finale</h2>
+            <p id="finalPnL">0</p>
+        </div>
+
+        <div class="card">
+            <h2>Maximum Drawdown</h2>
+            <p id="maxDD">0</p>
+        </div>
+
+    </div>
+
+    <div class="chart-container">
+        <canvas id="priceChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="pnlChart"></canvas>
+    </div>
+
+</div>
+
+<script src="settimana6.js"></script>
+
 </body>
 </html>
