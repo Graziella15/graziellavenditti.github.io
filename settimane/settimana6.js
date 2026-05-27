@@ -1,98 +1,230 @@
-let chart;
+let priceChart;
+let pnlChart;
 
-// Funzione per generare numeri casuali con distribuzione Normale (Gaussiana)
-// Essenziale per vedere oscillazioni realistiche e quindi il Drawdown
-function gaussianRandom() {
-    let u = 0, v = 0;
-    while(u === 0) u = Math.random();
-    while(v === 0) v = Math.random();
-    return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+function randomNormal() {
+
+    let u = 0;
+    let v = 0;
+
+    while (u === 0) u = Math.random();
+    while (v === 0) v = Math.random();
+
+    return Math.sqrt(-2.0 * Math.log(u)) *
+           Math.cos(2.0 * Math.PI * v);
 }
 
-function runSimulation() {
-    const steps = 100;
-    let price = 100;      
-    let mu = 0.1;         // Drift (Rendimento annuo)
-    let sigma = 0.3;      // Volatilità (Aumentata per vedere il DD)
-    let dt = 1/steps;
-    
-    let prices = [price];
-    let pnl = [0];
-    let currentPnl = 0;
-    let maxPnlSoFar = 0;
-    let maxDD = 0;
+function movingAverage(data, window) {
 
-    for (let i = 1; i < steps; i++) {
-        // 1. GBM Corretto: dP = P * (mu*dt + sigma*W)
-        let Wiener = gaussianRandom();
-        let change = price * (mu * dt + sigma * Math.sqrt(dt) * Wiener);
-        let nextPrice = price + change;
+    let ma = [];
 
-        // 2. Strategia: "Trend Following"
-        // Se il prezzo dell'ultimo step è salito, scommetto che salirà ancora (Long)
-        // Se è sceso, scommetto che scenderà (Short)
-        let lastReturn = nextPrice - price;
-        let signal = (prices[i-1] < price) ? 1 : -1; 
-        let gainLoss = signal * lastReturn;
-        
-        currentPnl += gainLoss;
-        
-        prices.push(nextPrice);
-        pnl.push(currentPnl);
+    for (let i = 0; i < data.length; i++) {
 
-        // 3. LOGICA DRAWDOWN (Corretta)
-        // Il DD esiste solo se il PnL attuale è SOTTO il massimo storico raggiunto
-        if (currentPnl > maxPnlSoFar) {
-            maxPnlSoFar = currentPnl;
+        if (i < window) {
+            ma.push(null);
+        } else {
+
+            let sum = 0;
+
+            for (let j = i - window; j < i; j++) {
+                sum += data[j];
+            }
+
+            ma.push(sum / window);
         }
-
-        let currentDD = maxPnlSoFar - currentPnl;
-
-        if (currentDD > maxDD) {
-            maxDD = currentDD;
-        }
-
-        price = nextPrice;
     }
 
-    updateUI(prices, pnl, currentPnl, maxDD);
+    return ma;
 }
 
-function updateUI(prices, pnl, finalPnl, maxDD) {
-    // Usiamo toFixed(2) per vedere i decimali, se è molto piccolo vedrai comunque cifre diverse da 0
-    document.getElementById('pnl-value').innerText = `€ ${finalPnl.toFixed(2)}`;
-    document.getElementById('dd-value').innerText = `€ ${maxDD.toFixed(2)}`;
+function simulate() {
 
-    const ctx = document.getElementById('tradingChart').getContext('2d');
-    if (chart) chart.destroy();
+    const S0 = parseFloat(document.getElementById("S0").value);
+    const mu = parseFloat(document.getElementById("mu").value);
+    const sigma = parseFloat(document.getElementById("sigma").value);
+    const steps = parseInt(document.getElementById("steps").value);
+    const maWindow = parseInt(document.getElementById("maWindow").value);
 
-    chart = new Chart(ctx, {
-        type: 'line',
+    const dt = 1 / 252;
+
+    let prices = [S0];
+
+    for (let i = 1; i < steps; i++) {
+
+        const Z = randomNormal();
+
+        const prev = prices[i - 1];
+
+        const next =
+            prev *
+            Math.exp(
+                (mu - 0.5 * sigma * sigma) * dt +
+                sigma * Math.sqrt(dt) * Z
+            );
+
+        prices.push(next);
+    }
+
+    const ma = movingAverage(prices, maWindow);
+
+    let pnl = [0];
+    let drawdown = [0];
+
+    let position = 0;
+
+    let maxPnL = 0;
+
+    for (let i = 1; i < prices.length; i++) {
+
+        if (ma[i] !== null) {
+
+            if (prices[i] > ma[i]) {
+                position = 1;
+            } else {
+                position = 0;
+            }
+        }
+
+        const dailyPnL =
+            pnl[i - 1] +
+            position * (prices[i] - prices[i - 1]);
+
+        pnl.push(dailyPnL);
+
+        maxPnL = Math.max(maxPnL, dailyPnL);
+
+        drawdown.push(dailyPnL - maxPnL);
+    }
+
+    const maxDD = Math.min(...drawdown);
+
+    document.getElementById("finalPnL").innerText =
+        pnl[pnl.length - 1].toFixed(2);
+
+    document.getElementById("maxDD").innerText =
+        maxDD.toFixed(2);
+
+    const labels = Array.from({ length: steps }, (_, i) => i);
+
+    if (priceChart) priceChart.destroy();
+    if (pnlChart) pnlChart.destroy();
+
+    const ctx1 = document
+        .getElementById("priceChart")
+        .getContext("2d");
+
+    priceChart = new Chart(ctx1, {
+
+        type: "line",
+
         data: {
-            labels: Array.from({length: prices.length}, (_, i) => i),
-            datasets: [{
-                label: 'Prezzo Asset (GBM)',
-                data: prices,
-                borderColor: '#3498db',
-                borderWidth: 2,
-                pointRadius: 0,
-                yAxisID: 'y',
-            }, {
-                label: 'PnL Strategia',
-                data: pnl,
-                borderColor: '#e67e22', // Arancione per distinguere
-                borderWidth: 2,
-                pointRadius: 0,
-                yAxisID: 'y1',
-            }]
+
+            labels: labels,
+
+            datasets: [
+                {
+                    label: "Prezzo GBM",
+                    data: prices,
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: "Media Mobile",
+                    data: ma,
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: false
+                }
+            ]
         },
+
         options: {
+
             responsive: true,
-            maintainAspectRatio: false,
+
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Processo GBM e Strategia"
+                }
+            },
+
             scales: {
-                y: { type: 'linear', position: 'left', title: { display: true, text: 'Prezzo Asset' } },
-                y1: { type: 'linear', position: 'right', title: { display: true, text: 'PnL Accumulato' }, grid: { drawOnChartArea: false } }
+
+                x: {
+                    title: {
+                        display: true,
+                        text: "Tempo"
+                    }
+                },
+
+                y: {
+                    title: {
+                        display: true,
+                        text: "Prezzo"
+                    }
+                }
+            }
+        }
+    });
+
+    const ctx2 = document
+        .getElementById("pnlChart")
+        .getContext("2d");
+
+    pnlChart = new Chart(ctx2, {
+
+        type: "line",
+
+        data: {
+
+            labels: labels,
+
+            datasets: [
+                {
+                    label: "PnL",
+                    data: pnl,
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: "Drawdown",
+                    data: drawdown,
+                    borderWidth: 2,
+                    borderDash: [10, 5],
+                    fill: false
+                }
+            ]
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+                title: {
+                    display: true,
+                    text: "PnL e Drawdown"
+                }
+            },
+
+            scales: {
+
+                x: {
+                    title: {
+                        display: true,
+                        text: "Tempo"
+                    }
+                },
+
+                y: {
+                    title: {
+                        display: true,
+                        text: "Valore"
+                    }
+                }
             }
         }
     });
 }
+
+simulate();
