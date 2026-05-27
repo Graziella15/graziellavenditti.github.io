@@ -7,8 +7,9 @@ body {
     padding: 20px;
 }
 
+/* Allargato leggermente il container per ospitare comodamente i due grafici affiancati */
 .container {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     background: white;
     padding: 40px;
@@ -47,12 +48,34 @@ button {
 
 button:hover { background-color: #74b9ff; }
 
-#gbmCanvas {
+/* --- NUOVA SEZIONE PER I DUE CANVAS --- */
+.canvas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.canvas-wrapper h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #2d3436;
+}
+
+/* Stilizzazione comune per entrambi i canvas */
+#abmCanvas, #gbmCanvas {
     width: 100%;
-    height: 450px;
+    height: 380px; /* Ridotto leggermente per mantenere l'equilibrio visivo nel layout a due colonne */
     border: 1px solid #eee;
     border-radius: 8px;
-    margin-bottom: 30px;
+    background-color: #ffffff;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.01);
 }
 
 hr { border: 0; border-top: 1px solid #eee; margin: 40px 0; }
@@ -69,3 +92,13 @@ hr { border: 0; border-top: 1px solid #eee; margin: 40px 0; }
 }
 
 .theory p { font-size: 0.95rem; text-align: justify; }
+
+/* Responsive design per schermi piccoli (sotto i 500px di larghezza complessiva) */
+@media (max-width: 550px) {
+    .canvas-container {
+        grid-template-columns: 1fr; /* Forza il layout a singola colonna */
+    }
+    #abmCanvas, #gbmCanvas {
+        height: 300px; /* Riduce l'altezza per non allungare troppo la pagina su smartphone */
+    }
+}
